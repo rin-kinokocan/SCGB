@@ -6,7 +6,7 @@
 namespace scgb{
   class Color{
   public:
-    Color();
+    static void Init();
     static int GetWebSafeColor(unsigned char r,unsigned char g,unsigned char b);
   };
 

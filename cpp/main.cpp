@@ -4,28 +4,29 @@
 #include <unistd.h>
 #include "../include/scgb.h"
 #include "../class/Heli.hh"
+using namespace scgb;
 
 int main(){
-  scgb::Screen scr(0,0);
-  scgb::pDrawable aa,bm1,bm2;
-  aa.reset(new scgb::AAtext(10,10,"./assets/ebi.aa"));
+  Screen::Init();
+  auto test=new scgb::AAtext(10,10,"./assets/ebi.aa");
+  pDrawable aa,bm1;
+  aa.reset(test);
   bm1.reset(new scgb::BMimage(0,0,"./assets/kinoko.bmp"));
-  scr.AddDrawable(1,aa);
-  scr.AddDrawable(2,bm1);
-  auto test=scr.GetDrawable(1);
-  while(scr.GetState()!=scgb::STA_DESTROY){
-    switch(scr.GetEvent()){//event management
+  Screen::AddDrawable(2,aa);
+  Screen::AddDrawable(1,bm1);
+  while(Screen::GetState()!=scgb::STA_DESTROY){
+    //draw start
+    Screen::Draw();
+    Screen::Refresh();
+    switch(Screen::GetEvent()){//event management
     case scgb::EVE_QUIT:
-      scr.Destroy();
+      Screen::Destroy();
       break;
-      
     case scgb::EVE_PRINT:
       break;
-      
     case scgb::EVE_RESIZE:
-      scr.Resize();
+      Screen::Resize();
       break;
-
     case scgb::EVE_RIGHT:
       test->Move(scgb::Right);
       break;
@@ -41,10 +42,7 @@ int main(){
     default:
       break;
     }
-    //draw start
     usleep(10000);
-    scr.Draw();
-    scr.Refresh();
   }
   return 0;
 }

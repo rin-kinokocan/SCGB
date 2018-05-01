@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include "../class/Movable.hh"
+#include "../class/define.h"
 using namespace scgb;
 
 bool Movable::rmove(){

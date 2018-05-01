@@ -1,6 +1,6 @@
 #pragma once
 #include <ncurses.h>
-#include "../include/define.h"
+#include "../class/define.h"
 #include "../class/GameWindow.h"
 
 #include "../class/Screen.h"

@@ -14,8 +14,7 @@ void AAtext::Draw(){
   int x=this->x,y=this->y;//where the cursor virtually should be.
   for(wchar_t c;this->file.get(c);){
     int w=wcwidth(c);
-    int cx,cy;
-    getyx(this->window,cy,cx);
+    int cx,cy;getyx(this->window,cy,cx);
     if(this->DrawPolicy(x,y,w)==true){
       switch(c){
       case L' ':
@@ -23,10 +22,13 @@ void AAtext::Draw(){
 	this->DrawTransparent(w);
 	break;
       default:
-	wchar_t op[2];
-	op[0]=c;
-	op[1]=L'\0';
-	waddwstr(this->window,op);
+	cchar_t a;
+	a.chars[0]=c;
+	a.chars[1]=L'\0';
+	a.attr=0;
+	auto b=this->GetGlobalCursorPos();
+	Screen::AddCchar(a,b[0],b[1]);
+	waddwstr(this->window,a.chars);
 	break;
       }
     }
@@ -49,10 +51,20 @@ void AAtext::Refresh(){
 }
 
 void AAtext::DrawTransparent(int w){
-  if(w==1)
-    waddwstr(this->window,L" ");
-  else
-    waddwstr(this->window,L"　");
+  auto b=GetGlobalCursorPos();
+  cchar_t a=Screen::GetCchar(b[0],b[1]);
+  wattron(this->window,a.attr);
+  if(wcwidth(a.chars[0])==w && a.chars[1]=='\0'){
+    waddwstr(this->window,a.chars);
+  }
+  else{
+    switch(w){
+    case 0:waddwstr(this->window,L"a");break;
+    case 1:waddwstr(this->window,L" ");break;
+    case 2:waddwstr(this->window,L"　");break;
+    }
+  }
+  wattroff(this->window,a.attr);
 }
 
 int AAtext::DrawPolicy(int x,int y,int w){
@@ -62,8 +74,6 @@ int AAtext::DrawPolicy(int x,int y,int w){
     return true;
   }
   else{
-    // endwin();
-    // std::cout<<x<<std::endl;
     return false;
   }
 }

@@ -33,6 +33,12 @@ void BMimage::Draw(){
   wmove(this->window,0,0);
   werase(this->window);
   for(int i:this->Pixels){
+    cchar_t a;
+    a.chars[0]=L' ';a.chars[1]=L'\0';
+    a.attr=COLOR_PAIR(i);
+    auto b=this->GetGlobalCursorPos();
+    Screen::AddCchar(a,b[0],b[1]);
+    Screen::AddCchar(a,b[0]+1,b[1]);
     wattron(this->window,COLOR_PAIR(i));
     waddwstr(this->window,L"  ");
     wattroff(this->window,COLOR_PAIR(i));

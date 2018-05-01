@@ -1,8 +1,8 @@
 #pragma once
+#include "define.h"
 #include "BaseWindow.h"
 
 namespace scgb{
-  
   enum Direction{
     Right,
     Left,
@@ -22,7 +22,4 @@ namespace scgb{
     bool Move(Direction dir);
     virtual ~Movable(){};
   };
-  typedef int Layer;
-  typedef std::shared_ptr<scgb::Movable> pDrawable;
-  typedef std::map<Layer,scgb::pDrawable> DrawList;
 }

@@ -9,7 +9,6 @@ namespace scgb{
   public:
     void Draw();
     void Refresh();
-    void Resize();
     void DrawTransparent(int w);
     int DrawPolicy(int,int,int);
     AAtext(int x,int y,std::string filename);

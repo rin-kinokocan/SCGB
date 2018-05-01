@@ -14,7 +14,6 @@ namespace scgb{
   public:
     void Draw();
     void Refresh();
-    void Resize();
     BMimage(int x,int y,const char* filename);
     ~BMimage();
   };

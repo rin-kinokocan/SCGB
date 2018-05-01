@@ -3,8 +3,13 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <memory>
+#include <map>
 
-namespace scgb{  
+namespace scgb{
+  //forward declaration of classes
+  class Drawable;
+  //
   enum State{
     STA_DESTROY=0,
     STA_OPEN=1,
@@ -54,5 +59,9 @@ namespace scgb{
   typedef WINDOW* WinPtr;
   typedef std::ifstream File;
   typedef std::wifstream WFile;
+
+  typedef int Layer;
+  typedef std::shared_ptr<scgb::Drawable> pDrawable;
+  typedef std::map<Layer,scgb::pDrawable> DrawList;
 }
 

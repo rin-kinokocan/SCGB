@@ -1,32 +1,37 @@
 #pragma once
 #include "GameWindow.h"
-#include "../include/define.h"
-#include "Color.hh"
+#include "define.h"
+
+using namespace std;
 
 namespace scgb{
-
-  class Screen :public GameWindow{
+  class Screen{
     //initializes ncurses and creates a window.
-
-  private:
-    State state;
-    void Init(int width,int height);
   public:
-    Palette palette;
-    
-    Screen(int width,int height);
-    void Draw();
-    void Refresh();
-    void Destroy();
-    void Resize();
-    void GetProperty(int ary[]);
-
-    Event GetEvent();    
-    State GetState();
-    ~Screen();
-
-    //for xterm version only?
-    static void SigHandler(int param);
+    static bool AddDrawable(Layer l,pDrawable pd){
+      if(Screen::drawentity.find(l)==Screen::drawentity.end())
+	Screen::drawentity.insert(std::pair<Layer,pDrawable>(l,pd));
+      else
+	return false;
+      return true;	 
+    };
+    static cchar_t GetCchar(int x,int y);
+    static void AddCchar(cchar_t,unsigned int x,unsigned int y);
+    static Event GetEvent();    
+    static State GetState();
+    static void Draw();
+    static void Resize();
+    static void Destroy();
+    static void Refresh();
+    static void Init();
+  private:
+    //static variables
+    static State state;
+    static DrawList drawentity;    
+    static vector<cchar_t> wholeScreen;
+    //Signal handlers
+    static void ResizeHandler(int param);
+    static void InterruptHandler(int param);
   };
 
 }
