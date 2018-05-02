@@ -15,11 +15,14 @@ void AAtext::Draw(){
   for(wchar_t c;this->file.get(c);){
     int w=wcwidth(c);
     int cx,cy;getyx(this->window,cy,cx);
-    if(this->DrawPolicy(x,y,w)==true){
+    int mx,my;getmaxyx(this->window,my,mx);
+    if(this->DrawPolicy(x,y,w)){
       switch(c){
       case L' ':
       case L'　':
 	this->DrawTransparent(w);
+	break;
+      case '\n':
 	break;
       default:
 	cchar_t a;
@@ -32,10 +35,14 @@ void AAtext::Draw(){
 	break;
       }
     }
-    
-    if(c==L'\n'){
-      if(y>=0)
+    if(c=='\n'){
+      if(y>=0){
+	for(;cx<mx-1;getyx(this->window,cy,cx)){
+	  //if returns,fill the lest with space.
+	  this->DrawTransparent(1);
+	}
 	wmove(this->window,cy+1,0);
+      }
       y+=1;
       x=this->x;
     }
@@ -52,19 +59,29 @@ void AAtext::Refresh(){
 
 void AAtext::DrawTransparent(int w){
   auto b=GetGlobalCursorPos();
-  cchar_t a=Screen::GetCchar(b[0],b[1]);
-  wattron(this->window,a.attr);
-  if(wcwidth(a.chars[0])==w && a.chars[1]=='\0'){
-    waddwstr(this->window,a.chars);
-  }
-  else{
-    switch(w){
-    case 0:waddwstr(this->window,L"a");break;
-    case 1:waddwstr(this->window,L" ");break;
-    case 2:waddwstr(this->window,L"　");break;
+    cchar_t a=Screen::GetCchar(b[0],b[1]);
+    if(wcwidth(a.chars[0])==w && a.chars[1]=='\0'){
+      wattron(this->window,a.attr);
+      waddwstr(this->window,a.chars);
+      wattroff(this->window,a.attr);
     }
-  }
-  wattroff(this->window,a.attr);
+    else{//just in case.
+      switch(w){
+      case 1:
+	wattron(this->window,a.attr);
+	waddwstr(this->window,L" ");
+	wattroff(this->window,a.attr);
+	break;
+      case 2:
+	for(int i=0;i<2;i++){
+	  b=GetGlobalCursorPos();
+	  a=Screen::GetCchar(b[0],b[1]);
+	  wattron(this->window,a.attr);
+	  waddwstr(this->window,L" ");
+	  wattroff(this->window,a.attr);
+	}
+      }
+    }
 }
 
 int AAtext::DrawPolicy(int x,int y,int w){
@@ -100,11 +117,11 @@ AAtext::AAtext(int x,int y,std::string filename)
       }
     }
     mw+=1;//includes space for return.
-    this->window=newwin(h,mw,y,x);
+    this->window=newwin(h-1,mw,y,x);
     this->x=x;
     this->y=y;
     this->width=mw;
-    this->height=h;
+    this->height=h-1;
   }
   else{
     throw std::invalid_argument("cannot open file");    

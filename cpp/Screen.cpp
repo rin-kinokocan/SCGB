@@ -119,5 +119,6 @@ void Screen::ResizeHandler(int param){
 }
 
 void Screen::InterruptHandler(int param){
+  Screen::Resize();
   Screen::Destroy();
 }
