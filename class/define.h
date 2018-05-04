@@ -9,6 +9,7 @@
 namespace scgb{
   //forward declaration of classes
   class Drawable;
+  class BaseWindow;
   //
   enum State{
     STA_DESTROY=0,
@@ -62,6 +63,11 @@ namespace scgb{
 
   typedef int Layer;
   typedef std::shared_ptr<scgb::Drawable> pDrawable;
-  typedef std::map<Layer,scgb::pDrawable> DrawList;
+  typedef std::shared_ptr<scgb::BaseWindow> pBaseWindow;
+  typedef std::map<Layer,scgb::pBaseWindow> DrawList;
+  
+  typedef std::vector<int> Vector2D;
+
+  typedef cchar_t cChar;
 }
 

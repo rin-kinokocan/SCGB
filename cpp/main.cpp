@@ -9,15 +9,12 @@ using namespace scgb;
 int main(){
   Screen::Init();
   auto test=new scgb::AAtext(10,10,"./assets/ebi.aa");
-  pDrawable aa,bm1;
+  pBaseWindow aa,bm1;
   aa.reset(test);
   bm1.reset(new scgb::BMimage(0,0,"./assets/kinoko.bmp"));
   Screen::AddDrawable(2,aa);
   Screen::AddDrawable(1,bm1);
   while(Screen::GetState()!=scgb::STA_DESTROY){
-    //draw start
-    Screen::Draw();
-    Screen::Refresh();
     switch(Screen::GetEvent()){//event management
     case scgb::EVE_QUIT:
       Screen::Destroy();
@@ -43,7 +40,11 @@ int main(){
       break;
     }
     usleep(10000);
+    //draw start
+    Screen::Draw();
+    Screen::Refresh();
   }
+  endwin();
   return 0;
 }
 

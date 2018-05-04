@@ -1,5 +1,4 @@
 #pragma once
-#include "GameWindow.h"
 #include "define.h"
 
 using namespace std;
@@ -8,13 +7,14 @@ namespace scgb{
   class Screen{
     //initializes ncurses and creates a window.
   public:
-    static bool AddDrawable(Layer l,pDrawable pd){
+    static bool AddDrawable(Layer l,pBaseWindow pb){
       if(Screen::drawentity.find(l)==Screen::drawentity.end())
-	Screen::drawentity.insert(std::pair<Layer,pDrawable>(l,pd));
+	Screen::drawentity.insert(std::pair<Layer,pBaseWindow>(l,pb));
       else
 	return false;
       return true;	 
     };
+    static Vector2D GetMaxXY();
     static cchar_t GetCchar(int x,int y);
     static void AddCchar(cchar_t,unsigned int x,unsigned int y);
     static Event GetEvent();    

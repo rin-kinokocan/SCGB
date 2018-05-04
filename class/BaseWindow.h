@@ -1,31 +1,34 @@
 #pragma once
 #include "define.h"
 #include "Drawable.h"
-#include <vector>
-#include <memory>
-#include <map>
 
 namespace scgb{
   class BaseWindow :public Drawable{
+  private:
+    int virtualX;
+    int virtualY;
   protected:
     int width;
     int height;
     int x;
     int y;
     WinPtr window;
+
+    void InitDraw();
+    void AfterDraw(cChar c);
+    void AddChar(cChar c);
+    void DrawTransparent(int w,bool f=false);
+    bool DrawPolicy(int w);
+    bool FitToScreen();
+    void DebugInfo();
   public:
-    void Resize(){
-      mvwin(this->window,this->y,this->x);
-      wresize(this->window,this->height,this->width);
-    };
-    std::vector<int> GetGlobalCursorPos(){
-      int posx,posy;getbegyx(this->window,posy,posx);
-      int cx,cy;getyx(this->window,cy,cx);
-      posx+=cx;posy+=cy;
-      vector<int> a;a.resize(2);
-      a[0]=posx;a[1]=posy;
-      return a;
-    };
+    void Resize();
+    void DrawOnScreen();
+    Vector2D GetGlobalCursorPos();
+    Vector2D GetGlobalCursorPos(int x,int y);
+    Vector2D GetXY();
+    Vector2D GetMaxXY();
+
     virtual ~BaseWindow(){};
   };
 }

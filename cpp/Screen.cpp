@@ -1,11 +1,9 @@
-#include <ncurses.h>
 #include <csignal>
 #include <unistd.h>
 #include <locale>
-#include "../class/define.h"
-#include "../class/Drawable.h"
 #include "../class/Screen.h"
 #include "../class/Color.hh"
+#include "../class/BaseWindow.h"
 
 using namespace scgb;
 
@@ -15,6 +13,7 @@ vector<cchar_t> Screen::wholeScreen;
 
 void Screen::Draw(){
   int x,y;
+  erase();
   getmaxyx(stdscr,y,x);      
   mvprintw(0,1,"size: %d %d",x,y);
   mvwprintw(stdscr,3,1,"%dcolors available",COLORS);
@@ -32,7 +31,8 @@ void Screen::Draw(){
   }
   for(auto i:Screen::drawentity){
     i.second->Draw();
-    mvprintw(1,1,"printing somethig...");
+    i.second->DrawOnScreen();
+    mvprintw(1,1,"printing something...");
   }
 }
 
@@ -56,6 +56,8 @@ void Screen::Destroy(){
 void Screen::Resize(){
   endwin();
   initscr();
+  auto a=GetMaxXY();
+  Screen::wholeScreen.resize(a[0]*a[1]);
   for(auto& i:Screen::drawentity){
     i.second->Resize();
     i.second->Refresh();
@@ -68,6 +70,13 @@ Event Screen::GetEvent(){
   return  (Event)getch();
 }
 
+Vector2D Screen::GetMaxXY(){
+  int x,y;getmaxyx(stdscr,y,x);
+  Vector2D v;
+  v.resize(2);
+  v[0]=x;v[1]=y;
+  return v;
+}
 
 cchar_t Screen::GetCchar(int x,int y){
   int my,mx;getmaxyx(stdscr,my,mx);
