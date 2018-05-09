@@ -81,7 +81,7 @@ Vector2D Screen::GetMaxXY(){
 cchar_t Screen::GetCchar(int x,int y){
   int my,mx;getmaxyx(stdscr,my,mx);
   if(x>mx || y>my)
-    throw std::invalid_argument("overflow");
+    throw std::invalid_argument("Screen::GetCchar overflow");
   return Screen::wholeScreen[x+y*mx];
 }
 

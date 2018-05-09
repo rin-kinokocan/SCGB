@@ -69,11 +69,11 @@ AAtext::AAtext(int x,int y,std::string filename)
       }
     }
     mw+=1;//includes space for return.
-    this->window=newwin(h,mw,y,x);
     this->x=x;
     this->y=y;
     this->width=mw;
     this->height=h;
+    FitToScreen();
   }
   else{
     throw std::invalid_argument("cannot open file");    

@@ -30,18 +30,13 @@ void BMimage::ReadFile(){
 }
 
 void BMimage::Draw(){
-  wmove(this->window,0,0);
-  werase(this->window);
+  InitDraw();
   for(int i:this->Pixels){
     cchar_t a;
     a.chars[0]=L' ';a.chars[1]=L'\0';
-    a.attr=COLOR_PAIR(i);
-    auto b=this->GetGlobalCursorPos();
-    Screen::AddCchar(a,b[0],b[1]);
-    Screen::AddCchar(a,b[0]+1,b[1]);
-    wattron(this->window,COLOR_PAIR(i));
-    waddwstr(this->window,L"  ");
-    wattroff(this->window,COLOR_PAIR(i));
+    a.attr=COLOR_PAIR(i)|A_PROTECT;
+    AddChar(a);
+    AddChar(a);
   }
 }
 
@@ -59,10 +54,9 @@ BMimage::BMimage(int x,int y,const char* filename)
     throw std::invalid_argument("cannot open file");
   }
   this->ReadFile();
-  this->width=this->bi.biWidth*2;
+  this->width=this->bi.biWidth*2+1;//+1 is for return.
   this->height=this->bi.biHeight;
-  this->window=newwin(this->height,this->width,y,x);
-  this->file.seekg(this->bf.bfOffBits);
+  FitToScreen();
   int w=this->bi.biWidth;
   int h=this->bi.biHeight;
   this->Pixels.resize(w*h);

@@ -8,10 +8,10 @@ using namespace scgb;
 
 int main(){
   Screen::Init();
-  auto test=new scgb::AAtext(10,10,"./assets/ebi.aa");
+  auto test=new scgb::AAtext(0,10,"./assets/ebi.aa");
   pBaseWindow aa,bm1;
   aa.reset(test);
-  bm1.reset(new scgb::BMimage(0,0,"./assets/kinoko.bmp"));
+  bm1.reset(new scgb::BMimage(-10,0,"./assets/kinoko.bmp"));
   Screen::AddDrawable(2,aa);
   Screen::AddDrawable(1,bm1);
   while(Screen::GetState()!=scgb::STA_DESTROY){

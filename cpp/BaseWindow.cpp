@@ -10,42 +10,25 @@ void BaseWindow::InitDraw(){
 };
 void BaseWindow::AfterDraw(cChar c){
   auto a=c.chars[0];
-  if(a!='\n'){
-    virtualX+=wcwidth(c.chars[0]);
+  auto b=width+x;
+  auto cw=wcwidth(c.chars[0]);
+  if(a!='\n' && virtualX+cw<b-1){
+    virtualX+=cw;
   }
   else{
+    auto cur=GetXY();
     if(virtualY>=0){
-      auto cur=GetXY();
       DrawTransparent(1,true);
       wmove(window,cur[1]+1,0);
     }
     virtualX=x;
     virtualY++;
   }
-  DebugInfo();
 };
-void BaseWindow::DebugInfo(){
-  string info;
-  move(10,40);
-  info="x:"+to_string(x);
-  addstr(info.c_str());
-  move(11,40);
-  info="y:"+to_string(y);
-  addstr(info.c_str());
-  move(12,40);
-  info="width:"+to_string(width);
-  addstr(info.c_str());
-  move(13,40);
-  info="height:"+to_string(height);
-  addstr(info.c_str());
-  move(14,40);
-  auto max=GetMaxXY();
-  info="maxwidth:"+to_string(max[0]);
-  addstr(info.c_str());
-  move(15,40);
-  info="maxheight:"+to_string(max[1]);
-  addstr(info.c_str());
-  move(16,40);
+void BaseWindow::OnReturn(){
+  cChar a;a.chars[0]='\n';
+  a.chars[1]='\0';a.attr=0;
+  AddChar(a);
 };
 void BaseWindow::AddChar(cChar c){
   if(c.chars[1]!='\0')//validation
@@ -77,7 +60,7 @@ void BaseWindow::DrawTransparent(int w,bool f){
       AddChar(a);
 };
 bool BaseWindow::DrawPolicy(int w){
-  Vector2D max=Screen::GetMaxXY();
+  auto max=Screen::GetMaxXY();
   int vx=virtualX,vy=virtualY;
   if(vx>=0 && vx+w<max[0] && vy>=0 && vy<max[1])
     return true;
