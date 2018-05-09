@@ -1,9 +1,6 @@
-#include <memory>
-#include <csignal>
 #include <cstdlib>
 #include <unistd.h>
 #include "../include/scgb.h"
-#include "../class/Heli.hh"
 using namespace scgb;
 
 int main(){

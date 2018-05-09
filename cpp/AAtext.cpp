@@ -18,14 +18,17 @@ void AAtext::Draw(){
     max=GetMaxXY();
     d=max[0]-cur[0]-1;
     int w=wcwidth(c);
+    auto v=GetVirtualCursorPos();
     switch(c){
     case L' ':
     case L'　':
       DrawTransparent(w);
       break;
     case L'\n':
-      for(int i=0;i<d;i++)
-	DrawTransparent(1,true);
+      if(v[1]>=0){
+	for(int i=0;i<d;i++)
+	  DrawTransparent(1,true);
+      }
     default:
       cchar_t a;
       a.chars[0]=c;
@@ -37,10 +40,7 @@ void AAtext::Draw(){
   }
   for(int i=0;i<d;i++)
     DrawTransparent(1,true);
-  cchar_t b;
-  b.chars[0]='\n';b.chars[1]='\0';
-  b.attr=0;
-  AddChar(b);
+  OnReturn();
 }
 
 void AAtext::Refresh(){

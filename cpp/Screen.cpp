@@ -49,7 +49,7 @@ void Screen::Refresh(){
 void Screen::Destroy(){
   mvprintw(2,1,"destroy is called ");
   Screen::drawentity.clear();
-  endwin();//ends ncurses
+  // endwin();//ends ncurses
   Screen::state=STA_DESTROY;
 }
 
@@ -62,8 +62,8 @@ void Screen::Resize(){
     i.second->Resize();
     i.second->Refresh();
   }
-  mvprintw(10,0,"resizing...");
-  doupdate();
+  mvprintw(10,0,"resizing...");  
+  Screen::Refresh();
 }
 
 Event Screen::GetEvent(){
@@ -79,10 +79,11 @@ Vector2D Screen::GetMaxXY(){
 }
 
 cchar_t Screen::GetCchar(int x,int y){
-  int my,mx;getmaxyx(stdscr,my,mx);
-  if(x>mx || y>my)
+  auto a=Screen::GetMaxXY();
+  if(x>a[0] || x<0 || y>a[1] || y<0){
     throw std::invalid_argument("Screen::GetCchar overflow");
-  return Screen::wholeScreen[x+y*mx];
+  }
+  return Screen::wholeScreen[x+y*a[0]];
 }
 
 void Screen::AddCchar(cchar_t c,unsigned int x,unsigned int y){
@@ -111,9 +112,9 @@ void Screen::Init(){//Initialize everything.
   use_default_colors();
   Color::Init();
   //initialization of static variables.
-  int x,y;getmaxyx(stdscr,y,x);
+  auto max=Screen::GetMaxXY();
   Screen::state=STA_OPEN;
-  Screen::wholeScreen.resize(x*y);
+  Screen::wholeScreen.resize(max[0]*max[1]);
   //if ncurses hasn't enabled sigwinch.
   signal(SIGWINCH,Screen::ResizeHandler);
   //to detect Ctrl-c
@@ -128,6 +129,5 @@ void Screen::ResizeHandler(int param){
 }
 
 void Screen::InterruptHandler(int param){
-  Screen::Resize();
-  Screen::Destroy();
+  Screen::state=STA_DESTROY;
 }

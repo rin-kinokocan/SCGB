@@ -12,6 +12,9 @@ void BaseWindow::AfterDraw(cChar c){
   auto a=c.chars[0];
   auto b=width+x;
   auto cw=wcwidth(c.chars[0]);
+  move(20,40);
+  string info="y="+to_string(y);
+  addstr(info.c_str());
   if(a!='\n' && virtualX+cw<b-1){
     virtualX+=cw;
   }
@@ -46,7 +49,13 @@ void BaseWindow::AddChar(cChar c){
 };
 void BaseWindow::DrawTransparent(int w,bool f){
     auto b=GetGlobalCursorPos();
-    auto a=Screen::GetCchar(b[0],b[1]);
+    cChar a;
+    try{
+      a=Screen::GetCchar(b[0],b[1]);
+    }
+    catch(invalid_argument e){
+      return;
+    }
     int cw=wcwidth(a.chars[0]);
     if(cw>w || a.chars[1]!='\0'){
       a.chars[0]=' ';
@@ -80,18 +89,18 @@ bool BaseWindow::FitToScreen(){
   else if(y<0)//too high
     resy=height+y;
 
-  if(window==nullptr && resx>0 && resy>0){
+  if(resx>0 && resy>0){
     int tx=x,ty=y;
     if(this->x<0)
       tx=0;
     if(this->y<0)
       ty=0;
-    delwin(this->window);
+    if(this->window!=nullptr)
+      delwin(this->window);
     this->window=newwin(resy,resx,ty,tx);
   }
-  if(wresize(this->window,resy,resx)){
-    //if cannot create that size of window.(namely too small)
-    delwin(this->window);
+  else{
+    delwin(window);
     this->window=nullptr;
     return false;
   }
@@ -111,7 +120,7 @@ void BaseWindow::DrawOnScreen(){
 };
 
 void BaseWindow::Resize(){
-  FitToScreen();
+  FitToScreen();  
 };
     
 Vector2D BaseWindow::GetGlobalCursorPos(){
@@ -147,3 +156,8 @@ Vector2D BaseWindow::GetMaxXY(){
   return v;
 };
 
+Vector2D BaseWindow::GetVirtualCursorPos(){
+  Vector2D a;a.resize(2);
+  a[0]=virtualX;a[1]=virtualY;
+  return a;
+};

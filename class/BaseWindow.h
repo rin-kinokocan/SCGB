@@ -28,6 +28,7 @@ namespace scgb{
     Vector2D GetGlobalCursorPos(int x,int y);
     Vector2D GetXY();
     Vector2D GetMaxXY();
+    Vector2D GetVirtualCursorPos();
 
     virtual ~BaseWindow(){};
   };
