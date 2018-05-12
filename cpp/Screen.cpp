@@ -38,12 +38,19 @@ void Screen::Draw(){
 
 
 void Screen::Refresh(){
-  touchwin(stdscr);
-  wnoutrefresh(stdscr);
-  for(auto& i:Screen::drawentity){   
-    i.second->Refresh();
-  }
-  doupdate();
+  if(isendwin()==false){
+    touchwin(stdscr);
+    wnoutrefresh(stdscr);
+    for(auto& i:Screen::drawentity){   
+      i.second->Refresh();
+    }
+    doupdate();touchwin(stdscr);
+    wnoutrefresh(stdscr);
+    for(auto& i:Screen::drawentity){   
+      i.second->Refresh();
+    }
+    doupdate();
+  }  
 }
 
 void Screen::Destroy(){
@@ -63,7 +70,6 @@ void Screen::Resize(){
     i.second->Refresh();
   }
   mvprintw(10,0,"resizing...");  
-  Screen::Refresh();
 }
 
 Event Screen::GetEvent(){
@@ -81,7 +87,7 @@ Vector2D Screen::GetMaxXY(){
 cchar_t Screen::GetCchar(int x,int y){
   auto a=Screen::GetMaxXY();
   if(x>a[0] || x<0 || y>a[1] || y<0){
-    throw std::invalid_argument("Screen::GetCchar overflow");
+    throw std::exception();
   }
   return Screen::wholeScreen[x+y*a[0]];
 }

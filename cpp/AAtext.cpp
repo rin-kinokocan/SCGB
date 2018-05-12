@@ -8,12 +8,10 @@ using namespace scgb;
 
 void AAtext::Draw(){
   InitDraw();
-  this->file.clear();
-  this->file.seekg(0,std::ios::beg);
   Vector2D cur;
   Vector2D max;
   int d;
-  for(wchar_t c;file.get(c);){
+  for(auto c:data){
     cur=GetXY();
     max=GetMaxXY();
     d=max[0]-cur[0]-1;
@@ -49,7 +47,8 @@ void AAtext::Refresh(){
 }
 
 AAtext::AAtext(int x,int y,std::string filename)
-  :file(filename,std::ios::binary){
+{
+  WFile file(filename,std::ios::binary);
   file.imbue(std::locale("ja_JP.UTF-8"));  
   if(file.is_open()!=false){
     int w=1,h=1,mw=0;
@@ -67,7 +66,9 @@ AAtext::AAtext(int x,int y,std::string filename)
 	  mw=w;
 	break;
       }
+      data.push_back(c);
     }
+    file.close();
     mw+=1;//includes space for return.
     this->x=x;
     this->y=y;
@@ -81,5 +82,4 @@ AAtext::AAtext(int x,int y,std::string filename)
 }
 
 AAtext::~AAtext(){
-  file.close();
 }

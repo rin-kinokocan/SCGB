@@ -12,7 +12,8 @@ int main(){
   Screen::AddDrawable(2,aa);
   Screen::AddDrawable(1,bm1);
   while(Screen::GetState()!=scgb::STA_DESTROY){
-    switch(Screen::GetEvent()){//event management
+    auto a=Screen::GetEvent();
+    switch(a){//event management
     case scgb::EVE_QUIT:
       Screen::Destroy();
       break;
@@ -36,10 +37,10 @@ int main(){
     default:
       break;
     }
-    usleep(10000);
     //draw start
     Screen::Draw();
     Screen::Refresh();
+    usleep(10000);
   }
   endwin();
   return 0;

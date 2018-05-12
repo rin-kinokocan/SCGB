@@ -12,9 +12,6 @@ void BaseWindow::AfterDraw(cChar c){
   auto a=c.chars[0];
   auto b=width+x;
   auto cw=wcwidth(c.chars[0]);
-  move(20,40);
-  string info="y="+to_string(y);
-  addstr(info.c_str());
   if(a!='\n' && virtualX+cw<b-1){
     virtualX+=cw;
   }
@@ -53,7 +50,7 @@ void BaseWindow::DrawTransparent(int w,bool f){
     try{
       a=Screen::GetCchar(b[0],b[1]);
     }
-    catch(invalid_argument e){
+    catch(exception& e){
       return;
     }
     int cw=wcwidth(a.chars[0]);

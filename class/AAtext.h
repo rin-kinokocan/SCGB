@@ -5,7 +5,7 @@
 namespace scgb{
   class AAtext :public Movable{
   protected:
-    WFile file;
+    std::vector<wchar_t> data;
   public:
     void Draw();
     void Refresh();

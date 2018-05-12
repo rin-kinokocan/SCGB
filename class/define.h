@@ -21,7 +21,6 @@ namespace scgb{
     EVE_PRINT='p',
     EVE_NOINPUT=ERR,    
     EVE_RESIZE=KEY_RESIZE,
-    
     EVE_RIGHT=KEY_RIGHT,
     EVE_LEFT=KEY_LEFT,
     EVE_UP=KEY_UP,
