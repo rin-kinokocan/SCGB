@@ -56,7 +56,6 @@ void Screen::Refresh(){
 void Screen::Destroy(){
   mvprintw(2,1,"destroy is called ");
   Screen::drawentity.clear();
-  // endwin();//ends ncurses
   Screen::state=STA_DESTROY;
 }
 

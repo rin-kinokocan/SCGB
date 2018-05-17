@@ -7,7 +7,9 @@ namespace scgb{
     std::vector<wchar_t> data;
   public:
     void Draw();
-    UserInput(int,int,int,int);
+    void WaitInput(int maxChar);
+     UserInput(int,int,int,int);
+    ~UserInput();
   };
 }
 

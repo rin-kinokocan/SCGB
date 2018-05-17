@@ -7,7 +7,8 @@ void BaseWindow::InitDraw(){
   werase(this->window);
   virtualX=x;
   virtualY=y;
-};
+}
+
 void BaseWindow::AfterDraw(cChar c){
   auto a=c.chars[0];
   auto b=width+x;
@@ -24,12 +25,14 @@ void BaseWindow::AfterDraw(cChar c){
     virtualX=x;
     virtualY++;
   }
-};
+}
+
 void BaseWindow::OnReturn(){
   cChar a;a.chars[0]='\n';
   a.chars[1]='\0';a.attr=0;
   AddChar(a);
-};
+}
+
 void BaseWindow::AddChar(cChar c){
   if(c.chars[1]!='\0')//validation
     return;
@@ -43,7 +46,8 @@ void BaseWindow::AddChar(cChar c){
     Screen::AddCchar(c,b[0],b[1]);
   }
   AfterDraw(c);
-};
+}
+
 void BaseWindow::DrawTransparent(int w,bool f){
     auto b=GetGlobalCursorPos();
     cChar a;
@@ -64,7 +68,8 @@ void BaseWindow::DrawTransparent(int w,bool f){
     }
     else
       AddChar(a);
-};
+}
+
 bool BaseWindow::DrawPolicy(int w){
   auto max=Screen::GetMaxXY();
   int vx=virtualX,vy=virtualY;
@@ -73,7 +78,8 @@ bool BaseWindow::DrawPolicy(int w){
   else{
     return false;
   }
-};
+}
+
 bool BaseWindow::FitToScreen(){
   int resx=this->width,resy=this->height;
   auto max=Screen::GetMaxXY();
@@ -102,7 +108,7 @@ bool BaseWindow::FitToScreen(){
     return false;
   }
   return true;
-};
+}
 
 void BaseWindow::DrawOnScreen(){
   auto max=GetMaxXY();
@@ -114,11 +120,11 @@ void BaseWindow::DrawOnScreen(){
       Screen::AddCchar(a,b[0],b[1]);
     }
   }
-};
+}
 
 void BaseWindow::Resize(){
   FitToScreen();  
-};
+}
     
 Vector2D BaseWindow::GetGlobalCursorPos(){
   int posx,posy;getbegyx(this->window,posy,posx);
@@ -127,7 +133,7 @@ Vector2D BaseWindow::GetGlobalCursorPos(){
   vector<int> a;a.resize(2);
   a[0]=posx;a[1]=posy;
   return a;
-};
+}
 
 Vector2D BaseWindow::GetGlobalCursorPos(int x,int y){
   int posx,posy;getbegyx(this->window,posy,posx);
@@ -135,7 +141,7 @@ Vector2D BaseWindow::GetGlobalCursorPos(int x,int y){
     vector<int> a;a.resize(2);
   a[0]=posx;a[1]=posy;
   return a;
-};
+}
 
 Vector2D BaseWindow::GetXY(){
   int x,y;getyx(this->window,y,x);
@@ -143,7 +149,7 @@ Vector2D BaseWindow::GetXY(){
   v.resize(2);
   v[0]=x;v[1]=y;
   return v;
-};
+}
 
 Vector2D BaseWindow::GetMaxXY(){
   int x,y;getmaxyx(window,y,x);
@@ -151,13 +157,14 @@ Vector2D BaseWindow::GetMaxXY(){
   v.resize(2);
   v[0]=x;v[1]=y;
   return v;
-};
+}
 
 Vector2D BaseWindow::GetVirtualCursorPos(){
   Vector2D a;a.resize(2);
   a[0]=virtualX;a[1]=virtualY;
   return a;
-};
+
+}
 
 void BaseWindow::Refresh(){
   touchwin(window);
@@ -168,4 +175,4 @@ BaseWindow::BaseWindow(int x,int y,int w,int h){
   this->x=x;this->y=y;
   this->width=w;this->height=h;
   FitToScreen();
-};
+}
