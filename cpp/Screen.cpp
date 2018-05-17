@@ -124,7 +124,7 @@ void Screen::Init(){//Initialize everything.
   //if ncurses hasn't enabled sigwinch.
   signal(SIGWINCH,Screen::ResizeHandler);
   //to detect Ctrl-c
-  signal(SIGQUIT,Screen::InterruptHandler);
+ signal(SIGQUIT,Screen::InterruptHandler);
 }
 
 void Screen::ResizeHandler(int param){

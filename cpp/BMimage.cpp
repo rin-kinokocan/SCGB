@@ -40,11 +40,6 @@ void BMimage::Draw(){
   }
 }
 
-void BMimage::Refresh(){
-  touchwin(this->window);
-  wnoutrefresh(this->window);
-}
-
 BMimage::BMimage(int x,int y,const char* filename)
   :file(filename,std::ios::in | std::ios::binary)
 {

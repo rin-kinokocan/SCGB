@@ -8,7 +8,6 @@ namespace scgb{
     std::vector<wchar_t> data;
   public:
     void Draw();
-    void Refresh();
     AAtext(int x,int y,std::string filename);
     ~AAtext();
   };

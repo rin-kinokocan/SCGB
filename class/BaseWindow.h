@@ -30,7 +30,10 @@ namespace scgb{
     Vector2D GetXY();
     Vector2D GetMaxXY();
     Vector2D GetVirtualCursorPos();
-
+    void Refresh();
+    
+    BaseWindow(){};
+    BaseWindow(int,int,int,int);
     virtual ~BaseWindow(){};
   };
 }

@@ -5,12 +5,10 @@ using namespace scgb;
 
 int main(){
   Screen::Init();
-  auto test=new scgb::AAtext(0,10,"./assets/ebi.aa");
-  pBaseWindow aa,bm1;
-  aa.reset(test);
-  bm1.reset(new scgb::BMimage(-10,0,"./assets/kinoko.bmp"));
-  Screen::AddDrawable(2,aa);
-  Screen::AddDrawable(1,bm1);
+  Screen::AddDrawable<BMimage>(1,new BMimage(-5,0,"./assets/kinoko.bmp"));
+  auto test=Screen::AddDrawable<AAtext>(2,new AAtext(0,10,"./assets/ebi.aa"));
+  Screen::AddDrawable<UserInput>(3,new UserInput(10,0,20,10));
+  
   while(Screen::GetState()!=scgb::STA_DESTROY){
     auto a=Screen::GetEvent();
     switch(a){//event management

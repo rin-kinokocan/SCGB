@@ -41,11 +41,6 @@ void AAtext::Draw(){
   OnReturn();
 }
 
-void AAtext::Refresh(){
-  touchwin(window);
-  wnoutrefresh(window);
-}
-
 AAtext::AAtext(int x,int y,std::string filename)
 {
   WFile file(filename,std::ios::binary);

@@ -20,6 +20,8 @@ namespace scgb{
     bool windmove();
   public:
     bool Move(Direction dir);
+    Movable(){};
+    Movable(int,int,int,int);
     virtual ~Movable(){};
   };
 }

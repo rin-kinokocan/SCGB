@@ -58,3 +58,7 @@ bool Movable::windmove(){
   mvwin(this->window,ty,tx);
   return true;
 }
+
+Movable::Movable(int x,int y,int w,int h)
+  :BaseWindow(x,y,w,h){
+}

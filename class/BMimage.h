@@ -13,7 +13,6 @@ namespace scgb{
     std::vector<int> Pixels;
   public:
     void Draw();
-    void Refresh();
     BMimage(int x,int y,const char* filename);
     ~BMimage();
   };

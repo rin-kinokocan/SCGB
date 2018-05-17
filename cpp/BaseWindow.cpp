@@ -158,3 +158,14 @@ Vector2D BaseWindow::GetVirtualCursorPos(){
   a[0]=virtualX;a[1]=virtualY;
   return a;
 };
+
+void BaseWindow::Refresh(){
+  touchwin(window);
+  wnoutrefresh(window);
+}
+
+BaseWindow::BaseWindow(int x,int y,int w,int h){
+  this->x=x;this->y=y;
+  this->width=w;this->height=h;
+  FitToScreen();
+};

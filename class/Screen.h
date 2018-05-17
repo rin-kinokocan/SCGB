@@ -7,13 +7,23 @@ namespace scgb{
   class Screen{
     //initializes ncurses and creates a window.
   public:
-    static bool AddDrawable(Layer l,pBaseWindow pb){
-      if(Screen::drawentity.find(l)==Screen::drawentity.end())
-	Screen::drawentity.insert(std::pair<Layer,pBaseWindow>(l,pb));
-      else
-	return false;
-      return true;	 
-    };
+    template <class T>
+    static shared_ptr<T> AddDrawable(Layer l,T* pd){
+      if(Screen::drawentity.find(l)==Screen::drawentity.end()){
+	shared_ptr<T> b;
+	b.reset(pd);
+	Screen::drawentity.insert(std::pair<Layer,pBaseWindow>(l,b));
+	return b;
+      }
+      else{
+	string info="the layer ";
+	info+=l;info+="is already used";
+	endwin();
+	throw new runtime_error(info);
+      }
+    }
+
+
     static Vector2D GetMaxXY();
     static cchar_t GetCchar(int x,int y);
     static void AddCchar(cchar_t,unsigned int x,unsigned int y);
