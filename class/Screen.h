@@ -21,6 +21,7 @@ namespace scgb{
 	endwin();
 	throw new runtime_error(info);
       }
+      Draw();//updates screen
     }
 
 

@@ -1,18 +1,18 @@
 CXX:=g++
-CXXFLAGS:=-Wall -std=c++11 -g -O0 
+CURDIR:=$(PWD)
+CXXFLAGS:=-Wall -std=c++11 -g -O0 -iquote=$(CURDIR)
 LIB:=-lncursesw
 SRCDIR:=cpp
 INCDIR:=include
 BLDDIR:=build
 CLSDIR:=class
 EXENAME:=scgb
-
 #to make all dependency automatically.REF:http://make.mad-scientist.net/papers/advanced-auto-dependency-generation/
 
 DEPDIR:=dependency
 $(shell mkdir -p $(BLDDIR))
 $(shell mkdir -p $(DEPDIR))
-DEPFLAGS=-MT $@ -MMD -MP -MF $(DEPDIR)/$*.Td
+DEPFLAGS=-MT $@ -MMD -MP -MF $(DEPDIR)/$*.Td 
 POSTCOMPILE=@mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d && touch $@
 
 #apparently && is one of the shell scripts.

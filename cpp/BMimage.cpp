@@ -1,5 +1,5 @@
-#include "../class/Color.hh"
-#include "../class/BMimage.h"
+#include "class/Color.hh"
+#include "class/BMimage.h"
 #include <unistd.h>
 
 using namespace scgb;

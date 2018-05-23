@@ -1,4 +1,4 @@
-#include "../class/BaseWindow.h"
+#include "class/BaseWindow.h"
 using namespace scgb;
 using namespace std;
 

@@ -1,9 +1,9 @@
 #include <csignal>
 #include <unistd.h>
 #include <locale>
-#include "../class/Screen.h"
-#include "../class/Color.hh"
-#include "../class/BaseWindow.h"
+#include "class/Screen.h"
+#include "class/Color.hh"
+#include "class/BaseWindow.h"
 
 using namespace scgb;
 

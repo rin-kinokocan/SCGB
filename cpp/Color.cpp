@@ -1,4 +1,4 @@
-#include "../class/Color.hh"
+#include "class/Color.hh"
 #include <unistd.h>
 
 using namespace scgb;

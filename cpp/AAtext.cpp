@@ -1,4 +1,4 @@
-#include "../class/AAtext.h"
+#include "class/AAtext.h"
 #include <locale>
 #include <unistd.h>
 #include <unicode/utypes.h>

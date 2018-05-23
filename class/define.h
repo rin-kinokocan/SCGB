@@ -15,8 +15,22 @@ namespace scgb{
     STA_DESTROY=0,
     STA_OPEN=1,
   };
+
+  enum Key{
+    //key values used in SCGB.If your terminal returns other number,
+    //then change these numbers accordingly.
+    SCGB_BACKSPACE=127,
+    SCGB_DELETE=KEY_DC,
+    SCGB_CTR_D=4,
+    SCGB_RIGHT=KEY_RIGHT,
+    SCGB_LEFT=KEY_LEFT,
+    SCGB_UP=KEY_UP,
+    SCGB_DOWN=KEY_DOWN,
+  };
   
   enum Event{
+    //Return values of Screen::GetEvent.
+    //I may merge this into Key.
     EVE_QUIT='q',
     EVE_PRINT='p',
     EVE_NOINPUT=ERR,    
@@ -68,5 +82,10 @@ namespace scgb{
   typedef std::vector<int> Vector2D;
 
   typedef cchar_t cChar;
+
+  //prototypes of Util functions
+  namespace Util{
+    cChar make_cChar(wchar_t in,int attr);
+  }
 }
 
