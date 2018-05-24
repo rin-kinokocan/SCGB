@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "Screen.h"
 
 namespace scgb{
   class Drawable{

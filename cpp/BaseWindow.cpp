@@ -1,4 +1,6 @@
 #include "class/BaseWindow.h"
+#include "class/Screen.h"
+
 using namespace scgb;
 using namespace std;
 

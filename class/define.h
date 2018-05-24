@@ -7,10 +7,9 @@
 #include <map>
 
 namespace scgb{
-  //forward declaration of classes
+
   class Drawable;
   class BaseWindow;
-  //
   enum State{
     STA_DESTROY=0,
     STA_OPEN=1,
@@ -41,6 +40,12 @@ namespace scgb{
     EVE_DOWN=KEY_DOWN,
   };
 
+  enum Direction{
+    Right,
+    Left,
+    Up,
+    Down,
+  };
       
   typedef struct{
     unsigned short bfType;

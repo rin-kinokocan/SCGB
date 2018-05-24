@@ -2,6 +2,7 @@
 
 using namespace scgb;
 using namespace scgb::Util;
+
 using namespace std;
 
 
@@ -111,4 +112,5 @@ UserInput::~UserInput(){
   for(auto c:data){
     wcout<<c;
   }
+  wcout<<endl;
 }

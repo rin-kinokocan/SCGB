@@ -1,5 +1,4 @@
 #include "class/Color.hh"
-#include <unistd.h>
 
 using namespace scgb;
 void Color::Init(){

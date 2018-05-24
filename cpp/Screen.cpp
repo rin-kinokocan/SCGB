@@ -3,8 +3,8 @@
 #include <locale>
 #include "class/Screen.h"
 #include "class/Color.hh"
-#include "class/BaseWindow.h"
 
+using namespace std;
 using namespace scgb;
 
 State Screen::state;

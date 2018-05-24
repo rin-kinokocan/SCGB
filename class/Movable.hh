@@ -3,13 +3,6 @@
 #include "BaseWindow.h"
 
 namespace scgb{
-  enum Direction{
-    Right,
-    Left,
-    Up,
-    Down,
-  };
-
   class Movable :public BaseWindow{
   private:    
     bool rmove();
