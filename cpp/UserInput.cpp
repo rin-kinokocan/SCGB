@@ -18,6 +18,7 @@ void UserInput::WaitInput(int maxChar,bool isblankok){
   int tabsize=4;
   int inspos=0;
   int length=0;
+  wint_t tmp;
   auto beg=[&]{return container.begin();};
   auto end=[&]{return container.end();};
   bool cond=false;
@@ -26,7 +27,7 @@ void UserInput::WaitInput(int maxChar,bool isblankok){
   auto cursor=GetXY();
   do{
     curs_set(1);
-    auto tmp=wgetch(window);
+    wget_wch(window,&tmp);
     auto kn=key_name(tmp);
     switch(tmp){
     case '\t':
@@ -41,12 +42,15 @@ void UserInput::WaitInput(int maxChar,bool isblankok){
       if(inspos>0){
   	inspos--;
   	container.erase(inspos+beg());
+	length--;
       }
       break;
     case Key::SCGB_DELETE:
     case Key::SCGB_CTR_D:
-      if(inspos+beg()<end())
+      if(inspos+beg()<end()){
+	length--;
 	container.erase(inspos+beg());
+      }
       break;
     case Key::SCGB_RIGHT:
       //move cursor to right
@@ -84,8 +88,13 @@ void UserInput::WaitInput(int maxChar,bool isblankok){
     for(int i=0;i<length;i++){
       waddwstr(window,make_cChar(container[i],0).chars);
     }
+    wattroff(window,COLOR_PAIR(0));
+    int move=0;
+    for(int i=0;i<inspos;i++){
+      move+=wcwidth(container[i]);
+    }
+    wmove(window,cursor[1],cursor[0]+move);
     curs_set(1);
-    wmove(window,cursor[1],cursor[0]+inspos);
     wrefresh(window);
   }while(!cond);
   
