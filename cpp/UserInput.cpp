@@ -38,6 +38,7 @@ void UserInput::WaitInput(int maxChar,bool isblankok){
   	}
       }
       break;
+    case KEY_BACKSPACE:
     case Key::SCGB_BACKSPACE:
       if(inspos>0){
   	inspos--;
@@ -70,7 +71,7 @@ void UserInput::WaitInput(int maxChar,bool isblankok){
       break;
     default:
       if(kn[0]=='^')
-  	;
+	beep();
       else{
   	if((inspos+beg())!=end() && length<maxChar){
   	  container.insert(inspos+beg(),tmp);

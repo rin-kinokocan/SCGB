@@ -2,6 +2,7 @@
 #include "class/Screen.h"
 
 using namespace scgb;
+using namespace scgb::Util;
 using namespace std;
 
 void BaseWindow::InitDraw(){
@@ -30,15 +31,11 @@ void BaseWindow::AfterDraw(cChar c){
 }
 
 void BaseWindow::OnReturn(){
-  cChar a;a.chars[0]='\n';
-  a.chars[1]='\0';a.attr=0;
-  AddChar(a);
+  AddChar(make_cChar('\n',0));
 }
 
-void BaseWindow::AddChar(cChar c){
-  if(c.chars[1]!='\0')//validation
-    return;
-  int ch=c.chars[0];
+void BaseWindow::AddChar(cChar c,bool useBelow){
+  auto ch=cCharToWchar(c);
   int a=wcwidth(ch);
   if(ch!='\n' && DrawPolicy(a)){
     auto b=GetGlobalCursorPos();

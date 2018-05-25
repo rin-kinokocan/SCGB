@@ -5,11 +5,12 @@ using namespace scgb;
 
 int main(){
   Screen::Init();
-  Screen::AddDrawable<BMimage>(1,new BMimage(-5,0,"./assets/kinoko.bmp"));
+  Screen::AddDrawable<BMimage>(1,new BMimage(20,0,"./assets/kinoko.bmp"));
   auto test=Screen::AddDrawable<AAtext>(2,new AAtext(0,10,"./assets/ebi.aa"));
   auto input=Screen::AddDrawable<UserInput>(3,new UserInput(10,0,20,10));
-  
   while(Screen::GetState()!=scgb::STA_DESTROY){
+    Screen::Draw();
+    Screen::Refresh();
     auto a=Screen::GetEvent();
     std::vector<wchar_t> data;
     switch(a){//event management
@@ -39,8 +40,6 @@ int main(){
       break;
     }
     //draw start
-    Screen::Draw();
-    Screen::Refresh();
     usleep(10000);
   }
   endwin();

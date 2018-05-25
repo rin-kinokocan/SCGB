@@ -113,8 +113,6 @@ void Screen::Init(){//Initialize everything.
   raw();
   cbreak();
   //color initialization starts!
-  start_color();
-  use_default_colors();
   Color::Init();
   //initialization of static variables.
   auto max=Screen::GetMaxXY();

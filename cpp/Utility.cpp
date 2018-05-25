@@ -9,5 +9,8 @@ namespace scgb{
       re.attr=attr;
       return re;
     }
+    wchar_t cCharToWchar(cChar c){
+      return c.chars[0];
+    }
   }
 }

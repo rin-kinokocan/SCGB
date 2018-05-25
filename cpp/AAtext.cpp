@@ -28,10 +28,7 @@ void AAtext::Draw(){
 	  DrawTransparent(1,true);
       }
     default:
-      cchar_t a;
-      a.chars[0]=c;
-      a.chars[1]=L'\0';
-      a.attr=0;
+      auto a=Util::make_cChar(c,0);
       AddChar(a);
       break;
     }

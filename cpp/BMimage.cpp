@@ -61,7 +61,7 @@ BMimage::BMimage(int x,int y,const char* filename)
       if(this->file.read(reinterpret_cast<char*>(&b),1)&&
 	 this->file.read(reinterpret_cast<char*>(&g),1)&&
 	 this->file.read(reinterpret_cast<char*>(&r),1)){
-	int p=Color::GetWebSafeColor(r,g,b);
+	int p=Color::GetColor(r,g,b);
 	int x=j,y=h-1-i;
 	int pos=y*w+x;
 	this->Pixels[pos]=p;

@@ -8,6 +8,7 @@ namespace scgb{
     DrawList drawentity;
   public:
     void Refresh();
+    void Resize();
     template <class T>
     std::shared_ptr<T> AddDrawable(Layer l,T* pd){
       if(drawentity.find(l)==drawentity.end()){

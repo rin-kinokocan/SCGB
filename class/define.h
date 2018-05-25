@@ -91,6 +91,7 @@ namespace scgb{
   //prototypes of Util functions
   namespace Util{
     cChar make_cChar(wchar_t in,int attr);
+    wchar_t cCharToWchar(cChar c);
   }
 }
 

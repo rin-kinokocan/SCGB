@@ -5,3 +5,5 @@
 #include "class/BMimage.h"
 #include "class/AAtext.h"
 #include "class/UserInput.h"
+#include "class/PlainWindow.h"
+#include "class/InputBox.h"

@@ -17,7 +17,7 @@ namespace scgb{
     void InitDraw();
     void AfterDraw(cChar c);
     void OnReturn();
-    void AddChar(cChar c);
+    void AddChar(cChar c,bool useBelow=false);
     void DrawTransparent(int w,bool f=false);
     bool DrawPolicy(int w);
     bool FitToScreen();
