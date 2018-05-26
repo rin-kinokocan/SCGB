@@ -33,6 +33,10 @@ void AAtext::Draw(){
       break;
     }
   }
+  cur=GetXY();
+  max=GetMaxXY();
+  d=max[0]-cur[0]-1;
+
   for(int i=0;i<d;i++)
     DrawTransparent(1,true);
   OnReturn();
@@ -71,7 +75,4 @@ AAtext::AAtext(int x,int y,std::string filename)
   else{
     throw std::invalid_argument("cannot open file");    
   }
-}
-
-AAtext::~AAtext(){
 }

@@ -9,6 +9,5 @@ namespace scgb{
   public:
     void Draw();
     AAtext(int x,int y,std::string filename);
-    ~AAtext();
   };
 }

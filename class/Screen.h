@@ -7,11 +7,11 @@ namespace scgb{
     //initializes ncurses and creates a window.
   public:
     template <class T>
-    static std::shared_ptr<T> AddDrawable(Layer l,T* pd){
+    static std::shared_ptr<T> AddDrawable(int l,T* pd){
       if(Screen::drawentity.find(l)==Screen::drawentity.end()){
 	std::shared_ptr<T> b;
 	b.reset(pd);
-	Screen::drawentity.insert(std::pair<Layer,pBaseWindow>(l,b));
+	Screen::drawentity.insert(std::pair<int,pDrawable>(l,b));
 	return b;
       }
       else{
@@ -36,7 +36,7 @@ namespace scgb{
   private:
     //static variables
     static State state;
-    static DrawList drawentity;    
+    static std::map<int,scgb::pDrawable> drawentity;    
     static std::vector<cchar_t> wholeScreen;
     //Signal handlers
     static void ResizeHandler(int param);

@@ -14,6 +14,5 @@ namespace scgb{
   public:
     void Draw();
     BMimage(int x,int y,const char* filename);
-    ~BMimage();
   };
 }

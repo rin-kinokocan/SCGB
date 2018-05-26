@@ -79,11 +79,7 @@ namespace scgb{
   typedef std::ifstream File;
   typedef std::wifstream WFile;
 
-  typedef int Layer;
   typedef std::shared_ptr<scgb::Drawable> pDrawable;
-  typedef std::shared_ptr<scgb::BaseWindow> pBaseWindow;
-  typedef std::map<Layer,scgb::pBaseWindow> DrawList;
-  
   typedef std::vector<int> Vector2D;
 
   typedef cchar_t cChar;

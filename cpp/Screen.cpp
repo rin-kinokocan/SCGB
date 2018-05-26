@@ -8,7 +8,7 @@ using namespace std;
 using namespace scgb;
 
 State Screen::state;
-DrawList Screen::drawentity;
+std::map<int,scgb::pDrawable> Screen::drawentity;
 vector<cchar_t> Screen::wholeScreen;
 
 void Screen::Draw(){
@@ -19,7 +19,7 @@ void Screen::Draw(){
   mvwprintw(stdscr,3,1,"%dcolors available",COLORS);
   mvwprintw(stdscr,4,1,"%dcolor-pairs available",COLOR_PAIRS);
   wmove(stdscr,5,0);
-  for(int i=0;i<COLORS;i++){
+  for(int i=1;i<=COLORS;i++){
     wattron(stdscr,COLOR_PAIR(i));
     wprintw(stdscr,"i");
     wattroff(stdscr,COLOR_PAIR(i));

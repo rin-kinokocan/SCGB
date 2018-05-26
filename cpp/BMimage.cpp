@@ -1,6 +1,6 @@
 #include "class/Color.hh"
 #include "class/BMimage.h"
-#include <unistd.h>
+#include "class/define.h"
 
 using namespace scgb;
 
@@ -32,9 +32,7 @@ void BMimage::ReadFile(){
 void BMimage::Draw(){
   InitDraw();
   for(int i:this->Pixels){
-    cchar_t a;
-    a.chars[0]=L' ';a.chars[1]=L'\0';
-    a.attr=COLOR_PAIR(i)|A_PROTECT;
+    auto a=Util::make_cChar(' ',COLOR_PAIR(i)|A_PROTECT);
     AddChar(a);
     AddChar(a);
   }
@@ -69,10 +67,5 @@ BMimage::BMimage(int x,int y,const char* filename)
     }
   }
   this->file.close();
-}
-
-BMimage::~BMimage(){
-  sleep(1);
-  delwin(this->window);
 }
 

@@ -33,6 +33,6 @@ namespace scgb{
     
     BaseWindow(){};
     BaseWindow(int,int,int,int);
-    virtual ~BaseWindow(){};
+    virtual ~BaseWindow(){delwin(window);};
   };
 }

@@ -5,16 +5,17 @@
 namespace scgb{
   class WindowContainer:public Drawable{
   protected:
-    DrawList drawentity;
+    std::map<int,scgb::pDrawable> drawentity;
   public:
+    void Draw();
     void Refresh();
     void Resize();
     template <class T>
-    std::shared_ptr<T> AddDrawable(Layer l,T* pd){
+    std::shared_ptr<T> AddDrawable(int l,T* pd){
       if(drawentity.find(l)==drawentity.end()){
 	std::shared_ptr<T> b;
 	b.reset(pd);
-	drawentity.insert(std::pair<Layer,pBaseWindow>(l,b));
+	drawentity.insert(std::pair<int,pDrawable>(l,b));
 	return b;
       }
       else{
