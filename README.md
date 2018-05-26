@@ -1,6 +1,9 @@
 # SCGB
 SCGB is a game engine in c++ using curses.
 
+# CAUTION
+THIS REPOSITORY IS NOT COMPLETE!
+
 ## What can SCGB do?
 SCGB can display ASCII arts,images on a terminal window.
 Internally,SCGB handles curses WINDOWs as layers,

@@ -22,7 +22,7 @@ namespace scgb{
       }
       Draw();//updates screen
     };
-
+    static void DeleteDrawable(int l);
     static Vector2D GetMaxXY();
     static cchar_t GetCchar(int x,int y);
     static void AddCchar(cchar_t,unsigned int x,unsigned int y);

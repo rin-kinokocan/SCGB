@@ -7,7 +7,7 @@ int main(){
   Screen::Init();
   Screen::AddDrawable<BMimage>(1,new BMimage(20,0,"./assets/kinoko.bmp"));
   auto test=Screen::AddDrawable<AAtext>(2,new AAtext(0,10,"./assets/ebi.aa"));
-  auto input=Screen::AddDrawable<UserInput>(3,new UserInput(10,0,20,10));
+  auto input=Screen::AddDrawable<InputBox>(3,new InputBox(10,0,20,10,10,"Input your name."));
   while(Screen::GetState()!=scgb::STA_DESTROY){
     Screen::Draw();
     Screen::Refresh();
@@ -18,8 +18,9 @@ int main(){
       Screen::Destroy();
       break;
     case scgb::EVE_PRINT:
-      input->WaitInput(10);
-      data=input->GetData();
+      input->SetActive(true);
+      data=input->GetInput();
+      input->SetActive(false);
       break;
     case scgb::EVE_RESIZE:
       Screen::Resize();

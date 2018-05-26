@@ -80,33 +80,37 @@ bool BaseWindow::DrawPolicy(int w){
 }
 
 bool BaseWindow::FitToScreen(){
-  int resx=this->width,resy=this->height;
-  auto max=Screen::GetMaxXY();
-  if(x+width > max[0])//too right
-    resx=max[0]-x;
-  else if(x<0)//too left
-    resx=width+x;
-  if(y+height>max[1])//too down
-    resy=max[1]-y;
-  else if(y<0)//too high
-    resy=height+y;
+  if(!isHidden){
+    int resx=this->width,resy=this->height;
+    auto max=Screen::GetMaxXY();
+    if(x+width > max[0])//too right
+      resx=max[0]-x;
+    else if(x<0)//too left
+      resx=width+x;
+    if(y+height>max[1])//too down
+      resy=max[1]-y;
+    else if(y<0)//too high
+      resy=height+y;
 
-  if(resx>0 && resy>0){
-    int tx=x,ty=y;
-    if(this->x<0)
-      tx=0;
-    if(this->y<0)
-      ty=0;
-    if(this->window!=nullptr)
-      delwin(this->window);
-    this->window=newwin(resy,resx,ty,tx);
+    if(resx>0 && resy>0){
+      int tx=x,ty=y;
+      if(this->x<0)
+	tx=0;
+      if(this->y<0)
+	ty=0;
+      if(this->window!=nullptr)
+	delwin(this->window);
+      this->window=newwin(resy,resx,ty,tx);
+    }
+    else{
+      delwin(window);
+      this->window=nullptr;
+      return false;
+    }
+    return true;
+
   }
-  else{
-    delwin(window);
-    this->window=nullptr;
-    return false;
-  }
-  return true;
+  return false;
 }
 
 void BaseWindow::DrawOnScreen(){
@@ -124,7 +128,18 @@ void BaseWindow::DrawOnScreen(){
 void BaseWindow::Resize(){
   FitToScreen();  
 }
-    
+
+void BaseWindow::Hide(){
+  delwin(window);
+  window=nullptr;
+  isHidden=true;
+}
+
+void BaseWindow::Show(){
+  isHidden=false;
+  FitToScreen();
+}
+
 Vector2D BaseWindow::GetGlobalCursorPos(){
   int posx,posy;getbegyx(this->window,posy,posx);
   int cx,cy;getyx(this->window,cy,cx);

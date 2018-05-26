@@ -13,7 +13,8 @@ namespace scgb{
     int x;
     int y;
     WinPtr window=nullptr;
-
+    bool isHidden=false;
+    
     void InitDraw();
     void AfterDraw(cChar c);
     void OnReturn();
@@ -23,6 +24,8 @@ namespace scgb{
     bool FitToScreen();
   public:
     void Resize();
+    void Hide();
+    void Show();
     void DrawOnScreen();
     Vector2D GetGlobalCursorPos();
     Vector2D GetGlobalCursorPos(int x,int y);

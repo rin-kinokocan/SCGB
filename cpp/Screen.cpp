@@ -11,6 +11,13 @@ State Screen::state;
 std::map<int,scgb::pDrawable> Screen::drawentity;
 vector<cchar_t> Screen::wholeScreen;
 
+void Screen::DeleteDrawable(int l){
+  auto a=Screen::drawentity.find(l);
+  if(a!=Screen::drawentity.end()){
+    Screen::drawentity.erase(a);
+  }
+}
+
 void Screen::Draw(){
   int x,y;
   erase();
