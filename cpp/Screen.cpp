@@ -39,7 +39,6 @@ void Screen::Draw(){
   for(auto i:Screen::drawentity){
     i.second->Draw();
     i.second->DrawOnScreen();
-    mvprintw(1,1,"printing something...");
   }
 }
 

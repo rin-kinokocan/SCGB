@@ -10,6 +10,8 @@ namespace scgb{
     virtual void Refresh(){};
     virtual void Resize(){};
     virtual void DrawOnScreen(){};
+    virtual void Hide(){};
+    virtual void Show(){};
     virtual ~Drawable(){};
   };
 }

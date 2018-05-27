@@ -7,8 +7,6 @@ using namespace std;
 
 
 void UserInput::Draw(){
-  werase(window);
-  box(window,'|','-');
 }
 
 void UserInput::WaitInput(int maxChar,bool isblankok){
@@ -23,13 +21,16 @@ void UserInput::WaitInput(int maxChar,bool isblankok){
   auto end=[&]{return container.end();};
   bool cond=false;
   nodelay(window,false);
-  wmove(window,1,1);
+  wmove(window,0,0);
   auto cursor=GetXY();
   do{
     curs_set(1);
-    wget_wch(window,&tmp);
+    tmp=GetInput();
     auto kn=key_name(tmp);
     switch(tmp){
+    case '\0':
+      beep();
+      break;
     case '\t':
       if(isblankok && length+tabsize<maxChar){
   	for(int i=0;i<tabsize;i++){

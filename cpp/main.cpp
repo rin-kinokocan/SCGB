@@ -18,9 +18,7 @@ int main(){
       Screen::Destroy();
       break;
     case scgb::EVE_PRINT:
-      input->SetActive(true);
       data=input->GetInput();
-      input->SetActive(false);
       break;
     case scgb::EVE_RESIZE:
       Screen::Resize();

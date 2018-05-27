@@ -18,15 +18,18 @@ namespace scgb{
     void InitDraw();
     void AfterDraw(cChar c);
     void OnReturn();
-    void AddChar(cChar c,bool useBelow=false);
+    void AddChar(cChar c);//for file reading things,I guess?.
     void DrawTransparent(int w,bool f=false);
     bool DrawPolicy(int w);
     bool FitToScreen();
   public:
-    void Resize();
-    void Hide();
-    void Show();
-    void DrawOnScreen();
+    virtual void Resize();
+    virtual void Hide();
+    virtual void Show();
+    virtual void DrawOnScreen();
+    
+    void AddChar(cChar c,int x,int y);//for normal use.
+    void AddStr(std::vector<cChar>,int x,int y);//to add string.
     Vector2D GetGlobalCursorPos();
     Vector2D GetGlobalCursorPos(int x,int y);
     Vector2D GetXY();

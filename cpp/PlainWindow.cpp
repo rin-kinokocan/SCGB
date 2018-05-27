@@ -3,6 +3,7 @@ using namespace scgb;
 using namespace scgb::Util;
 
 void PlainWindow::Draw(){
+  InitDraw();
   if(isBox)
     box(window,ACS_VLINE,ACS_HLINE);
   wbkgd(window,ColorPair);

@@ -34,7 +34,7 @@ void BaseWindow::OnReturn(){
   AddChar(make_cChar('\n',0));
 }
 
-void BaseWindow::AddChar(cChar c,bool useBelow){
+void BaseWindow::AddChar(cChar c){
   auto ch=cCharToWchar(c);
   int a=wcwidth(ch);
   if(ch!='\n' && DrawPolicy(a)){
@@ -45,6 +45,18 @@ void BaseWindow::AddChar(cChar c,bool useBelow){
     Screen::AddCchar(c,b[0],b[1]);
   }
   AfterDraw(c);
+}
+
+void BaseWindow::AddChar(cChar c,int x,int y){
+  wmove(window,x,y);
+  AddChar(c);
+}
+
+void BaseWindow::AddStr(std::vector<cChar> data,int x,int y){
+  wmove(window,x,y);
+  for(auto a:data){
+    AddChar(a);
+  }
 }
 
 void BaseWindow::DrawTransparent(int w,bool f){

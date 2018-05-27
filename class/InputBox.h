@@ -7,11 +7,9 @@ namespace scgb{
   private:
     int x,y,w,h;
   public:
-    std::string info;
+    std::vector<cChar> info;
     int maxchar;
-    bool isActive=false;
     void Draw();
-    void SetActive(bool);
     std::vector<wchar_t> GetInput();
     InputBox(int x,int y,int width,int height,int maxchar,std::string);
   };
