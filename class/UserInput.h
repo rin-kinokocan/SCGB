@@ -9,6 +9,7 @@ namespace scgb{
       wint_t tmp;wget_wch(window,&tmp);
       return tmp;
     };
+    void WindowSetting();
   public:
     void Draw();
     void WaitInput(int maxChar,bool isblankok=true);

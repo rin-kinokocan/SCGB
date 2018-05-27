@@ -69,11 +69,7 @@ namespace scgb{
     unsigned int biClrImporant;
   }BMinfo;
 
-  typedef struct{
-    unsigned char red;
-    unsigned char blue;
-    unsigned char green;
-  }RGB;
+
 
   typedef WINDOW* WinPtr;
   typedef std::ifstream File;

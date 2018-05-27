@@ -119,6 +119,7 @@ bool BaseWindow::FitToScreen(){
       this->window=nullptr;
       return false;
     }
+    WindowSetting();
     return true;
 
   }
@@ -202,3 +203,4 @@ BaseWindow::BaseWindow(int x,int y,int w,int h){
   this->width=w;this->height=h;
   FitToScreen();
 }
+

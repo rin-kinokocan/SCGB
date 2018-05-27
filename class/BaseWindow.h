@@ -22,6 +22,7 @@ namespace scgb{
     void DrawTransparent(int w,bool f=false);
     bool DrawPolicy(int w);
     bool FitToScreen();
+    virtual void WindowSetting(){};    
   public:
     virtual void Resize();
     virtual void Hide();
@@ -36,7 +37,6 @@ namespace scgb{
     Vector2D GetMaxXY();
     Vector2D GetVirtualCursorPos();
     void Refresh();
-    
     BaseWindow(){};
     BaseWindow(int,int,int,int);
     virtual ~BaseWindow(){delwin(window);};

@@ -1,6 +1,6 @@
 #pragma once
 #include "define.h"
-#include "BaseWindow.h"
+#include "Drawable.h"
 
 namespace scgb{
   class Screen{

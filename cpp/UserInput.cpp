@@ -113,7 +113,9 @@ vector<wchar_t> UserInput::GetData(){
 
 UserInput::UserInput(int x,int y,int w,int h)
   :Movable(x,y,w,h)
-{
+{}
+
+void UserInput::WindowSetting(){
   keypad(window,true);
 }
 

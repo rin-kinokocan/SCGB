@@ -1,5 +1,4 @@
 #include <csignal>
-#include <unistd.h>
 #include <locale>
 #include "class/Screen.h"
 #include "class/Color.hh"
