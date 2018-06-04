@@ -1,4 +1,4 @@
-#include "define.h"
+#pragma once
 #include "Movable.hh"
 
 namespace scgb{

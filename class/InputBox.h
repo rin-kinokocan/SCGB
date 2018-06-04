@@ -1,5 +1,4 @@
 #pragma once
-#include "define.h"
 #include "WindowContainer.h"
 
 namespace scgb{

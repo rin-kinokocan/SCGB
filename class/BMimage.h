@@ -1,6 +1,4 @@
 #pragma once
-#include <ncurses.h>
-#include <vector>
 #include "Movable.hh"
  
 namespace scgb{
