@@ -14,12 +14,12 @@ namespace scgb{
     virtual void Hide();
     virtual void Show();
     template <class T>
-    std::shared_ptr<T> AddDrawable(int l,T* pd){
+    WeakDrawable<T> AddDrawable(int l,T* pd){
       if(drawentity.find(l)==drawentity.end()){
 	std::shared_ptr<T> b;
 	b.reset(pd);
 	drawentity.insert(std::pair<int,pDrawable>(l,b));
-	return b;
+	return WeakDrawable<T>(b);
       }
       else{
 	std::string info="the layer ";

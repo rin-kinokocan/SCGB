@@ -7,12 +7,12 @@ namespace scgb{
     //initializes ncurses and creates a window.
   public:
     template <class T>
-    static std::shared_ptr<T> AddDrawable(int l,T* pd){
+    static WeakDrawable<T> AddDrawable(int l,T* pd){
       if(Screen::drawentity.find(l)==Screen::drawentity.end()){
 	std::shared_ptr<T> b;
 	b.reset(pd);
 	Screen::drawentity.insert(std::pair<int,pDrawable>(l,b));
-	return b;
+	return WeakDrawable<T>(b);
       }
       else{
 	std::string info="the layer ";

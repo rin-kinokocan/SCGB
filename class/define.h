@@ -78,8 +78,20 @@ namespace scgb{
   typedef std::shared_ptr<scgb::Drawable> pDrawable;
   typedef std::vector<int> Vector2D;
 
-  typedef cchar_t cChar;
+  template <class T>
+  class WeakDrawable{//return type of AddDrawable
+  public:
+    std::weak_ptr<T> pointer;
+    std::shared_ptr<T> operator->(){
+      return pointer.lock();
+    };
+    WeakDrawable(std::shared_ptr<T> a){
+      pointer=a;
+    };
+  };
 
+  typedef cchar_t cChar;
+  
   //prototypes of Util functions
   namespace Util{
     cChar make_cChar(wchar_t in,int attr);
