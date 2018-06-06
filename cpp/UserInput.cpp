@@ -49,7 +49,7 @@ void UserInput::WaitInput(int maxChar,bool isblankok){
       break;
     case Key::SCGB_DELETE:
     case Key::SCGB_CTR_D:
-      if(inspos+beg()<end()){
+      if(inspos+beg()<end() && inspos<length){
 	length--;
 	container.erase(inspos+beg());
       }

@@ -110,6 +110,7 @@ bool BaseWindow::FitToScreen(){
 	tx=0;
       if(this->y<0)
 	ty=0;
+
       if(this->window!=nullptr)
 	delwin(this->window);
       this->window=newwin(resy,resx,ty,tx);

@@ -7,12 +7,12 @@ namespace scgb{
     //initializes ncurses and creates a window.
   public:
     template <class T>
-    static WeakDrawable<T> AddDrawable(int l,T* pd){
+    static WeakPtr<T> AddDrawable(int l,T* pd){
       if(Screen::drawentity.find(l)==Screen::drawentity.end()){
 	std::shared_ptr<T> b;
 	b.reset(pd);
 	Screen::drawentity.insert(std::pair<int,pDrawable>(l,b));
-	return WeakDrawable<T>(b);
+	return WeakPtr<T>(b);
       }
       else{
 	std::string info="the layer ";
@@ -32,7 +32,7 @@ namespace scgb{
     static void Resize();
     static void Destroy();
     static void Refresh();
-    static void Init();
+    static void Init();//The most important method.
   private:
     //static variables
     static State state;
@@ -41,6 +41,7 @@ namespace scgb{
     //Signal handlers
     static void ResizeHandler(int param);
     static void InterruptHandler(int param);
+    Screen();
   };
 
 }

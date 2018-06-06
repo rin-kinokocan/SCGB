@@ -8,9 +8,11 @@
 #include <string>
 
 namespace scgb{
-
+  //forward declaration of classes
   class Drawable;
   class BaseWindow;
+  class EventMediator;
+  //
   enum State{
     STA_DESTROY=0,
     STA_OPEN=1,
@@ -80,13 +82,16 @@ namespace scgb{
   typedef std::vector<int> Vector2D;
 
   template <class T>
-  class WeakDrawable{//return type of AddDrawable
+  class WeakPtr{//wrapper of std::weak_ptr
   public:
     std::weak_ptr<T> pointer;
     std::shared_ptr<T> operator->(){
-      return pointer.lock();
+      if(!pointer.expired())
+	return pointer.lock();
+      else
+	throw std::runtime_error("NOPE.");
     };
-    WeakDrawable(std::shared_ptr<T> a){
+    WeakPtr(std::shared_ptr<T> a){
       pointer=a;
     };
   };

@@ -1,8 +1,12 @@
 #pragma once
+#include "define.h"
 
 namespace scgb{
   class Drawable{
     //interface for Drawing things.
+    //follows Composite design pattern.
+  protected:
+    EventMediator* parentmediator=nullptr;
   public:
     virtual void Draw(){};
     virtual void Refresh(){};
@@ -11,6 +15,8 @@ namespace scgb{
     virtual void Hide(){};
     virtual void Show(){};
     virtual ~Drawable(){};
+    void SetMediator(EventMediator* a){parentmediator=a;};
+    virtual void EventHandler(int i){};
   };
 }
 

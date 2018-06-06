@@ -1,5 +1,4 @@
 #pragma once
-#include "define.h"
 #include "Drawable.h"
 
 namespace scgb{
@@ -14,7 +13,7 @@ namespace scgb{
     int y;
     WinPtr window=nullptr;
     bool isHidden=false;
-    
+   
     void InitDraw();
     void AfterDraw(cChar c);
     void OnReturn();
@@ -22,7 +21,7 @@ namespace scgb{
     void DrawTransparent(int w,bool f=false);
     bool DrawPolicy(int w);
     bool FitToScreen();
-    virtual void WindowSetting(){};    
+    virtual void WindowSetting(){};
   public:
     virtual void Resize();
     virtual void Hide();

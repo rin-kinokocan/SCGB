@@ -19,7 +19,6 @@ int main(){
       break;
     case scgb::EVE_PRINT:
       data=input->GetInput();
-      Screen::DeleteDrawable(3);
       break;
     case scgb::EVE_RESIZE:
       Screen::Resize();

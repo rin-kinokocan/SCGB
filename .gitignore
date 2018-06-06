@@ -1,2 +1,5 @@
 test/
+build/
+dependency/
+scgb
 CMakeLists.txt
