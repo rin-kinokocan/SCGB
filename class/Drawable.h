@@ -1,5 +1,6 @@
 #pragma once
 #include "define.h"
+#include "Mediator.h"
 
 namespace scgb{
   class Drawable{
@@ -15,8 +16,9 @@ namespace scgb{
     virtual void Hide(){};
     virtual void Show(){};
     virtual ~Drawable(){};
+    
     void SetMediator(EventMediator* a){parentmediator=a;};
-    virtual void EventHandler(int i){};
+    virtual void EventHandler(int i){parentmediator->SendEvent(i);};
   };
 }
 

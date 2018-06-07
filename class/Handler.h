@@ -1,7 +1,9 @@
 #pragma once
 
 namespace scgb{
+  class EventMediator;
   class Handler{
-  public:
+  protected:
     virtual void EventHandler(int i){};
+    friend EventMediator;
   };}

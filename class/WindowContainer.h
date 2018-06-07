@@ -5,6 +5,7 @@
 namespace scgb{
   class WindowContainer:public Drawable,Handler{
   protected:
+    int width,height,x,y;
     std::map<int,scgb::pDrawable> drawentity;
     bool isHidden=false;
     EventMediator mediator=EventMediator(this);
@@ -14,7 +15,6 @@ namespace scgb{
     virtual void Resize();
     virtual void Hide();
     virtual void Show();
-    virtual void EventHandler(int i){};
     template <class T>
     WeakPtr<T> AddDrawable(int l,T* pd){
       if(drawentity.find(l)==drawentity.end()){
