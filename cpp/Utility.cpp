@@ -12,5 +12,25 @@ namespace scgb{
     wchar_t cCharToWchar(cChar c){
       return c.chars[0];
     }
+
+    Vector2D GetMaxScrXY(){
+      int x,y;getmaxyx(stdscr,y,x);
+      Vector2D v;
+      v.resize(2);
+      v[0]=x;v[1]=y;
+      return v;
+    }
+
+    void LogToStdout(std::string a){
+      bool f=true;
+      if(isendwin())
+      	f=false;
+      else
+	endwin();
+      std::cout<<a<<std::endl;
+      if(f)
+	initscr();
+    }
   }
+
 }

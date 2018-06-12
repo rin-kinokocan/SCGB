@@ -1,11 +1,12 @@
 #include "class/BaseWindow.h"
-#include "class/Screen.h"
-
+#include "class/WindowContainer.h"
 using namespace scgb;
 using namespace scgb::Util;
 using namespace std;
 
 void BaseWindow::InitDraw(){
+  if(window==nullptr)
+    FitToScreen();
   wmove(this->window,0,0);
   werase(this->window);
   virtualX=x;
@@ -42,7 +43,6 @@ void BaseWindow::AddChar(cChar c){
     wattron(window,c.attr);
     waddwstr(window,c.chars);
     wattroff(window,c.attr);
-    Screen::AddCchar(c,b[0],b[1]);
   }
   AfterDraw(c);
 }
@@ -63,7 +63,7 @@ void BaseWindow::DrawTransparent(int w,bool f){
     auto b=GetGlobalCursorPos();
     cChar a;
     try{
-      a=Screen::GetCchar(b[0],b[1]);
+      a=GetWholeScreen(b[0],b[1]);
     }
     catch(exception& e){
       return;
@@ -82,7 +82,7 @@ void BaseWindow::DrawTransparent(int w,bool f){
 }
 
 bool BaseWindow::DrawPolicy(int w){
-  auto max=Screen::GetMaxXY();
+  auto max=parentcontainer->GetMaxXY();
   int vx=virtualX,vy=virtualY;
   if(vx>=0 && vx+w<max[0] && vy>=0 && vy<max[1])
     return true;
@@ -94,7 +94,7 @@ bool BaseWindow::DrawPolicy(int w){
 bool BaseWindow::FitToScreen(){
   if(!isHidden){
     int resx=this->width,resy=this->height;
-    auto max=Screen::GetMaxXY();
+    auto max=parentcontainer->GetMaxXY();
     if(x+width > max[0])//too right
       resx=max[0]-x;
     else if(x<0)//too left
@@ -134,12 +134,12 @@ void BaseWindow::DrawOnScreen(){
       cChar a;
       mvwin_wch(window,j,i,&a);
       auto b=GetGlobalCursorPos(i,j);
-      Screen::AddCchar(a,b[0],b[1]);
+      AddWholeScreen(b[0],b[1],a);
     }
   }
 }
 
-void BaseWindow::Resize(){
+void BaseWindow::OnResize(){
   FitToScreen();  
 }
 
@@ -191,7 +191,14 @@ Vector2D BaseWindow::GetVirtualCursorPos(){
   Vector2D a;a.resize(2);
   a[0]=virtualX;a[1]=virtualY;
   return a;
+}
 
+cChar BaseWindow::GetWholeScreen(int x,int y){
+  return parentcontainer->GetWholeScreen(x,y);
+}
+
+void BaseWindow::AddWholeScreen(int x,int y,cChar c){
+  parentcontainer->AddWholeScreen(x,y,c);
 }
 
 void BaseWindow::Refresh(){
@@ -202,6 +209,5 @@ void BaseWindow::Refresh(){
 BaseWindow::BaseWindow(int x,int y,int w,int h){
   this->x=x;this->y=y;
   this->width=w;this->height=h;
-  FitToScreen();
 }
 

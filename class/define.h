@@ -11,7 +11,7 @@ namespace scgb{
   //forward declaration of classes
   class Drawable;
   class BaseWindow;
-  class EventMediator;
+  class WindowContainer;
   //
   enum State{
     STA_DESTROY=0,
@@ -102,6 +102,8 @@ namespace scgb{
   namespace Util{
     cChar make_cChar(wchar_t in,int attr);
     wchar_t cCharToWchar(cChar c);
+    Vector2D GetMaxScrXY();
+    void LogToStdout(std::string);
   }
 }
 

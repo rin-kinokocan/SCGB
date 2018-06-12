@@ -11,8 +11,6 @@ void InputBox::Draw(){
 
 std::vector<wchar_t> InputBox::GetInput(){
   Show();
-  Screen::Draw();
-  Screen::Refresh();
   auto a=dynamic_pointer_cast<UserInput>(drawentity.at(1));
   a->WaitInput(maxchar,false);
   Hide();
@@ -20,7 +18,7 @@ std::vector<wchar_t> InputBox::GetInput(){
 }
 
 InputBox::InputBox(int x,int y,int w,int h,int mc,string display)
-{
+  :WindowContainer(x,y,w,h){
   maxchar=mc;
   for(auto a:display){
     info.push_back(Util::make_cChar(a,0));

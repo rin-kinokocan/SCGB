@@ -49,7 +49,6 @@ BMimage::BMimage(int x,int y,const char* filename)
   this->ReadFile();
   this->width=this->bi.biWidth*2+1;//+1 is for return.
   this->height=this->bi.biHeight;
-  FitToScreen();
   int w=this->bi.biWidth;
   int h=this->bi.biHeight;
   this->Pixels.resize(w*h);

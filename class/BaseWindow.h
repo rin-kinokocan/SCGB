@@ -1,5 +1,6 @@
 #pragma once
 #include "Drawable.h"
+#include "WindowContainer.h"
 
 namespace scgb{
   class BaseWindow :public Drawable{
@@ -17,13 +18,13 @@ namespace scgb{
     void InitDraw();
     void AfterDraw(cChar c);
     void OnReturn();
-    void AddChar(cChar c);//for file reading things,I guess?.
+    void AddChar(cChar c);//for file reading things,I guess?
     void DrawTransparent(int w,bool f=false);
     bool DrawPolicy(int w);
     bool FitToScreen();
     virtual void WindowSetting(){};
   public:
-    virtual void Resize();
+    virtual void OnResize();
     virtual void Hide();
     virtual void Show();
     virtual void DrawOnScreen();
@@ -35,6 +36,8 @@ namespace scgb{
     Vector2D GetXY();
     Vector2D GetMaxXY();
     Vector2D GetVirtualCursorPos();
+    cChar GetWholeScreen(int x,int y);
+    void AddWholeScreen(int x,int y,cChar c);
     void Refresh();
     BaseWindow(){};
     BaseWindow(int,int,int,int);
