@@ -10,7 +10,7 @@ void PlainWindow::Draw(){
 };
 
 PlainWindow::PlainWindow(int x,int y,int w,int h,chtype CP,bool isBox):
-  Movable(x,y,w,h){
+  BaseWindow(x,y,w,h){
   ColorPair=CP;
   this->isBox=isBox;
 }

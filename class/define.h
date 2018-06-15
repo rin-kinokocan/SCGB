@@ -102,6 +102,7 @@ namespace scgb{
   namespace Util{
     cChar make_cChar(wchar_t in,int attr);
     wchar_t cCharToWchar(cChar c);
+    int cCharToAttr(cChar c);
     Vector2D GetMaxScrXY();
     void LogToStdout(std::string);
   }

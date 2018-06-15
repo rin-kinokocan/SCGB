@@ -12,6 +12,9 @@ namespace scgb{
     wchar_t cCharToWchar(cChar c){
       return c.chars[0];
     }
+    int cCharToAttr(cChar c){
+      return c.attr;
+    }
 
     Vector2D GetMaxScrXY(){
       int x,y;getmaxyx(stdscr,y,x);

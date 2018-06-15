@@ -1,8 +1,8 @@
 #pragma once
-#include "Movable.hh"
+#include "BaseWindow.h"
 
 namespace scgb{
-  class AAtext :public Movable{
+  class AAtext :public BaseWindow{
   protected:
     std::vector<wchar_t> data;
   public:

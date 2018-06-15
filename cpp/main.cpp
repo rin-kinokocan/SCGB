@@ -40,7 +40,7 @@ int main(){
       break;
     }
     //draw start
-    usleep(10000);
+    usleep(20000);
   }
   endwin();
   return 0;

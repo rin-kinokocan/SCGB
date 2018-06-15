@@ -5,93 +5,93 @@ using namespace scgb::Util;
 using namespace std;
 
 void BaseWindow::InitDraw(){
-  if(window==nullptr)
-    FitToScreen();
-  wmove(this->window,0,0);
+  MoveCursor(0,0);
   werase(this->window);
   virtualX=x;
   virtualY=y;
 }
 
-void BaseWindow::AfterDraw(cChar c){
-  auto a=c.chars[0];
-  auto b=width+x;
-  auto cw=wcwidth(c.chars[0]);
-  if(a!='\n' && virtualX+cw<b-1){
-    virtualX+=cw;
-  }
-  else{
-    auto cur=GetXY();
-    if(virtualY>=0){
-      DrawTransparent(1,true);
-      wmove(window,cur[1]+1,0);
-    }
-    virtualX=x;
-    virtualY++;
-  }
-}
-
-void BaseWindow::OnReturn(){
-  AddChar(make_cChar('\n',0));
-}
-
-void BaseWindow::AddChar(cChar c){
+bool BaseWindow::AddChar(cChar c){
+  //adds cChar where the virtual cursors are.
+  //will not draw newline.
   auto ch=cCharToWchar(c);
+  auto attr=cCharToAttr(c);
   int a=wcwidth(ch);
   if(ch!='\n' && DrawPolicy(a)){
-    auto b=GetGlobalCursorPos();
-    wattron(window,c.attr);
+    wattron(window,attr);
     waddwstr(window,c.chars);
-    wattroff(window,c.attr);
+    wattroff(window,attr);
+ }
+  return MoveAfterDraw(a);
+}
+
+bool BaseWindow::MoveAfterDraw(int w){
+  int rx=virtualX,ry=virtualY;
+  bool flag=false;
+  if(rx-x+w<width){
+    rx+=w;
   }
-  AfterDraw(c);
+  else{
+    rx=x;
+    ry++;
+    flag=true;
+ }
+  MoveCursor(rx-x,ry-y);
+  return flag;
+}
+
+void BaseWindow::MoveCursor(int px,int py){
+  //moves virtual cursors to the given coods.
+  //parameters are relative cursor pos.
+  // string info;
+  //   info="ADC:";info+=std::to_string(px);
+  //   info+=",";info+=std::to_string(py);
+  //   Util::LogToStdout(info);
+
+  if(px>=0 && px<width && py>=0 && py<height){
+    int vx=px+x,vy=py+y;
+    virtualX=vx;virtualY=vy;
+    auto a=parentcontainer->GetMaxXY();
+    if(DrawPolicy(0)){
+      if(x<0)
+	px+=x;
+      if(y<0)
+	py+=y;
+      wmove(window,py,px);
+    }
+  }
 }
 
 void BaseWindow::AddChar(cChar c,int x,int y){
-  wmove(window,x,y);
+  MoveCursor(x,y);
   AddChar(c);
 }
 
 void BaseWindow::AddStr(std::vector<cChar> data,int x,int y){
-  wmove(window,x,y);
+  MoveCursor(x,y);
   for(auto a:data){
     AddChar(a);
   }
 }
 
-void BaseWindow::DrawTransparent(int w,bool f){
-    auto b=GetGlobalCursorPos();
-    cChar a;
-    try{
-      a=GetWholeScreen(b[0],b[1]);
-    }
-    catch(exception& e){
-      return;
-    }
-    int cw=wcwidth(a.chars[0]);
-    if(cw>w || a.chars[1]!='\0'){
-      a.chars[0]=' ';
-    }
-    if(f){
-      wattron(window,a.attr);
-      waddwstr(window,a.chars);
-      wattroff(window,a.attr);
-    }
-    else
-      AddChar(a);
+bool BaseWindow::DrawTransparent(int w,bool f){
+  auto a=GetWholeScreen(virtualX,virtualY);
+  return AddChar(a);
 }
 
 bool BaseWindow::DrawPolicy(int w){
-  auto max=parentcontainer->GetMaxXY();
-  int vx=virtualX,vy=virtualY;
-  if(vx>=0 && vx+w<max[0] && vy>=0 && vy<max[1])
+  //returns if virtual cursors are inside of drawing range.
+  auto a=parentcontainer->GetMaxXY();
+  int vx=virtualX-x,vy=virtualY-y;
+  if(vx>=0 && vx+w<a[0] && vy>=0 && vy<a[1])
     return true;
-  else{
+  else
     return false;
-  }
 }
 
-bool BaseWindow::FitToScreen(){
+
+bool BaseWindow::MakeWindow(){
+  //Makes a window that fit to the coods&size.
   if(!isHidden){
     int resx=this->width,resy=this->height;
     auto max=parentcontainer->GetMaxXY();
@@ -122,25 +122,22 @@ bool BaseWindow::FitToScreen(){
     }
     WindowSetting();
     return true;
-
   }
   return false;
 }
 
 void BaseWindow::DrawOnScreen(){
-  auto max=GetMaxXY();
-  for(int i=0;i<max[0];i++){
-    for(int j=0;j<max[1];j++){
+  for(int j=y;j<y+height;j++){
+    for(int i=x;i<x+width;i++){
       cChar a;
-      mvwin_wch(window,j,i,&a);
-      auto b=GetGlobalCursorPos(i,j);
-      AddWholeScreen(b[0],b[1],a);
+      mvwin_wch(window,j-y,i-x,&a);
+      AddWholeScreen(i,j,a);
     }
   }
 }
 
 void BaseWindow::OnResize(){
-  FitToScreen();  
+  MakeWindow();  
 }
 
 void BaseWindow::Hide(){
@@ -151,44 +148,12 @@ void BaseWindow::Hide(){
 
 void BaseWindow::Show(){
   isHidden=false;
-  FitToScreen();
+  MakeWindow();
 }
 
-Vector2D BaseWindow::GetGlobalCursorPos(){
-  int posx,posy;getbegyx(this->window,posy,posx);
-  int cx,cy;getyx(this->window,cy,cx);
-  posx+=cx;posy+=cy;
-  vector<int> a;a.resize(2);
-  a[0]=posx;a[1]=posy;
-  return a;
-}
-
-Vector2D BaseWindow::GetGlobalCursorPos(int x,int y){
-  int posx,posy;getbegyx(this->window,posy,posx);
-  posx+=x;posy+=y;
-    vector<int> a;a.resize(2);
-  a[0]=posx;a[1]=posy;
-  return a;
-}
-
-Vector2D BaseWindow::GetXY(){
-  int x,y;getyx(this->window,y,x);
-  Vector2D v;
-  v.resize(2);
-  v[0]=x;v[1]=y;
-  return v;
-}
-
-Vector2D BaseWindow::GetMaxXY(){
-  int x,y;getmaxyx(window,y,x);
-  Vector2D v;
-  v.resize(2);
-  v[0]=x;v[1]=y;
-  return v;
-}
-
-Vector2D BaseWindow::GetVirtualCursorPos(){
-  Vector2D a;a.resize(2);
+Vector2D BaseWindow::GetVirtualCursor(){
+  Vector2D a;
+  a.resize(2);
   a[0]=virtualX;a[1]=virtualY;
   return a;
 }
@@ -201,6 +166,11 @@ void BaseWindow::AddWholeScreen(int x,int y,cChar c){
   parentcontainer->AddWholeScreen(x,y,c);
 }
 
+void BaseWindow::SetParent(WindowContainer* a){
+  parentcontainer=a;
+  MakeWindow();
+};
+
 void BaseWindow::Refresh(){
   touchwin(window);
   wnoutrefresh(window);
@@ -209,5 +179,25 @@ void BaseWindow::Refresh(){
 BaseWindow::BaseWindow(int x,int y,int w,int h){
   this->x=x;this->y=y;
   this->width=w;this->height=h;
+}
+
+void BaseWindow::rmove(){
+  this->x++;
+  MakeWindow();
+}
+
+void BaseWindow::lmove(){
+  this->x--;
+  MakeWindow();
+}
+
+void BaseWindow::umove(){
+  this->y--;
+  MakeWindow();
+}
+
+void BaseWindow::dmove(){
+  this->y++;
+  MakeWindow();
 }
 

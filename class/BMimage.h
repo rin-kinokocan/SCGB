@@ -1,8 +1,8 @@
 #pragma once
-#include "Movable.hh"
- 
+#include "BaseWindow.h"
+
 namespace scgb{
-  class BMimage :public Movable{
+  class BMimage :public BaseWindow{
   protected:
     void ReadFile();
     File file;

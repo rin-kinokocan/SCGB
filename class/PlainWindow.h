@@ -1,8 +1,8 @@
 #pragma once
-#include "Movable.hh"
+#include "BaseWindow.h"
 
 namespace scgb{
-  class PlainWindow:public Movable{
+  class PlainWindow:public BaseWindow{
     //just a rectangle of a given color.
   public:
     virtual void Draw();

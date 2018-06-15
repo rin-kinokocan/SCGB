@@ -16,9 +16,11 @@ void WindowContainer::OnResize(){
 }
 
 void WindowContainer::Draw(){
-  for(auto i:drawentity){
-    i.second->Draw();
-    i.second->DrawOnScreen();
+  if(!isHidden){
+    for(auto i:drawentity){
+      i.second->Draw();
+      i.second->DrawOnScreen();
+    }
   }
 }
 
@@ -37,7 +39,7 @@ void WindowContainer::Hide(){
 }
 
 void WindowContainer::Show(){
-  isHidden=true;
+  isHidden=false;
   for(auto a:drawentity){
     auto b=dynamic_pointer_cast<Drawable>(a.second);
     b->Show();
@@ -52,12 +54,7 @@ void WindowContainer::DeleteDrawable(int l){
 }
 
 Vector2D WindowContainer::GetMaxXY(){
-  Vector2D v,a;
-  a=Util::GetMaxScrXY();
-  int c=x+width,d=y+height;
-  v.resize(2);
-  v[0]=max(a[0],c);v[1]=max(a[1],c);
-  return v;
+  return Util::GetMaxScrXY();
 }
 
 cChar WindowContainer::GetWholeScreen(int x,int y){

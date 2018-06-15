@@ -8,38 +8,24 @@ using namespace scgb;
 
 void AAtext::Draw(){
   InitDraw();
-  Vector2D cur;
-  Vector2D max;
-  int d;
   for(auto c:data){
-    cur=GetXY();
-    max=GetMaxXY();
-    d=max[0]-cur[0]-1;
     int w=wcwidth(c);
-    auto v=GetVirtualCursorPos();
+    auto a=GetVirtualCursor();
     switch(c){
     case L' ':
     case L'　':
-      DrawTransparent(w);
+      for(int i=0;i<w;i++)
+	DrawTransparent(1);
       break;
     case L'\n':
-      if(v[1]>=0){
-	for(int i=0;i<d;i++)
-	  DrawTransparent(1,true);
-      }
+      while(!DrawTransparent(1)){;}
+      break;
     default:
-      auto a=Util::make_cChar(c,0);
-      AddChar(a);
+      AddChar(Util::make_cChar(c,0));
       break;
     }
   }
-  cur=GetXY();
-  max=GetMaxXY();
-  d=max[0]-cur[0]-1;
-
-  for(int i=0;i<d;i++)
-    DrawTransparent(1,true);
-  OnReturn();
+  while(!DrawTransparent(1)){;}
 }
 
 AAtext::AAtext(int x,int y,std::string filename)
@@ -50,7 +36,8 @@ AAtext::AAtext(int x,int y,std::string filename)
     int w=1,h=1,mw=0;
     file.clear();
     file.seekg(0,std::ios::beg);
-    for(wchar_t c;file.get(c);){
+    wchar_t c;
+    while(file.get(c)){
       switch(c){
       case L'\n':
 	h++;
@@ -65,10 +52,9 @@ AAtext::AAtext(int x,int y,std::string filename)
       data.push_back(c);
     }
     file.close();
-    mw+=1;//includes space for return.
     this->x=x;
     this->y=y;
-    this->width=mw;
+    this->width=mw+1;
     this->height=h;
   }
   else{

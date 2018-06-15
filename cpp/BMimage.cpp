@@ -47,7 +47,7 @@ BMimage::BMimage(int x,int y,const char* filename)
     throw std::invalid_argument("cannot open file");
   }
   this->ReadFile();
-  this->width=this->bi.biWidth*2+1;//+1 is for return.
+  this->width=this->bi.biWidth*2;
   this->height=this->bi.biHeight;
   int w=this->bi.biWidth;
   int h=this->bi.biHeight;

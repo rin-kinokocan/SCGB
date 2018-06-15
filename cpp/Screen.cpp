@@ -11,7 +11,7 @@ void Screen::Draw(){
   int x,y;
   erase();
   for(auto &a:Screen::wholeScreen){//initialize wholescreen
-    a=Util::make_cChar('\0',0);
+    a=Util::make_cChar(' ',0);
   }
   for(auto i:drawentity){
     i.second->Draw();
@@ -37,18 +37,17 @@ void Screen::Refresh(){
 
 cChar Screen::GetWholeScreen(int x,int y){
   auto a=GetMaxXY();
-  if(x>a[0] || x<0 || y>a[1] || y<0){
-    throw std::exception();
+  if(x>=a[0] || x<0 || y>=a[1] || y<0){
+    return Util::make_cChar(' ',0);
   }
   return Screen::wholeScreen[x+y*a[0]];
 }
 
 void Screen::AddWholeScreen(int x,int y,cChar c){
-  unsigned int my,mx;getmaxyx(stdscr,my,mx);
-  if(x>mx || y>my)
+  auto a=GetMaxXY();
+  if(x>=a[0] || x<0 || y>=a[1] || y<0)
     return;
-  int pos=x+y*mx;
-  Screen::wholeScreen[pos]=c;
+  Screen::wholeScreen[x+y*a[0]]=c;
 }
 
 void Screen::Destroy(){

@@ -22,7 +22,6 @@ void UserInput::WaitInput(int maxChar,bool isblankok){
   bool cond=false;
   nodelay(window,false);
   wmove(window,0,0);
-  auto cursor=GetXY();
   do{
     curs_set(1);
     tmp=GetInput();
@@ -84,7 +83,7 @@ void UserInput::WaitInput(int maxChar,bool isblankok){
       }
       break;
     }
-    wmove(window,cursor[1],cursor[0]);
+    MoveCursor(0,0);
     wattron(window,COLOR_PAIR(0));
     wclrtoeol(window);
     for(int i=0;i<length;i++){
@@ -95,7 +94,7 @@ void UserInput::WaitInput(int maxChar,bool isblankok){
     for(int i=0;i<inspos;i++){
       move+=wcwidth(container[i]);
     }
-    wmove(window,cursor[1],cursor[0]+move);
+    MoveCursor(0,+move);
     curs_set(1);
     wrefresh(window);
   }while(!cond);
@@ -112,7 +111,7 @@ vector<wchar_t> UserInput::GetData(){
 }
 
 UserInput::UserInput(int x,int y,int w,int h)
-  :Movable(x,y,w,h)
+  :BaseWindow(x,y,w,h)
 {}
 
 void UserInput::WindowSetting(){

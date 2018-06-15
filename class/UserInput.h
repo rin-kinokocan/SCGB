@@ -1,8 +1,8 @@
 #pragma once
-#include "Movable.hh"
+#include "BaseWindow.h"
 
 namespace scgb{
-  class UserInput :public Movable{
+  class UserInput :public BaseWindow{
   protected:
     std::vector<wchar_t> data;
     virtual wchar_t GetInput(){
