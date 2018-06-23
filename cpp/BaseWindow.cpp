@@ -51,7 +51,7 @@ void BaseWindow::MoveCursor(int px,int py){
   if(px>=0 && px<width && py>=0 && py<height){
     int vx=px+x,vy=py+y;
     virtualX=vx;virtualY=vy;
-    auto a=parentcontainer->GetMaxXY();
+    auto a=psd->GetMaxXY();
     if(DrawPolicy(0)){
       if(x<0)
 	px+=x;
@@ -74,14 +74,9 @@ void BaseWindow::AddStr(std::vector<cChar> data,int x,int y){
   }
 }
 
-bool BaseWindow::DrawTransparent(int w,bool f){
-  auto a=GetWholeScreen(virtualX,virtualY);
-  return AddChar(a);
-}
-
 bool BaseWindow::DrawPolicy(int w){
   //returns if virtual cursors are inside of drawing range.
-  auto a=parentcontainer->GetMaxXY();
+  auto a=psd->GetMaxXY();
   int vx=virtualX-x,vy=virtualY-y;
   if(vx>=0 && vx+w<a[0] && vy>=0 && vy<a[1])
     return true;
@@ -94,7 +89,7 @@ bool BaseWindow::MakeWindow(){
   //Makes a window that fit to the coods&size.
   if(!isHidden){
     int resx=this->width,resy=this->height;
-    auto max=parentcontainer->GetMaxXY();
+    auto max=psd->GetMaxXY();
     if(x+width > max[0])//too right
       resx=max[0]-x;
     else if(x<0)//too left
@@ -126,16 +121,6 @@ bool BaseWindow::MakeWindow(){
   return false;
 }
 
-void BaseWindow::DrawOnScreen(){
-  for(int j=y;j<y+height;j++){
-    for(int i=x;i<x+width;i++){
-      cChar a;
-      mvwin_wch(window,j-y,i-x,&a);
-      AddWholeScreen(i,j,a);
-    }
-  }
-}
-
 void BaseWindow::OnResize(){
   MakeWindow();  
 }
@@ -151,35 +136,13 @@ void BaseWindow::Show(){
   MakeWindow();
 }
 
-Vector2D BaseWindow::GetVirtualCursor(){
-  Vector2D a;
-  a.resize(2);
-  a[0]=virtualX;a[1]=virtualY;
-  return a;
-}
-
-cChar BaseWindow::GetWholeScreen(int x,int y){
-  return parentcontainer->GetWholeScreen(x,y);
-}
-
-void BaseWindow::AddWholeScreen(int x,int y,cChar c){
-  parentcontainer->AddWholeScreen(x,y,c);
-}
-
-void BaseWindow::SetParent(WindowContainer* a){
-  parentcontainer=a;
-  MakeWindow();
-};
-
 void BaseWindow::Refresh(){
   touchwin(window);
   wnoutrefresh(window);
 }
 
-BaseWindow::BaseWindow(int x,int y,int w,int h){
-  this->x=x;this->y=y;
-  this->width=w;this->height=h;
-}
+BaseWindow::BaseWindow(int x,int y,int w,int h,SizeData* psd)
+  :Drawable(x,y,w,h,psd){}
 
 void BaseWindow::rmove(){
   this->x++;

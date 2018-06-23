@@ -10,26 +10,25 @@ void AAtext::Draw(){
   InitDraw();
   for(auto c:data){
     int w=wcwidth(c);
-    auto a=GetVirtualCursor();
     switch(c){
     case L' ':
     case L'　':
-      for(int i=0;i<w;i++)
-	DrawTransparent(1);
-      break;
+      // for(int i=0;i<w;i++)
+      // 	DrawTransparent(1);
+      // break;
     case L'\n':
-      while(!DrawTransparent(1)){;}
-      break;
+      // while(!DrawTransparent(1)){;}
+      // break;
     default:
       AddChar(Util::make_cChar(c,0));
       break;
     }
   }
-  while(!DrawTransparent(1)){;}
+  // while(!DrawTransparent(1)){;}
 }
 
-AAtext::AAtext(int x,int y,std::string filename)
-{
+AAtext::AAtext(int x,int y,SizeData* psd,std::string filename)
+  :BaseWindow(x,y,0,0,psd){
   WFile file(filename,std::ios::binary);
   file.imbue(std::locale("ja_JP.UTF-8"));  
   if(file.is_open()!=false){

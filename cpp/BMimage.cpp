@@ -38,8 +38,8 @@ void BMimage::Draw(){
   }
 }
 
-BMimage::BMimage(int x,int y,const char* filename)
-  :file(filename,std::ios::in | std::ios::binary)
+BMimage::BMimage(int x,int y,SizeData* psd,std::string filename)
+  :BaseWindow(x,y,0,0,psd),file(filename,std::ios::in | std::ios::binary)
 {
   this->x=x;
   this->y=y;

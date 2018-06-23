@@ -8,6 +8,22 @@ namespace scgb{
     virtual void Draw();
     bool isBox;
     chtype ColorPair;
-    PlainWindow(int x,int y,int w,int h,chtype ColorPair=0,bool isBox=false);
+    virtual void WindowSetting();
+    PlainWindow(int,int,int,int,SizeData*,chtype,bool);
+  };
+  
+  class PWBuilder:public DrawableBuilder{
+  protected:
+    bool isBox=false;
+    chtype color=0;
+  public:
+    Drawable* GetResult(){
+      return new PlainWindow(x,y,w,h,psd,color,isBox);
+    }
+    PWBuilder(int x,int y,int w,int h)
+      :DrawableBuilder(x,y,w,h){};
+    PWBuilder& SetBox(bool i){isBox=i;return *this;};
+    PWBuilder& SetColor(chtype c){color=c;return *this;};
+    virtual ~PWBuilder(){};
   };
 }

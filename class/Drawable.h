@@ -1,26 +1,38 @@
 #pragma once
 #include "define.h"
+#include "SizeData.h"
 #include "Movable.h"
 
 namespace scgb{
   class Drawable:public Movable{
-    //interface for Drawing things.
-    //follows Composite design pattern.
   protected:
-    WindowContainer* parentcontainer=nullptr;
-    virtual cChar GetWholeScreen(int x,int y)=0;
-    virtual void AddWholeScreen(int x,int y,cChar c)=0;
+    int x,y,width,height;
+    SizeData* psd=nullptr;
   public:
-    virtual void SetParent(WindowContainer* a){parentcontainer=a;};
     virtual void Draw(){};
     virtual void Refresh(){};
     virtual void OnResize(){};
-    virtual void DrawOnScreen(){};
     virtual void Hide(){};
     virtual void Show(){};
+    Drawable(int px,int py,int w,int h,SizeData* ppsd){
+      x=px;y=py;width=w;height=h;psd=ppsd;
+    };
+    Drawable(SizeData* ppsd){psd=ppsd;};
     virtual ~Drawable(){};
-
-    friend WindowContainer;
   };
+  
+  class DrawableBuilder{
+  protected:
+    int x,y,w,h;
+    SizeData* psd=nullptr;
+  public:
+    virtual Drawable* GetResult()=0;
+    void SetPSD(SizeData* sd){psd=sd;};
+    DrawableBuilder(int px,int py,int pw,int ph){
+      x=px;y=py;w=pw;h=ph;
+    };
+    virtual ~DrawableBuilder(){};
+  };
+
 }
 

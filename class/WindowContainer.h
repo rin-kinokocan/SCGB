@@ -4,28 +4,24 @@
 namespace scgb{
   class WindowContainer:public Drawable{
   protected:
-    int width,height,x,y;
     std::map<int,scgb::pDrawable> drawentity;
+    SizeData sd;
     bool isHidden=false;
   public:
     virtual void Draw();
     virtual void Refresh();
     virtual void OnResize();
-    virtual void DrawOnScreen();
     virtual void Hide();
     virtual void Show();
-    virtual Vector2D GetMaxXY();
-    virtual cChar GetWholeScreen(int x,int y);
-    virtual void AddWholeScreen(int x,int y,cChar c);
     
     template <class T>
-    WeakPtr<T> AddDrawable(int l,T* pd){
+    WeakPtr<T> AddDrawable(int l,DrawableBuilder* db){
       if(drawentity.find(l)==drawentity.end()){
-	std::shared_ptr<T> b;
-	pd->SetParent(this);
-	b.reset(pd);
+	std::shared_ptr<Drawable> b;
+	db->SetPSD(&sd);
+	b.reset(db->GetResult());
 	drawentity.insert(std::pair<int,pDrawable>(l,b));
-	return WeakPtr<T>(b);
+	return WeakPtr<T>(std::static_pointer_cast<T>(b));
       }
       else{
 	std::string info="the layer ";
@@ -36,22 +32,21 @@ namespace scgb{
     };
     virtual void DeleteDrawable(int l);
     
-    WindowContainer(int x,int y,int width,int height){
-      auto a=Util::GetMaxScrXY();
-      if(x<=0)
-	this->x=a[0];
-      else
-	this->x=x;
-      if(y<=0)
-	this->y=a[1];
-      else
-	this->y=y;
-      this->width=width;
-      this->height=height;
-    };
-    
+    WindowContainer(int,int,int,int,SizeData*,SizeData);
+    WindowContainer(int,int,int,int,SizeData*);
     virtual ~WindowContainer(){
       drawentity.clear();
     };
+  };
+  
+  class WCBuilder:public DrawableBuilder{
+  public:
+    virtual Drawable* GetResult(){
+      SizeData sd;
+      return new WindowContainer(x,y,w,h,psd,sd);
+    };
+    WCBuilder(int x,int y,int w,int h)
+      :DrawableBuilder(x,y,w,h){};
+    virtual ~WCBuilder(){};
   };
 }

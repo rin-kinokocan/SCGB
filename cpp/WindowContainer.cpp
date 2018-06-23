@@ -19,14 +19,7 @@ void WindowContainer::Draw(){
   if(!isHidden){
     for(auto i:drawentity){
       i.second->Draw();
-      i.second->DrawOnScreen();
     }
-  }
-}
-
-void WindowContainer::DrawOnScreen(){
-  for(auto i:drawentity){
-    i.second->DrawOnScreen();
   }
 }
   
@@ -53,14 +46,10 @@ void WindowContainer::DeleteDrawable(int l){
   }
 }
 
-Vector2D WindowContainer::GetMaxXY(){
-  return Util::GetMaxScrXY();
-}
+WindowContainer::WindowContainer
+(int x,int y,int w,int h,SizeData* psd,SizeData sd)
+  :Drawable(x,y,w,h,psd){};
 
-cChar WindowContainer::GetWholeScreen(int x,int y){
-  return parentcontainer->GetWholeScreen(x,y);
-}
-
-void WindowContainer::AddWholeScreen(int x,int y,cChar c){
-  parentcontainer->AddWholeScreen(x,y,c);
-}
+WindowContainer::WindowContainer
+(int x,int y,int w,int h,SizeData* psd)
+  :Drawable(x,y,w,h,psd){};
