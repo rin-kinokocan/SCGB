@@ -7,3 +7,4 @@
 #include "class/UserInput.h"
 #include "class/PlainWindow.h"
 #include "class/InputBox.h"
+#include "class/GameWindow.h"

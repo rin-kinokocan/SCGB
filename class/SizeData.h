@@ -8,6 +8,12 @@ namespace scgb{
   private:
     double x,y,width,height;
   public:
+    SizeData(){}
+    SizeData(int x,int y,int w,int h){
+      this->x=x;
+      this->y=y;
+      width=w;height=h;
+    }
     virtual Vector2D GetMaxXY(){
       Vector2D v;
       v.resize(2);
@@ -25,23 +31,5 @@ namespace scgb{
     friend WindowContainer;
   };
   
-  class MaxSizeData:public SizeData{
-    //size data for screen.
-    //always shows (0,0) to (COLS,RAWS).
-  public:
-    Vector2D GetMaxXY(){
-      Vector2D v;
-      v.resize(2);
-      getmaxyx(stdscr,v[1],v[0]);
-      return v;
-    };
-    Vector2D GetMinXY(){
-      Vector2D v;
-      v.resize(2);
-      v[0]=0;
-      v[1]=0;
-      return v;
-    };
-  };
 }
 

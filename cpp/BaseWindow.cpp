@@ -90,13 +90,14 @@ bool BaseWindow::MakeWindow(){
   if(!isHidden){
     int resx=this->width,resy=this->height;
     auto max=psd->GetMaxXY();
+    auto min=psd->GetMinXY();
     if(x+width > max[0])//too right
       resx=max[0]-x;
-    else if(x<0)//too left
+    else if(x<min[0])//too left
       resx=width+x;
     if(y+height>max[1])//too down
       resy=max[1]-y;
-    else if(y<0)//too high
+    else if(y<min[1])//too high
       resy=height+y;
 
     if(resx>0 && resy>0){
@@ -109,13 +110,13 @@ bool BaseWindow::MakeWindow(){
       if(this->window!=nullptr)
 	delwin(this->window);
       this->window=newwin(resy,resx,ty,tx);
+      WindowSetting();
     }
     else{
       delwin(window);
       this->window=nullptr;
       return false;
     }
-    WindowSetting();
     return true;
   }
   return false;
@@ -142,7 +143,9 @@ void BaseWindow::Refresh(){
 }
 
 BaseWindow::BaseWindow(int x,int y,int w,int h,SizeData* psd)
-  :Drawable(x,y,w,h,psd){}
+  :Drawable(x,y,w,h,psd){
+  MakeWindow();
+}
 
 void BaseWindow::rmove(){
   this->x++;

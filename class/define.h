@@ -31,9 +31,7 @@ namespace scgb{
   };
   
   enum Event{
-    //Return values of Screen::GetEvent.
-    //I may merge this into Key.
-    EVE_QUIT='q',
+    EVE_END,
     EVE_PRINT='p',
     EVE_NOINPUT=ERR,    
     EVE_RESIZE=KEY_RESIZE,

@@ -25,9 +25,9 @@ namespace scgb{
       }
       else{
 	std::string info="the layer ";
-	info+=l;info+="is already used";
+	info+=std::to_string(l);info+="is already used";
 	endwin();
-	throw new std::runtime_error(info);
+	throw std::runtime_error(info);
       }
     };
     virtual void DeleteDrawable(int l);

@@ -7,31 +7,19 @@ using namespace std;
 using namespace scgb;
 
 void Screen::Draw(){
-  int x,y;
   for(auto i:drawentity){
     i.second->Draw();
   }
 }
 
 void Screen::Refresh(){
-  if(isendwin()==false){
-    touchwin(stdscr);
-    wnoutrefresh(stdscr);
-    for(auto& i:drawentity){   
+  if(!isendwin()){
+    for(auto& i:drawentity){
       i.second->Refresh();
     }
-    doupdate();touchwin(stdscr);
     wnoutrefresh(stdscr);
-    for(auto& i:drawentity){   
-      i.second->Refresh();
-    }
     doupdate();
   }  
-}
-
-void Screen::Destroy(){
-  mvprintw(2,1,"destroy is called ");
-  drawentity.clear();
 }
 
 void Screen::OnResize(){

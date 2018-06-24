@@ -10,7 +10,6 @@ namespace scgb{
     //((0,0) at left top of the window) local.
     int virtualX;
     int virtualY;
-    bool MakeWindow();
   protected:
     //coordinates of the window.
     //unlike curses' window coodinates,
@@ -18,7 +17,7 @@ namespace scgb{
     //virtualX-x=relative cursor pos.
     WinPtr window=nullptr;
     bool isHidden=false;
-   
+    bool MakeWindow();   
     void InitDraw();
     bool MoveAfterDraw(int w);
     bool AddChar(cChar c);//for file reading things,I guess?

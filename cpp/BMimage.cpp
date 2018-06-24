@@ -66,5 +66,6 @@ BMimage::BMimage(int x,int y,SizeData* psd,std::string filename)
     }
   }
   this->file.close();
+  MakeWindow();
 }
 

@@ -18,7 +18,7 @@ void AAtext::Draw(){
       // break;
     case L'\n':
       // while(!DrawTransparent(1)){;}
-      // break;
+      break;
     default:
       AddChar(Util::make_cChar(c,0));
       break;
@@ -55,6 +55,7 @@ AAtext::AAtext(int x,int y,SizeData* psd,std::string filename)
     this->y=y;
     this->width=mw+1;
     this->height=h;
+    MakeWindow();;
   }
   else{
     throw std::invalid_argument("cannot open file");    

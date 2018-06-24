@@ -7,16 +7,18 @@ namespace scgb{
   public:
     void Draw();
     void OnResize();
-    void Destroy();
     void Refresh();
-    
     void Init();//The most important method.
     
     //methods to save screen.
     static cchar_t GetCchar(int x,int y);
     static void AddCchar(cchar_t,unsigned int x,unsigned int y);
     Screen():
-      WindowContainer(0,0,0,0,nullptr){};
+      WindowContainer(0,0,0,0,nullptr){
+      Init();
+      int w,h;getmaxyx(stdscr,h,w);
+      sd=SizeData(0,0,w,h);
+    };
 
   private:
     //Signal handlers

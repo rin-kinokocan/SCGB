@@ -40,7 +40,7 @@ clean :
 	@rm $(BLDDIR) $(EXENAME) $(DEPDIR) $(SRCDIR)/#* $(INCDIR)/#* $(CLSDIR)/#* -rf
 
 git :
-	make clean && git add -A && git commit && git push origin master
+	make clean && git add -A && git commit && git push
 
 #DEPENDENCY
 $(DEPDIR)/%.d: ;
