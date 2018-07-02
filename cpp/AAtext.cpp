@@ -9,16 +9,16 @@ using namespace scgb;
 void AAtext::Draw(){
   InitDraw();
   for(auto c:data){
-    int w=wcwidth(c);
+    // int w=wcwidth(c);
     switch(c){
+    case L'\n':
+      while(!AddChar(Util::make_cChar(' ',0))){;}
+      break;
     case L' ':
     case L'　':
       // for(int i=0;i<w;i++)
       // 	DrawTransparent(1);
       // break;
-    case L'\n':
-      // while(!DrawTransparent(1)){;}
-      break;
     default:
       AddChar(Util::make_cChar(c,0));
       break;
@@ -55,7 +55,7 @@ AAtext::AAtext(int x,int y,SizeData* psd,std::string filename)
     this->y=y;
     this->width=mw+1;
     this->height=h;
-    MakeWindow();;
+    MakeWindow();
   }
   else{
     throw std::invalid_argument("cannot open file");    

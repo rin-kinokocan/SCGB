@@ -6,6 +6,7 @@
 #include <memory>
 #include <map>
 #include <string>
+#include <gainput/gainput.h>
 
 namespace scgb{
   //forward declaration of classes
@@ -18,29 +19,22 @@ namespace scgb{
     STA_OPEN=1,
   };
 
-  enum Key{
-    //key values used in SCGB.If your terminal returns other number,
-    //then change these numbers accordingly.
-    SCGB_BACKSPACE=127,
-    SCGB_DELETE=KEY_DC,
-    SCGB_CTR_D=4,
-    SCGB_RIGHT=KEY_RIGHT,
-    SCGB_LEFT=KEY_LEFT,
-    SCGB_UP=KEY_UP,
-    SCGB_DOWN=KEY_DOWN,
+  enum KeyEvent{
+    //key values used in SCGB.
+    SCGB_BACKSPACE,
+    SCGB_DELETE,
+    SCGB_CTR_D,
+    SCGB_RIGHT,
+    SCGB_LEFT,
+    SCGB_UP,
+    SCGB_DOWN,
   };
   
   enum Event{
     EVE_END,
-    EVE_PRINT='p',
-    EVE_NOINPUT=ERR,    
     EVE_RESIZE=KEY_RESIZE,
-    EVE_RIGHT=KEY_RIGHT,
-    EVE_LEFT=KEY_LEFT,
-    EVE_UP=KEY_UP,
-    EVE_DOWN=KEY_DOWN,
   };
-
+    
   enum Direction{
     Right,
     Left,
@@ -78,7 +72,10 @@ namespace scgb{
 
   typedef std::shared_ptr<scgb::Drawable> pDrawable;
   typedef std::vector<int> Vector2D;
-
+  //for future
+  typedef gainput::InputMap InputMap;
+  typedef gainput::InputManager InputManager;
+  
   template <class T>
   class WeakPtr{//wrapper of std::weak_ptr
   public:
@@ -88,10 +85,11 @@ namespace scgb{
 	return pointer.lock();
       else
 	throw std::runtime_error("NOPE.");
-    };
+    }
+    WeakPtr(){}
     WeakPtr(std::shared_ptr<T> a){
       pointer=a;
-    };
+    }
   };
 
   typedef cchar_t cChar;

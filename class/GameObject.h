@@ -12,7 +12,8 @@ namespace scgb{
   protected:
     std::vector<EventListner*> els;
   public:
-    virtual void Draw(){};
+    virtual void Draw()=0;
+    virtual void Exec()=0;
     virtual void AttachEL(EventListner* el){
       els.push_back(el);
     }
