@@ -9,7 +9,7 @@ int main(){
   BMimageBuilder bmi(20,10,"./assets/kinoko.bmp");
   AAtextBuilder aa(20,0,"./assets/ebi.aa");
   GCMovableBuilder ebi(&aa);
-  gw.AddDrawable<BMimage>(3,&bmi);
+  gw.AddDrawable<BMimage>(1,&bmi);
   auto hero=gw.AddGameComponent<GCMovable>(2,&ebi);
   while(!gel.IsEnd()){
     gw.Draw();

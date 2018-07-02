@@ -15,16 +15,13 @@ namespace scgb{
     //unlike curses' window coodinates,
     //these can be negative.
     //virtualX-x=relative cursor pos.
-    WinPtr window=nullptr;
     bool isHidden=false;
-    bool MakeWindow();   
     void InitDraw();
     bool MoveAfterDraw(int w);
     bool AddChar(cChar c);//for file reading things,I guess?
     bool DrawPolicy(int w);
     virtual void WindowSetting(){};
   public:
-    void Refresh();
     virtual void OnResize();
     virtual void Hide();
     virtual void Show();
@@ -39,7 +36,7 @@ namespace scgb{
     void AddStr(std::vector<cChar>,int x,int y);//to add string.
     
     BaseWindow(int,int,int,int,SizeData*);
-    virtual ~BaseWindow(){delwin(window);};
+    virtual ~BaseWindow(){};
   };
   
   class BWBuilder:public DrawableBuilder{

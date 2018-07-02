@@ -65,8 +65,6 @@ namespace scgb{
   }BMinfo;
 
 
-
-  typedef WINDOW* WinPtr;
   typedef std::ifstream File;
   typedef std::wifstream WFile;
 

@@ -6,7 +6,6 @@ using namespace std;
 
 void BaseWindow::InitDraw(){
   MoveCursor(0,0);
-  werase(this->window);
   virtualX=x;
   virtualY=y;
 }
@@ -18,9 +17,9 @@ bool BaseWindow::AddChar(cChar c){
   auto attr=cCharToAttr(c);
   int a=wcwidth(ch);
   if(ch!='\n' && DrawPolicy(a)){
-    wattron(window,attr);
-    waddwstr(window,c.chars);
-    wattroff(window,attr);
+    attron(attr);
+    addwstr(c.chars);
+    attroff(attr);
  }
   return MoveAfterDraw(a);
 }
@@ -43,11 +42,7 @@ bool BaseWindow::MoveAfterDraw(int w){
 void BaseWindow::MoveCursor(int px,int py){
   //moves virtual cursors to the given coods.
   //parameters are relative cursor pos.
-  // string info;
-  //   info="ADC:";info+=std::to_string(px);
-  //   info+=",";info+=std::to_string(py);
-  //   Util::LogToStdout(info);
-
+  
   if(px>=0 && px<width && py>=0 && py<height){
     int vx=px+x,vy=py+y;
     virtualX=vx;virtualY=vy;
@@ -57,7 +52,7 @@ void BaseWindow::MoveCursor(int px,int py){
 	px+=x;
       if(y<0)
 	py+=y;
-      wmove(window,py,px);
+      move(py,px);
     }
   }
 }
@@ -84,86 +79,33 @@ bool BaseWindow::DrawPolicy(int w){
     return false;
 }
 
-
-bool BaseWindow::MakeWindow(){
-  //Makes a window that fit to the coods&size.
-  if(!isHidden){
-    int resx=this->width,resy=this->height;
-    auto max=psd->GetMaxXY();
-    auto min=psd->GetMinXY();
-    if(x+width > max[0])//too right
-      resx=max[0]-x;
-    else if(x<min[0])//too left
-      resx=width+x;
-    if(y+height>max[1])//too down
-      resy=max[1]-y;
-    else if(y<min[1])//too high
-      resy=height+y;
-
-    if(resx>0 && resy>0){
-      int tx=x,ty=y;
-      if(this->x<0)
-	tx=0;
-      if(this->y<0)
-	ty=0;
-
-      if(this->window!=nullptr)
-	delwin(this->window);
-      this->window=newwin(resy,resx,ty,tx);
-      WindowSetting();
-    }
-    else{
-      delwin(window);
-      this->window=nullptr;
-      return false;
-    }
-    return true;
-  }
-  return false;
-}
-
-void BaseWindow::OnResize(){
-  MakeWindow();  
-}
+void BaseWindow::OnResize(){}
 
 void BaseWindow::Hide(){
-  delwin(window);
-  window=nullptr;
   isHidden=true;
 }
 
 void BaseWindow::Show(){
   isHidden=false;
-  MakeWindow();
-}
-
-void BaseWindow::Refresh(){
-  touchwin(window);
-  wnoutrefresh(window);
 }
 
 BaseWindow::BaseWindow(int x,int y,int w,int h,SizeData* psd)
   :Drawable(x,y,w,h,psd){
-  MakeWindow();
 }
 
 void BaseWindow::rmove(){
   this->x++;
-  MakeWindow();
 }
 
 void BaseWindow::lmove(){
   this->x--;
-  MakeWindow();
 }
 
 void BaseWindow::umove(){
   this->y--;
-  MakeWindow();
 }
 
 void BaseWindow::dmove(){
   this->y++;
-  MakeWindow();
 }
 

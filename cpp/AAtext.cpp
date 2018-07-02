@@ -55,7 +55,6 @@ AAtext::AAtext(int x,int y,SizeData* psd,std::string filename)
     this->y=y;
     this->width=mw+1;
     this->height=h;
-    MakeWindow();
   }
   else{
     throw std::invalid_argument("cannot open file");    

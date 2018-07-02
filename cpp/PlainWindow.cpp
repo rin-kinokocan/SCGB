@@ -6,9 +6,9 @@ void PlainWindow::Draw(){
 };
 
 void PlainWindow::WindowSetting(){
-  if(isBox)
-    box(window,ACS_VLINE,ACS_HLINE);
-  wbkgd(window,ColorPair);
+  if(isBox);
+  // box(window,ACS_VLINE,ACS_HLINE);
+  // wbkgd(window,ColorPair);
 }
 
 PlainWindow::PlainWindow(int x,int y,int w,int h,SizeData* psd,chtype CP,bool isBox):
