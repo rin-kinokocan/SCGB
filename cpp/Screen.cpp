@@ -1,7 +1,6 @@
-#include <csignal>
 #include <locale>
-#include "class/Screen.h"
-#include "class/Color.hh"
+#include "Screen.h"
+#include "Color.hh"
 
 using namespace std;
 using namespace scgb;
@@ -44,19 +43,4 @@ void Screen::Init(){//Initialize everything.
   cbreak();
   //color initialization starts!
   Color::Init();
-  //if ncurses hasn't enabled sigwinch.
-  signal(SIGWINCH,Screen::ResizeHandler);
-  //to detect Ctrl-c
- signal(SIGQUIT,Screen::InterruptHandler);
 }
-
-void Screen::ResizeHandler(int param){
-  //I hasn't enabled sigwinch
-  if(isendwin()==false){
-    ungetch(scgb::EVE_RESIZE);
-  }
-}
-
-void Screen::InterruptHandler(int param){
-}
-

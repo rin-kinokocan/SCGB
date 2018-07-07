@@ -1,7 +1,7 @@
 CXX:=g++
 CURDIR:=$(PWD)
-CXXFLAGS:=-Wall -std=c++11 -g -O0 -iquote=$(CURDIR)
-LIB:=-lncursesw -lm -lgainput -lX11
+CXXFLAGS:=-Wall -std=c++11 -g -O0 -iquote=$(CURDIR)/class
+LIB:=-lncursesw
 SRCDIR:=cpp
 INCDIR:=include
 BLDDIR:=build

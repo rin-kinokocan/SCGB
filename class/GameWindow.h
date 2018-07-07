@@ -6,9 +6,8 @@ namespace scgb{
   class GameWindow:public GameObject{
   protected:
     Screen scr;
-    InputManager im;
-    InputMap map;
     std::map<int,std::shared_ptr<GameComponent>> gcs;
+    InputMap im;
   public:
     void Draw(){
       scr.Draw();
@@ -16,8 +15,13 @@ namespace scgb{
     }
     void Exec(){
       im.Update();
+      if(im.GetBool(SCGB_RESIZE))
+	scr.OnResize();
       for(auto a:gcs){
 	a.second->Exec();
+      }
+      if(im.GetBool(SCGB_QUIT)){
+	SendMessage(EVE_END);
       }
     }
     
@@ -26,7 +30,7 @@ namespace scgb{
       std::shared_ptr<GameComponent> b;
       auto db=gcb->GetDrawableBuilder();
       auto a=AddDrawable<Drawable>(l,db);
-      gcb->SetIM(&map);
+      gcb->SetIM(&im);
       gcb->SetDrawable(a);
       b.reset(gcb->GetResult());
       gcs.insert(std::pair<int,std::shared_ptr<GameComponent>>(l,b));
@@ -36,13 +40,6 @@ namespace scgb{
     WeakPtr<T> AddDrawable(int l,DrawableBuilder* db){
       return scr.AddDrawable<T>(l,db);
     };
-    GameWindow():map(im){
-      auto id=im.CreateDevice<gainput::InputDeviceKeyboard>();
-      map.MapBool(SCGB_LEFT,id,gainput::KeyLeft);
-      map.MapBool(SCGB_RIGHT,id,gainput::KeyRight);
-      map.MapBool(SCGB_UP,id,gainput::KeyUp);
-      map.MapBool(SCGB_DOWN,id,gainput::KeyDown);
-    }
   };
   
   class GWEventListner:public EventListner{

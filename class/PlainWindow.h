@@ -20,7 +20,7 @@ namespace scgb{
     Drawable* GetResult(){
       return new PlainWindow(x,y,w,h,psd,color,isBox);
     }
-    PWBuilder(int x,int y,int w,int h)
+    PWBuilder(double x,double y,int w,int h)
       :DrawableBuilder(x,y,w,h){};
     PWBuilder& SetBox(bool i){isBox=i;return *this;};
     PWBuilder& SetColor(chtype c){color=c;return *this;};

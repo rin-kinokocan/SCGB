@@ -1,5 +1,6 @@
 #pragma once
 #include "define.h"
+#include "InputMap.h"
 
 namespace scgb{
   class EventListner{
@@ -17,7 +18,7 @@ namespace scgb{
     virtual void AttachEL(EventListner* el){
       els.push_back(el);
     }
-    virtual void SendMessage(Event e,std::string str=NULL){
+    virtual void SendMessage(Event e,std::string str=""){
       for(auto el:els){
 	el->notify(e,str);
       }

@@ -1,13 +1,13 @@
-#include "class/BaseWindow.h"
-#include "class/WindowContainer.h"
+#include "BaseWindow.h"
+#include "WindowContainer.h"
 using namespace scgb;
 using namespace scgb::Util;
 using namespace std;
 
 void BaseWindow::InitDraw(){
   MoveCursor(0,0);
-  virtualX=x;
-  virtualY=y;
+  curx=0;
+  cury=0;
 }
 
 bool BaseWindow::AddChar(cChar c){
@@ -25,34 +25,27 @@ bool BaseWindow::AddChar(cChar c){
 }
 
 bool BaseWindow::MoveAfterDraw(int w){
-  int rx=virtualX,ry=virtualY;
+  int rx=curx,ry=cury;
   bool flag=false;
-  if(rx-x+w<width){
+  if(rx+w<width){
     rx+=w;
   }
   else{
-    rx=x;
+    rx=0;
     ry++;
     flag=true;
  }
-  MoveCursor(rx-x,ry-y);
+  MoveCursor(rx,ry);
   return flag;
 }
 
 void BaseWindow::MoveCursor(int px,int py){
   //moves virtual cursors to the given coods.
   //parameters are relative cursor pos.
-  
   if(px>=0 && px<width && py>=0 && py<height){
-    int vx=px+x,vy=py+y;
-    virtualX=vx;virtualY=vy;
-    auto a=psd->GetMaxXY();
+    curx=px;cury=py;
     if(DrawPolicy(0)){
-      if(x<0)
-	px+=x;
-      if(y<0)
-	py+=y;
-      move(py,px);
+      move(py+y,px+x);
     }
   }
 }
@@ -70,9 +63,9 @@ void BaseWindow::AddStr(std::vector<cChar> data,int x,int y){
 }
 
 bool BaseWindow::DrawPolicy(int w){
-  //returns if virtual cursors are inside of drawing range.
+  //returns if cursors are inside of stdscr.
   auto a=psd->GetMaxXY();
-  int vx=virtualX-x,vy=virtualY-y;
+  int vx=curx+x,vy=cury+y;
   if(vx>=0 && vx+w<a[0] && vy>=0 && vy<a[1])
     return true;
   else

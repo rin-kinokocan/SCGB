@@ -6,7 +6,6 @@
 #include <memory>
 #include <map>
 #include <string>
-#include <gainput/gainput.h>
 
 namespace scgb{
   //forward declaration of classes
@@ -28,13 +27,15 @@ namespace scgb{
     SCGB_LEFT,
     SCGB_UP,
     SCGB_DOWN,
+    SCGB_RESIZE=KEY_RESIZE,
+    SCGB_NOINPUT=ERR,
+    SCGB_QUIT='q',
   };
-  
+
   enum Event{
     EVE_END,
-    EVE_RESIZE=KEY_RESIZE,
   };
-    
+  
   enum Direction{
     Right,
     Left,
@@ -42,37 +43,11 @@ namespace scgb{
     Down,
   };
       
-  typedef struct{
-    unsigned short bfType;
-    unsigned int bfSize;
-    unsigned short bfReserved1;
-    unsigned short bfReserved2;
-    unsigned int bfOffBits;
-  }BMfile;
-
-  typedef struct{
-    unsigned int biSize;
-    unsigned int biWidth;
-    unsigned int biHeight;
-    unsigned short biPlanes;
-    unsigned short biBitCount;
-    unsigned int biCompression;
-    unsigned int biSizeImage;
-    unsigned int biXPixPerMeter;
-    unsigned int biYPixPerMeter;
-    unsigned int biClrUsed;
-    unsigned int biClrImporant;
-  }BMinfo;
-
-
   typedef std::ifstream File;
   typedef std::wifstream WFile;
 
   typedef std::shared_ptr<scgb::Drawable> pDrawable;
   typedef std::vector<int> Vector2D;
-  //for future
-  typedef gainput::InputMap InputMap;
-  typedef gainput::InputManager InputManager;
   
   template <class T>
   class WeakPtr{//wrapper of std::weak_ptr
@@ -99,6 +74,6 @@ namespace scgb{
     int cCharToAttr(cChar c);
     Vector2D GetMaxScrXY();
     void LogToStdout(std::string);
+    void SetSigHandlers();
   }
 }
-

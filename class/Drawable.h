@@ -6,7 +6,8 @@
 namespace scgb{
   class Drawable:public Movable{
   protected:
-    int x,y,width,height;
+    double x,y;
+    int width,height;
     SizeData* psd=nullptr;
   public:
     virtual void Draw(){};
@@ -14,7 +15,7 @@ namespace scgb{
     virtual void OnResize(){};
     virtual void Hide(){};
     virtual void Show(){};
-    Drawable(int px,int py,int w,int h,SizeData* ppsd){
+    Drawable(double px,double py,int w,int h,SizeData* ppsd){
       x=px;y=py;width=w;height=h;psd=ppsd;
     };
     Drawable(SizeData* ppsd){psd=ppsd;};

@@ -4,17 +4,9 @@
 namespace scgb{
   class BaseWindow :public Drawable{
   private:
-    //virtual cursors.
-    //shows where the cursors globally are.
-    //I call relative coodinates
-    //((0,0) at left top of the window) local.
-    int virtualX;
-    int virtualY;
+    int curx=0;
+    int cury=0;
   protected:
-    //coordinates of the window.
-    //unlike curses' window coodinates,
-    //these can be negative.
-    //virtualX-x=relative cursor pos.
     bool isHidden=false;
     void InitDraw();
     bool MoveAfterDraw(int w);
@@ -44,7 +36,7 @@ namespace scgb{
     virtual Drawable* GetResult(){
       return new BaseWindow(x,y,w,h,psd);
     };
-    BWBuilder(int x,int y,int w,int h)
+    BWBuilder(double x,double y,double w,int h)
       :DrawableBuilder(x,y,w,h){};
     virtual ~BWBuilder(){};
   };

@@ -9,7 +9,7 @@ namespace scgb{
   public:
     void Draw();
     // std::vector<wchar_t> GetInput();
-    InputBox(int,int,int,int,SizeData*,std::string);
+    InputBox(double,double,int,int,SizeData*,std::string);
   };
   
   class IBBuilder:public DrawableBuilder{
@@ -19,7 +19,7 @@ namespace scgb{
     virtual Drawable* GetResult(){
       return new InputBox(x,y,w,h,psd,str);
     }
-    IBBuilder(int x,int y,int w,int h,std::string s)
+    IBBuilder(double x,double y,int w,int h,std::string s)
       :DrawableBuilder(x,y,w,h){str=s;};
     virtual ~IBBuilder(){};
   };

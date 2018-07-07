@@ -1,4 +1,4 @@
-#include "class/AAtext.h"
+#include "AAtext.h"
 #include <locale>
 #include <unistd.h>
 #include <unicode/utypes.h>
@@ -27,7 +27,7 @@ void AAtext::Draw(){
   // while(!DrawTransparent(1)){;}
 }
 
-AAtext::AAtext(int x,int y,SizeData* psd,std::string filename)
+AAtext::AAtext(double x,double y,SizeData* psd,std::string filename)
   :BaseWindow(x,y,0,0,psd){
   WFile file(filename,std::ios::binary);
   file.imbue(std::locale("ja_JP.UTF-8"));  

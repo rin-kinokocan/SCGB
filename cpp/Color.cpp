@@ -1,4 +1,4 @@
-#include "class/Color.hh"
+#include "Color.hh"
 #include <cmath>
 #include <iostream>
 #include <exception>

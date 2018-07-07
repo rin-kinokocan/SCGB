@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "InputMap.h"
 
 namespace scgb{
   
@@ -9,8 +10,8 @@ namespace scgb{
     InputMap* im;
   public:
     virtual void Draw(){wpd->Draw();};
-    GameComponent(WeakPtr<Drawable> pwpd,InputMap* pim)
-      :wpd(pwpd),im(pim){}
+    GameComponent(WeakPtr<Drawable> wpd,InputMap* im)
+      :wpd(wpd),im(im){}
   };
 
   class GCBuilder{

@@ -1,4 +1,6 @@
-#include "class/define.h"
+#include "define.h"
+#include <csignal>
+
 namespace scgb{
   namespace Util{
     cChar make_cChar(wchar_t in,int attr){
@@ -34,6 +36,19 @@ namespace scgb{
       if(f)
 	initscr();
     }
-  }
+    static void ResizeHandler(int param){
+      if(isendwin()==false){
+	ungetch(scgb::SCGB_RESIZE);
+      }
+    }
+    static void InterruptHandler(int param){
+    }
 
+    void SetSigHandlers(){
+      //if ncurses hasn't enabled sigwinch.
+      signal(SIGWINCH,ResizeHandler);
+      //to detect Ctrl-c
+      signal(SIGQUIT,InterruptHandler);
+    }
+  }
 }

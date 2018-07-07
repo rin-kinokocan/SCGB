@@ -32,8 +32,8 @@ namespace scgb{
     };
     virtual void DeleteDrawable(int l);
     
-    WindowContainer(int,int,int,int,SizeData*,SizeData);
-    WindowContainer(int,int,int,int,SizeData*);
+    WindowContainer(double,double,int,int,SizeData*,SizeData);
+    WindowContainer(double,double,int,int,SizeData*);
     virtual ~WindowContainer(){
       drawentity.clear();
     };
@@ -45,7 +45,7 @@ namespace scgb{
       SizeData sd;
       return new WindowContainer(x,y,w,h,psd,sd);
     };
-    WCBuilder(int x,int y,int w,int h)
+    WCBuilder(double x,double y,int w,int h)
       :DrawableBuilder(x,y,w,h){};
     virtual ~WCBuilder(){};
   };

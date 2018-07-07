@@ -1,5 +1,5 @@
-#include "class/InputBox.h"
-#include "include/scgb.h"
+#include "InputBox.h"
+#include "PlainWindow.h"
 using namespace std;
 using namespace scgb;
 
@@ -17,7 +17,7 @@ void InputBox::Draw(){
 //   return a->GetData();
 // }
 
-InputBox::InputBox(int x,int y,int w,int h,SizeData* psd,string display)
+InputBox::InputBox(double x,double y,int w,int h,SizeData* psd,string display)
   :WindowContainer(x,y,w,h,psd){
   for(auto a:display){
     info.push_back(Util::make_cChar(a,0));

@@ -20,9 +20,5 @@ namespace scgb{
       sd=SizeData(0,0,w,h);
     };
 
-  private:
-    //Signal handlers
-    static void ResizeHandler(int param);
-    static void InterruptHandler(int param);
   };
 }

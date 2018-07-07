@@ -1,33 +1,8 @@
-#include "class/Color.hh"
-#include "class/BMimage.h"
-#include "class/define.h"
+#include "Color.hh"
+#include "BMimage.h"
+#include "define.h"
 
 using namespace scgb;
-
-void BMimage::ReadFile(){
- 
-  this->file.read(reinterpret_cast<char*>(&(this->bf.bfType)),2);
-  if(bf.bfType!=19778){//"BM" in hex,but I'm not sure how to write hex.
-    printf("%d\n",bf.bfType);
-    throw 1;
-  }
-  this->file.read(reinterpret_cast<char*>(&(this->bf.bfSize)),4);
-  this->file.read(reinterpret_cast<char*>(&(this->bf.bfReserved1)),2);
-  this->file.read(reinterpret_cast<char*>(&(this->bf.bfReserved2)),2);
-  this->file.read(reinterpret_cast<char*>(&(this->bf.bfOffBits)),4);
-
-  this->file.read(reinterpret_cast<char*>(&(this->bi.biSize)),4);
-  this->file.read(reinterpret_cast<char*>(&(this->bi.biWidth)),4);
-  this->file.read(reinterpret_cast<char*>(&(this->bi.biHeight)),4);
-  this->file.read(reinterpret_cast<char*>(&(this->bi.biPlanes)),2);
-  this->file.read(reinterpret_cast<char*>(&(this->bi.biBitCount)),2);
-  this->file.read(reinterpret_cast<char*>(&(this->bi.biCompression)),4);
-  this->file.read(reinterpret_cast<char*>(&(this->bi.biSizeImage)),4);
-  this->file.read(reinterpret_cast<char*>(&(this->bi.biXPixPerMeter)),4);
-  this->file.read(reinterpret_cast<char*>(&(this->bi.biYPixPerMeter)),4);
-  this->file.read(reinterpret_cast<char*>(&(this->bi.biClrUsed)),4);
-  this->file.read(reinterpret_cast<char*>(&(this->bi.biClrImporant)),4);
-}
 
 void BMimage::Draw(){
   InitDraw();
@@ -39,25 +14,33 @@ void BMimage::Draw(){
 }
 
 BMimage::BMimage(int x,int y,SizeData* psd,std::string filename)
-  :BaseWindow(x,y,0,0,psd),file(filename,std::ios::in | std::ios::binary)
+  :BaseWindow(x,y,0,0,psd)
 {
+  File file(filename,std::ios::in | std::ios::binary);
+  int data;
   this->x=x;
   this->y=y;
   if(file.is_open()==false){
     throw std::invalid_argument("cannot open file");
   }
-  this->ReadFile();
-  this->width=this->bi.biWidth*2;
-  this->height=this->bi.biHeight;
-  int w=this->bi.biWidth;
-  int h=this->bi.biHeight;
+  file.read((char*)&data,2);
+  if(data!=19778)
+    throw(std::runtime_error("Not a BitMap"));
+  file.ignore(16);
+  file.read((char*)&width,4);
+  file.read((char*)&height,4);
+  file.ignore(28);
+  int w=width;
+  int h=height;
+  width*=2;
+
   this->Pixels.resize(w*h);
   for(int i=0;i<h;i++){
     for(int j=0;j<w;j++){
       unsigned char r,g,b;
-      if(this->file.read(reinterpret_cast<char*>(&b),1)&&
-	 this->file.read(reinterpret_cast<char*>(&g),1)&&
-	 this->file.read(reinterpret_cast<char*>(&r),1)){
+      if(file.read(reinterpret_cast<char*>(&b),1)&&
+	 file.read(reinterpret_cast<char*>(&g),1)&&
+	 file.read(reinterpret_cast<char*>(&r),1)){
 	int p=Color::GetColor(r,g,b);
 	int x=j,y=h-1-i;
 	int pos=y*w+x;
@@ -65,6 +48,6 @@ BMimage::BMimage(int x,int y,SizeData* psd,std::string filename)
       }
     }
   }
-  this->file.close();
+  file.close();
 }
 

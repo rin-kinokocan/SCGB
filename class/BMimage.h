@@ -4,10 +4,6 @@
 namespace scgb{
   class BMimage :public BaseWindow{
   protected:
-    void ReadFile();
-    File file;
-    BMfile bf;
-    BMinfo bi;
     std::vector<int> Pixels;
   public:
     void Draw();

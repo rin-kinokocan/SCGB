@@ -1,4 +1,4 @@
-#include "class/PlainWindow.h"
+#include "PlainWindow.h"
 using namespace scgb;
 using namespace scgb::Util;
 

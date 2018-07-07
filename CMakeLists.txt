@@ -1,0 +1,16 @@
+cmake_minimum_required(VERSION 2.8)
+project(SCGB)
+set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/cpp)
+set(INCLUDE_DIRS
+"${CMAKE_SOURCE_DIR}/class"
+)
+file(GLOB SCGB_SOURCES ${SOURCE_DIR}/*.cpp)
+include_directories(${INCLUDE_DIRS})
+add_library(scgb "${SCGB_SOURCES}")
+add_executable(scgb.exe "${SOURCE_DIR}/main.cpp")
+if(UNIX)
+  target_link_libraries(scgb.exe scgb ncursesw)
+elseif(WIN32)
+else()
+  message("unsupported OS")
+endif()

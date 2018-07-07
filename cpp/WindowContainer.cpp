@@ -1,4 +1,4 @@
-#include "class/WindowContainer.h"
+#include "WindowContainer.h"
 using namespace std;
 using namespace scgb;
 
@@ -47,11 +47,11 @@ void WindowContainer::DeleteDrawable(int l){
 }
 
 WindowContainer::WindowContainer
-(int x,int y,int w,int h,SizeData* psd,SizeData sd)
+(double x,double y,int w,int h,SizeData* psd,SizeData sd)
   :Drawable(x,y,w,h,psd){this->sd=sd;};
 
 WindowContainer::WindowContainer
-(int x,int y,int w,int h,SizeData* psd)
+(double x,double y,int w,int h,SizeData* psd)
   :Drawable(x,y,w,h,psd){
   sd.x=x;sd.width=w;
   sd.y=y;sd.height=h;
