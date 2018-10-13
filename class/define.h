@@ -23,10 +23,10 @@ namespace scgb{
     SCGB_BACKSPACE,
     SCGB_DELETE,
     SCGB_CTR_D,
-    SCGB_RIGHT,
-    SCGB_LEFT,
-    SCGB_UP,
-    SCGB_DOWN,
+    SCGB_RIGHT=KEY_RIGHT,
+    SCGB_LEFT=KEY_LEFT,
+    SCGB_UP=KEY_UP,
+    SCGB_DOWN=KEY_DOWN,
     SCGB_RESIZE=KEY_RESIZE,
     SCGB_NOINPUT=ERR,
     SCGB_QUIT='q',
@@ -46,7 +46,6 @@ namespace scgb{
   typedef std::ifstream File;
   typedef std::wifstream WFile;
 
-  typedef std::shared_ptr<scgb::Drawable> pDrawable;
   typedef std::vector<int> Vector2D;
   
   template <class T>

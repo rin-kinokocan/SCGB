@@ -1,19 +1,19 @@
-#include "GameComponent.h"
+#include "GameObject.hpp"
 
 namespace scgb{
-  class GCMovable:public GameComponent{
+  class GOMovable:public GameObject{
   public:
-    virtual void Exec(){
+    virtual void Exec(InputMap im){
+      if(im->GetBool(SCGB_LEFT))
+	wpd->Move(Left);
+      if(im->GetBool(SCGB_RIGHT))
+	wpd->Move(Right);
+      if(im->GetBool(SCGB_UP))
+	wpd->Move(Up);
+      if(im->GetBool(SCGB_DOWN))
+	wpd->Move(Down);
     }
-    GCMovable(WeakPtr<Drawable> pwpd,InputMap* pim)
-      :GameComponent(pwpd,pim){}
-  };
-  
-  class GCMovableBuilder:public GCBuilder{
-  public:
-    GameComponent* GetResult(){
-      return new GCMovable(wpd,im);
-    }
-    GCMovableBuilder(DrawableBuilder* pdb):GCBuilder(pdb){}
+    GCMovable(WeakPtr<Drawable> pwpd)
+      :GameComponent(pwpd){}
   };
 }

@@ -1,26 +1,27 @@
 #pragma once
-#include "Drawable.h"
+#include "DrawingComponent.hpp"
 
 namespace scgb{
-  class WindowContainer:public Drawable{
+  class WindowContainer:public DrawingComponent{
   protected:
-    std::map<int,scgb::pDrawable> drawentity;
-    SizeData sd;
-    bool isHidden=false;
+    std::map<int,std::shared_ptr<DrawingComponent>> drawlist;
   public:
     virtual void Draw();
-    virtual void Refresh();
-    virtual void OnResize();
     virtual void Hide();
     virtual void Show();
     
     template <class T>
-    WeakPtr<T> AddDrawable(int l,DrawableBuilder* db){
-      if(drawentity.find(l)==drawentity.end()){
-	std::shared_ptr<Drawable> b;
-	db->SetPSD(&sd);
-	b.reset(db->GetResult());
-	drawentity.insert(std::pair<int,pDrawable>(l,b));
+    WeakPtr<T> GetDrawable(int l){
+      auto a=std::static_pointer_cast<T>(drawlist[l]);
+      return WeakPtr<T>(a);
+    }
+    
+    template <class T>
+    WeakPtr<T> AddDrawable(int l,T* d){
+      if(drawlist.find(l)==drawlist.end()){
+	//I know it's a bad idea. I know it.
+	std::shared_ptr<DrawingComponent> b(d);
+	drawlist[l]=b;
 	return WeakPtr<T>(std::static_pointer_cast<T>(b));
       }
       else{
@@ -31,22 +32,10 @@ namespace scgb{
       }
     };
     virtual void DeleteDrawable(int l);
-    
-    WindowContainer(double,double,int,int,SizeData*,SizeData);
-    WindowContainer(double,double,int,int,SizeData*);
+
+    WindowContainer(double,double,int,int);
     virtual ~WindowContainer(){
-      drawentity.clear();
+      drawlist.clear();
     };
-  };
-  
-  class WCBuilder:public DrawableBuilder{
-  public:
-    virtual Drawable* GetResult(){
-      SizeData sd;
-      return new WindowContainer(x,y,w,h,psd,sd);
-    };
-    WCBuilder(double x,double y,int w,int h)
-      :DrawableBuilder(x,y,w,h){};
-    virtual ~WCBuilder(){};
   };
 }

@@ -27,8 +27,8 @@ void AAtext::Draw(){
   // while(!DrawTransparent(1)){;}
 }
 
-AAtext::AAtext(double x,double y,SizeData* psd,std::string filename)
-  :BaseWindow(x,y,0,0,psd){
+AAtext::AAtext(double x,double y,std::string filename)
+  :BaseWindow(x,y,0,0){
   WFile file(filename,std::ios::binary);
   file.imbue(std::locale("ja_JP.UTF-8"));  
   if(file.is_open()!=false){

@@ -1,45 +1,47 @@
 #pragma once
-#include "GameComponent.h"
-#include "Drawable.h"
+#include "LogicComponent.hpp"
 
 namespace scgb{
-  class GameWindow:public GameObject{
+  class GameWindow:public LogicComponent{
   protected:
+    std::map<int,std::shared_ptr<LogicComponent>> lcs;
     Screen scr;
-    std::map<int,std::shared_ptr<GameComponent>> gcs;
-    InputMap im;
+    
   public:
     void Draw(){
-      scr.Draw();
+      clear();
+      for(auto lc:lcs){
+	lc.second->Draw();
+      }
       scr.Refresh();
     }
-    void Exec(){
+    
+    void Exec(InputMap im){
       im.Update();
       if(im.GetBool(SCGB_RESIZE))
 	scr.OnResize();
-      for(auto a:gcs){
-	a.second->Exec();
+      
+      for(auto a:lcs){
+	a.second->Exec(im);
       }
       if(im.GetBool(SCGB_QUIT)){
 	SendMessage(EVE_END);
       }
     }
+
+    template <class T>
+    WeakPtr<T> AddGameObject(int l,T* lc){
+      //I know it's a bad idea. I know it.
+      std::shared_ptr<LogicComponent> s(lc);
+      lcs[l]=s;
+      return WeakPtr<T>(std::static_pointer_cast<T>(s));
+    }
     
-    template <class T>
-    WeakPtr<T> AddGameComponent(int l,GCBuilder* gcb){
-      std::shared_ptr<GameComponent> b;
-      auto db=gcb->GetDrawableBuilder();
-      auto a=AddDrawable<Drawable>(l,db);
-      gcb->SetIM(&im);
-      gcb->SetDrawable(a);
-      b.reset(gcb->GetResult());
-      gcs.insert(std::pair<int,std::shared_ptr<GameComponent>>(l,b));
-      return WeakPtr<T>(std::static_pointer_cast<T>(b));
-    };
-    template <class T>
-    WeakPtr<T> AddDrawable(int l,DrawableBuilder* db){
-      return scr.AddDrawable<T>(l,db);
-    };
+    GameWindow(){
+      scr.Init();
+    }
+    
+    ~GameWindow(){}
   };
   
   class GWEventListner:public EventListner{

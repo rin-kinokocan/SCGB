@@ -1,21 +1,17 @@
 #pragma once
 #include "define.h"
 #include "InputMap.h"
+#include "EventListner.hpp"
 
 namespace scgb{
-  class EventListner{
-  public:
-    virtual void notify(Event e,std::string str=NULL){};
-  };
-  
-  class GameObject{
-    //base class for GUI components.
+  class LogicComponent{
+    //Do something logical. But contains drawing function.
   protected:
     std::vector<EventListner*> els;
   public:
-    virtual void Draw()=0;
-    virtual void Exec()=0;
-    virtual void AttachEL(EventListner* el){
+    virtual void Draw(){};
+    virtual void Exec(InputMap im){};
+    virtual void AttachEventListner(EventListner* el){
       els.push_back(el);
     }
     virtual void SendMessage(Event e,std::string str=""){
@@ -23,6 +19,7 @@ namespace scgb{
 	el->notify(e,str);
       }
     }
+    virtual ~LogicComponent(){};
   };
-  
+
 }

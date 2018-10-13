@@ -6,5 +6,5 @@
 #include "PlainWindow.h"
 #include "InputBox.h"
 #include "GameWindow.h"
-#include "GameComponent.h"
-#include "GCMovable.h"
+#include "GameObject.hpp"
+#include "GOMovable.h"

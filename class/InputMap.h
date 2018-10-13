@@ -7,25 +7,30 @@ namespace scgb{
   public:
     void Update(){
       for(auto& i:map){
-	i.second=false;
+      	i.second=false;
       }
-      bool flag=true;
-      while(flag){
-	int c=getch();
-	auto i=map.find((KeyEvent)c);
+      while(1){
+	wint_t c;
+      	wget_wch(stdscr,&c);
 	if(c!=SCGB_NOINPUT){
+	  auto i=map.find((KeyEvent)c);
 	  if(i==map.end()){
-	    map.insert(std::pair<KeyEvent,bool>((KeyEvent)c,true));
-	  }
-	  else{
-	    if(i->second==false)
-	      i->second=true;
+      	    map.insert(std::pair<KeyEvent,bool>((KeyEvent)c,true));
+      	  }
+      	  else{
+      	    if(i->second==false)
+      	      i->second=true;
+	    auto i=map.find((KeyEvent)c);
+	    if(i!=map.end()){
+	      if(i->second==false)
+		i->second=true;
+	      else
+		break;
+	    }
 	    else
-	      flag=false;
+	      map.insert(std::pair<KeyEvent,bool>((KeyEvent)c,true));
 	  }
 	}
-	else
-	  flag=false;
       }
     };
     

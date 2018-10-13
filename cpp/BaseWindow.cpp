@@ -1,5 +1,4 @@
 #include "BaseWindow.h"
-#include "WindowContainer.h"
 using namespace scgb;
 using namespace scgb::Util;
 using namespace std;
@@ -64,7 +63,7 @@ void BaseWindow::AddStr(std::vector<cChar> data,int x,int y){
 
 bool BaseWindow::DrawPolicy(int w){
   //returns if cursors are inside of stdscr.
-  auto a=psd->GetMaxXY();
+  auto a=GetMaxScrXY();
   int vx=curx+x,vy=cury+y;
   if(vx>=0 && vx+w<a[0] && vy>=0 && vy<a[1])
     return true;
@@ -72,19 +71,8 @@ bool BaseWindow::DrawPolicy(int w){
     return false;
 }
 
-void BaseWindow::OnResize(){}
-
-void BaseWindow::Hide(){
-  isHidden=true;
-}
-
-void BaseWindow::Show(){
-  isHidden=false;
-}
-
-BaseWindow::BaseWindow(int x,int y,int w,int h,SizeData* psd)
-  :Drawable(x,y,w,h,psd){
-}
+BaseWindow::BaseWindow(int x,int y,int w,int h)
+  :DrawingComponent(x,y,w,h){}
 
 void BaseWindow::rmove(){
   this->x++;

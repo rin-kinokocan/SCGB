@@ -2,22 +2,9 @@
 using namespace std;
 using namespace scgb;
 
-void WindowContainer::Refresh(){
-  for(auto& i:drawentity){   
-    i.second->Refresh();
-  }
-}
-
-void WindowContainer::OnResize(){
-  for(auto& i:drawentity){
-    i.second->OnResize();
-    i.second->Refresh();
-  }
-}
-
 void WindowContainer::Draw(){
   if(!isHidden){
-    for(auto i:drawentity){
+    for(auto i:drawlist){
       i.second->Draw();
     }
   }
@@ -25,34 +12,25 @@ void WindowContainer::Draw(){
   
 void WindowContainer::Hide(){
   isHidden=true;
-  for(auto a:drawentity){
-    auto b=dynamic_pointer_cast<Drawable>(a.second);
-    b->Hide();
+  for(auto i:drawlist){
+    i.second->Hide();
   }
 }
 
 void WindowContainer::Show(){
   isHidden=false;
-  for(auto a:drawentity){
-    auto b=dynamic_pointer_cast<Drawable>(a.second);
-    b->Show();
+  for(auto i:drawlist){
+    i.second->Show();
   }
 }
 
 void WindowContainer::DeleteDrawable(int l){
-  auto a=drawentity.find(l);
-  if(a!=drawentity.end()){
-    drawentity.erase(a);
+  auto a=drawlist.find(l);
+  if(a!=drawlist.end()){
+    drawlist.erase(a);
   }
 }
 
 WindowContainer::WindowContainer
-(double x,double y,int w,int h,SizeData* psd,SizeData sd)
-  :Drawable(x,y,w,h,psd){this->sd=sd;};
-
-WindowContainer::WindowContainer
-(double x,double y,int w,int h,SizeData* psd)
-  :Drawable(x,y,w,h,psd){
-  sd.x=x;sd.width=w;
-  sd.y=y;sd.height=h;
-};
+(double x,double y,int w,int h)
+  :DrawingComponent(x,y,w,h){};

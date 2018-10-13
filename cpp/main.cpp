@@ -6,15 +6,13 @@ int main(){
   Util::SetSigHandlers();
   GameWindow gw;
   GWEventListner gel;
-  gw.AttachEL(&gel);
-  BMimageBuilder bmi(-10,10,"./assets/kinoko.bmp");
-  AAtextBuilder aa(30,0,"./assets/ebi.aa");
-  GCMovableBuilder ebi(&aa);
-  gw.AddDrawable<BMimage>(1,&bmi);
-  auto hero=gw.AddGameComponent<GCMovable>(2,&ebi);
+  InputMap im;
+  gw.AttachEventListner(&gel);
+  gw.AddGameObject<GameObject<BMimage>>(1,new GameObject<BMimage>(new BMimage(-10,10,"./assets/kinoko.bmp")));
+  auto hero=gw.AddGameObject<GOMovable<AAtext>>(2,new GOMovable<AAtext>(new AAtext(30,0,"./assets/ebi.aa")));
   while(!gel.IsEnd()){
     gw.Draw();
-    gw.Exec();
+    gw.Exec(im);
     usleep(2000);
   }
   endwin();
