@@ -5,24 +5,18 @@ namespace scgb{
   class WindowContainer:public DrawingComponent{
   protected:
     std::map<int,std::shared_ptr<DrawingComponent>> drawlist;
+    int width,height;
   public:
-    virtual void Draw();
-    virtual void Hide();
-    virtual void Show();
+    virtual void Draw(int x,int y);
     
     template <class T>
-    WeakPtr<T> GetDrawable(int l){
-      auto a=std::static_pointer_cast<T>(drawlist[l]);
-      return WeakPtr<T>(a);
+    std::shared_ptr<T> GetDrawable(int l){
+      return std::static_pointer_cast<T>(drawlist[l]);
     }
     
-    template <class T>
-    WeakPtr<T> AddDrawable(int l,T* d){
+    void AddDrawable(int l,std::shared_ptr<DrawingComponent> d){
       if(drawlist.find(l)==drawlist.end()){
-	//I know it's a bad idea. I know it.
-	std::shared_ptr<DrawingComponent> b(d);
-	drawlist[l]=b;
-	return WeakPtr<T>(std::static_pointer_cast<T>(b));
+	drawlist[l]=d;
       }
       else{
 	std::string info="the layer ";
@@ -30,12 +24,19 @@ namespace scgb{
 	endwin();
 	throw std::runtime_error(info);
       }
-    };
+    }
+    
+    void AddDrawable(int l,DrawingComponent* d){
+      auto a=std::shared_ptr<DrawingComponent>(d);
+      this->AddDrawable(l,a);
+    }
+    
     virtual void DeleteDrawable(int l);
 
-    WindowContainer(double,double,int,int);
+    WindowContainer(int w,int h):DrawingComponent(){}
+    
     virtual ~WindowContainer(){
       drawlist.clear();
-    };
+    }
   };
 }

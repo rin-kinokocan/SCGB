@@ -2,26 +2,10 @@
 using namespace std;
 using namespace scgb;
 
-void WindowContainer::Draw(){
-  if(!isHidden){
+void WindowContainer::Draw(int x,int y){
     for(auto i:drawlist){
-      i.second->Draw();
+      i.second->Draw(x,y);
     }
-  }
-}
-  
-void WindowContainer::Hide(){
-  isHidden=true;
-  for(auto i:drawlist){
-    i.second->Hide();
-  }
-}
-
-void WindowContainer::Show(){
-  isHidden=false;
-  for(auto i:drawlist){
-    i.second->Show();
-  }
 }
 
 void WindowContainer::DeleteDrawable(int l){
@@ -30,7 +14,3 @@ void WindowContainer::DeleteDrawable(int l){
     drawlist.erase(a);
   }
 }
-
-WindowContainer::WindowContainer
-(double x,double y,int w,int h)
-  :DrawingComponent(x,y,w,h){};

@@ -7,6 +7,6 @@ namespace scgb{
   public:
     virtual void Draw();
     chtype ColorPair;
-    PlainWindow(int,int,int,int,chtype);
+    PlainWindow(int,int,chtype);
   };
 }

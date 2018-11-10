@@ -4,22 +4,17 @@
 
 using namespace scgb;
 
-void BMimage::Draw(){
-  InitDraw();
+void BMimage::Draw(int x,int y){
+  InitDraw(x,y);
   for(int i:this->Pixels){
-    auto a=Util::make_cChar(' ',COLOR_PAIR(i)|A_PROTECT);
-    AddChar(a);
-    AddChar(a);
+    AddStr(L"aa",COLOR_PAIR(i)|A_PROTECT);
   }
 }
 
-BMimage::BMimage(int x,int y,std::string filename)
-  :BaseWindow(x,y,0,0)
+BMimage::BMimage(std::string filename):BaseWindow(0,0)
 {
   File file(filename,std::ios::in | std::ios::binary);
   int data;
-  this->x=x;
-  this->y=y;
   if(file.is_open()==false){
     throw std::invalid_argument("cannot open file");
   }

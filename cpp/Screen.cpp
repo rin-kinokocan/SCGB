@@ -1,14 +1,14 @@
 #include <locale>
 #include "Screen.h"
 #include "Color.hh"
+#include "define.h"
 
 using namespace std;
 using namespace scgb;
 
 void Screen::Refresh(){
   if(!isendwin()){
-    wnoutrefresh(stdscr);
-    doupdate();
+    refresh();
   }  
 }
 
@@ -21,6 +21,7 @@ void Screen::OnResize(){
 
 
 void Screen::Init(){//Initialize everything.
+  Util::SetSigHandlers();
   setlocale(LC_ALL, "");
   initscr();//initialize ncurses
   nodelay(stdscr,true);

@@ -6,13 +6,10 @@
 #include <memory>
 #include <map>
 #include <string>
+int mk_wcwidth(wchar_t);
+int mk_wcswidth(const wchar_t,size_t);
 
 namespace scgb{
-  //forward declaration of classes
-  class Drawable;
-  class BaseWindow;
-  class WindowContainer;
-  //
   enum State{
     STA_DESTROY=0,
     STA_OPEN=1,
@@ -46,7 +43,12 @@ namespace scgb{
   typedef std::ifstream File;
   typedef std::wifstream WFile;
 
-  typedef std::vector<int> Vector2D;
+  class Vector2D:public std::vector<int>{
+  public:
+    Vector2D(){
+      this->resize(2);
+    }
+  };
   
   template <class T>
   class WeakPtr{//wrapper of std::weak_ptr
@@ -64,14 +66,10 @@ namespace scgb{
     }
   };
 
-  typedef cchar_t cChar;
-  
   //prototypes of Util functions
   namespace Util{
-    cChar make_cChar(wchar_t in,int attr);
-    wchar_t cCharToWchar(cChar c);
-    int cCharToAttr(cChar c);
-    Vector2D GetMaxScrXY();
+    int GetAttr(cchar_t c);
+    Vector2D GetMaxScr();
     void LogToStdout(std::string);
     void SetSigHandlers();
   }

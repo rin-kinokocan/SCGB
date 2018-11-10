@@ -2,25 +2,25 @@
 #include "LogicComponent.hpp"
 
 namespace scgb{
+  class GameObject;
   class GameWindow:public LogicComponent{
   protected:
     std::map<int,std::shared_ptr<LogicComponent>> lcs;
-    Screen scr;
-    
   public:
     void Draw(){
-      clear();
+      erase();
       for(auto lc:lcs){
 	lc.second->Draw();
       }
-      scr.Refresh();
+      refresh();
     }
     
     void Exec(InputMap im){
       im.Update();
-      if(im.GetBool(SCGB_RESIZE))
+      if(im.GetBool(SCGB_RESIZE)){
+	Screen scr;
 	scr.OnResize();
-      
+      }
       for(auto a:lcs){
 	a.second->Exec(im);
       }
@@ -29,15 +29,12 @@ namespace scgb{
       }
     }
 
-    template <class T>
-    WeakPtr<T> AddGameObject(int l,T* lc){
-      //I know it's a bad idea. I know it.
-      std::shared_ptr<LogicComponent> s(lc);
-      lcs[l]=s;
-      return WeakPtr<T>(std::static_pointer_cast<T>(s));
+    void AddGameObject(int l,std::shared_ptr<GameObject> lc){
+      lcs[l]=lc;
     }
     
     GameWindow(){
+      Screen scr;
       scr.Init();
     }
     

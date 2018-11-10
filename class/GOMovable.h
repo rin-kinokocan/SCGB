@@ -1,20 +1,18 @@
 #include "GameObject.hpp"
 
 namespace scgb{
-  template <class T>
-  class GOMovable:public GameObject<T>{
+  class GOMovable:public GameObject{
   public:
     virtual void Exec(InputMap im){
       if(im.GetBool(SCGB_LEFT))
-	this->dcp->Move(Left);
+	this->x--;
       if(im.GetBool(SCGB_RIGHT))
-	this->dcp->Move(Right);
+	this->x++;
       if(im.GetBool(SCGB_UP))
-	this->dcp->Move(Up);
+	this->y--;
       if(im.GetBool(SCGB_DOWN))
-	this->dcp->Move(Down);
+	this->y++;
     }
-    GOMovable(T* pwpd)
-      :GameObject<T>(pwpd){}
+    GOMovable(double x,double y):GameObject(x,y){}
   };
 }

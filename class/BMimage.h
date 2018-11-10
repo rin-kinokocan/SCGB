@@ -6,7 +6,7 @@ namespace scgb{
   protected:
     std::vector<int> Pixels;
   public:
-    void Draw();
-    BMimage(int,int,std::string);
+    void Draw(int x,int y);
+    BMimage(std::string);
   };
 }

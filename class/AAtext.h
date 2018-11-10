@@ -6,7 +6,7 @@ namespace scgb{
   protected:
     std::vector<wchar_t> data;
   public:
-    void Draw();
-    AAtext(double x,double y,std::string filename);
+    void Draw(int x,int y);
+    AAtext(std::string filename);
   };
 }

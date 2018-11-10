@@ -6,6 +6,6 @@ namespace scgb{
   public:
     void Refresh();
     void OnResize();
-    void Init();//The most important method.
+    void Init();
   };
 }

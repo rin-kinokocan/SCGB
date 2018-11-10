@@ -1,58 +1,47 @@
 #include "AAtext.h"
 #include <locale>
 #include <unistd.h>
-#include <unicode/utypes.h>
 #include <string>
 
 using namespace scgb;
-
-void AAtext::Draw(){
-  InitDraw();
+void AAtext::Draw(int x,int y){
+  InitDraw(x,y);
   for(auto c:data){
-    // int w=wcwidth(c);
-    switch(c){
-    case L'\n':
-      while(!AddChar(Util::make_cChar(' ',0))){;}
-      break;
-    case L' ':
-    case L'　':
-      // for(int i=0;i<w;i++)
-      // 	DrawTransparent(1);
-      // break;
-    default:
-      AddChar(Util::make_cChar(c,0));
-      break;
+    if(c!=L'\n'){
+      AddChar(c,0);
+    }
+    else{
+      auto a=GetCursorPos();
+      if(a[0]!=width)
+	AddNewLine();
     }
   }
-  // while(!DrawTransparent(1)){;}
 }
 
-AAtext::AAtext(double x,double y,std::string filename)
-  :BaseWindow(x,y,0,0){
+AAtext::AAtext(std::string filename)
+  :BaseWindow(0,0){
   WFile file(filename,std::ios::binary);
   file.imbue(std::locale("ja_JP.UTF-8"));  
   if(file.is_open()!=false){
-    int w=1,h=1,mw=0;
     file.clear();
     file.seekg(0,std::ios::beg);
+    int w=0,h=0,mw=0;
     wchar_t c;
     while(file.get(c)){
       switch(c){
       case L'\n':
 	h++;
+	if(w>mw)
+	  mw=w;
 	w=0;
 	break;
       default:
-	w+=wcwidth(c);
-	if(w>mw)
-	  mw=w;
+	w+=mk_wcwidth(c);
 	break;
       }
       data.push_back(c);
     }
     file.close();
-    this->x=x;
-    this->y=y;
     this->width=mw+1;
     this->height=h;
   }

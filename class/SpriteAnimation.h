@@ -1,8 +1,10 @@
 #include "define.h"
-#include "Movable.h"
+#include "AAtext.h"
 
 namespace scgb{
-  class SpriteAnimation:public Movable{
-    SpriteAnimation(String filename,int x,int y,int )
+  class SpriteAnimation:public AAtext{
+    SpriteAnimation(String filename,int x,int y,int xdim,int ydim){
+      
+    }
   };
 }

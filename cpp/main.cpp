@@ -1,19 +1,26 @@
 #include <unistd.h>
 #include "scgb.h"
 using namespace scgb;
-
+using namespace scgb::Util;
 int main(){
-  Util::SetSigHandlers();
   GameWindow gw;
   GWEventListner gel;
   InputMap im;
+  auto aa=std::make_shared<GameObject>(0,0);
+  auto bm=std::make_shared<GameObject>(0,0);
+  auto movable=std::make_shared<GOMovable>(10,10);
+  
+  aa->AttachDrawingComponent(new AAtext("./assets/cloud.aa"));
+  bm->AttachDrawingComponent(new BMimage("./assets/kinoko.bmp"));
+  movable->AttachDrawingComponent(new AAtext("./assets/ebi.aa"));
   gw.AttachEventListner(&gel);
-  gw.AddGameObject<GameObject<BMimage>>(1,new GameObject<BMimage>(new BMimage(-10,10,"./assets/kinoko.bmp")));
-  auto hero=gw.AddGameObject<GOMovable<AAtext>>(2,new GOMovable<AAtext>(new AAtext(30,0,"./assets/ebi.aa")));
+  gw.AddGameObject(0,aa);
+  gw.AddGameObject(1,bm);
+  gw.AddGameObject(2,movable);
   while(!gel.IsEnd()){
     gw.Draw();
     gw.Exec(im);
-    usleep(2000);
+    usleep(200);
   }
   endwin();
   return 0;

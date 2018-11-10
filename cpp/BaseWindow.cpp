@@ -3,90 +3,95 @@ using namespace scgb;
 using namespace scgb::Util;
 using namespace std;
 
-void BaseWindow::InitDraw(){
-  MoveCursor(0,0);
+void BaseWindow::InitDraw(int x,int y){
+  move(y,x);
+  this->x=x;this->y=y;
+  MoveCursor(x,y);
   curx=0;
   cury=0;
 }
 
-bool BaseWindow::AddChar(cChar c){
-  //adds cChar where the virtual cursors are.
-  //will not draw newline.
-  auto ch=cCharToWchar(c);
-  auto attr=cCharToAttr(c);
-  int a=wcwidth(ch);
-  if(ch!='\n' && DrawPolicy(a)){
+void BaseWindow::AddChar(wchar_t ch,attr_t attr){
+  int a=mk_wcwidth(ch);
+  if(IsCursorOnScreen(a)){
+    std::wstring str(1,ch);
     attron(attr);
-    addwstr(c.chars);
+    addwstr(str.c_str());
     attroff(attr);
- }
-  return MoveAfterDraw(a);
-}
-
-bool BaseWindow::MoveAfterDraw(int w){
-  int rx=curx,ry=cury;
-  bool flag=false;
-  if(rx+w<width){
-    rx+=w;
   }
-  else{
-    rx=0;
-    ry++;
-    flag=true;
- }
-  MoveCursor(rx,ry);
-  return flag;
+  MoveAfterDraw(a);
 }
 
-void BaseWindow::MoveCursor(int px,int py){
-  //moves virtual cursors to the given coods.
-  //parameters are relative cursor pos.
-  if(px>=0 && px<width && py>=0 && py<height){
-    curx=px;cury=py;
-    if(DrawPolicy(0)){
-      move(py+y,px+x);
-    }
-  }
-}
-
-void BaseWindow::AddChar(cChar c,int x,int y){
+void BaseWindow::AddChar(wchar_t ch,attr_t attr,int x,int y){
   MoveCursor(x,y);
-  AddChar(c);
+  AddChar(ch,attr);
 }
 
-void BaseWindow::AddStr(std::vector<cChar> data,int x,int y){
-  MoveCursor(x,y);
-  for(auto a:data){
-    AddChar(a);
+void BaseWindow::AddStr(std::wstring str,attr_t attr){
+  for(auto ch:str){
+    AddChar(ch,attr);
   }
 }
 
-bool BaseWindow::DrawPolicy(int w){
-  //returns if cursors are inside of stdscr.
-  auto a=GetMaxScrXY();
-  int vx=curx+x,vy=cury+y;
-  if(vx>=0 && vx+w<a[0] && vy>=0 && vy<a[1])
+void BaseWindow::AddStr(std::wstring str,attr_t attr,int x,int y){
+  MoveCursor(x,y);
+  AddStr(str,attr);
+}
+
+void BaseWindow::AddNewLine(){
+  MoveCursor(0,cury+1);
+}
+
+void BaseWindow::DrawTransparent(wchar_t c){
+  //use same attribute as already in stdscr.
+  cchar_t a;
+  in_wch(&a);
+  AddChar(c,GetAttr(a));
+}
+
+bool BaseWindow::MoveCursor(int px,int py){
+  //move relative cursor to given coodinate.
+  if(IsCursorInBoundary(px,py)){
+    curx=px;
+    cury=py;
+    move(y+py,x+px);
+    return true;
+  }
+  else 
+    return false;
+}
+
+void BaseWindow::MoveAfterDraw(int w){
+  //move relative cursor position according to given width
+  if(curx+w<width){
+    MoveCursor(curx+w,cury);
+  }
+  else if(cury+1<height){
+    MoveCursor(0,cury+1);
+  }
+}
+
+Vector2D BaseWindow::GetCursorPos(){
+  Vector2D a;
+  a[0]=curx;a[1]=cury;
+  return a;
+}
+
+bool BaseWindow::IsCursorOnScreen(int w){
+  auto m=GetMaxScr();
+  if(x+curx<0 || y+cury<0)
+    return false;
+  if(x+curx+w<m[0] && y+cury<m[1])
     return true;
   else
     return false;
 }
 
-BaseWindow::BaseWindow(int x,int y,int w,int h)
-  :DrawingComponent(x,y,w,h){}
-
-void BaseWindow::rmove(){
-  this->x++;
+bool BaseWindow::IsCursorInBoundary(int x,int y){
+  //returns if cursors are inside of the boundary box.
+  //after moved to given coodinate.
+  if(x<=width && y<=height && x>=0 && y>=0)
+    return true;
+  else
+    return false;
 }
-
-void BaseWindow::lmove(){
-  this->x--;
-}
-
-void BaseWindow::umove(){
-  this->y--;
-}
-
-void BaseWindow::dmove(){
-  this->y++;
-}
-
