@@ -1,4 +1,5 @@
 #pragma once
+#include "Color.hpp"
 #include "LogicComponent.hpp"
 
 namespace scgb{
@@ -18,8 +19,10 @@ namespace scgb{
     void Exec(InputMap im){
       im.Update();
       if(im.GetBool(SCGB_RESIZE)){
-	Screen scr;
-	scr.OnResize();
+	def_prog_mode();
+	endwin();
+	initscr();
+	reset_prog_mode();
       }
       for(auto a:lcs){
 	a.second->Exec(im);
@@ -34,8 +37,16 @@ namespace scgb{
     }
     
     GameWindow(){
-      Screen scr;
-      scr.Init();
+      Util::SetSigHandlers();
+      setlocale(LC_ALL, "");
+      initscr();//initialize ncurses
+      nodelay(stdscr,true);
+      keypad(stdscr,true);
+      curs_set(0);
+      noecho();
+      cbreak();
+      //color initialization
+      Color::Init();
     }
     
     ~GameWindow(){}

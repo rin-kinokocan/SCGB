@@ -1,6 +1,6 @@
 #pragma once
-#include "define.h"
-#include "InputMap.h"
+#include "define.hpp"
+#include "InputMap.hpp"
 #include "EventListner.hpp"
 
 namespace scgb{

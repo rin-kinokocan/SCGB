@@ -1,4 +1,4 @@
-#include "AAtext.h"
+#include "AAtext.hpp"
 #include <locale>
 #include <unistd.h>
 #include <string>
@@ -12,7 +12,7 @@ void AAtext::Draw(int x,int y){
     }
     else{
       auto a=GetCursorPos();
-      if(a[0]!=width)
+      if(a[0]!=width && a[1]!=height)
 	AddNewLine();
     }
   }

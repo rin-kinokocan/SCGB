@@ -1,5 +1,5 @@
 #pragma once
-#include "BaseWindow.h"
+#include "BaseWindow.hpp"
 
 namespace scgb{
   class BMimage :public BaseWindow{

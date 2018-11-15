@@ -1,6 +1,5 @@
 #pragma once
 #include "DrawingComponent.hpp"
-#include "Movable.h"
 
 namespace scgb{
   class BaseWindow :public DrawingComponent{

@@ -1,12 +1,11 @@
-#include "BaseWindow.h"
+#include "BaseWindow.hpp"
 using namespace scgb;
 using namespace scgb::Util;
 using namespace std;
 
 void BaseWindow::InitDraw(int x,int y){
-  move(y,x);
   this->x=x;this->y=y;
-  MoveCursor(x,y);
+  MoveCursor(0,0);
   curx=0;
   cury=0;
 }
@@ -50,7 +49,7 @@ void BaseWindow::DrawTransparent(wchar_t c){
 }
 
 bool BaseWindow::MoveCursor(int px,int py){
-  //move relative cursor to given coodinate.
+  //move cursor to given coodinate.
   if(IsCursorInBoundary(px,py)){
     curx=px;
     cury=py;

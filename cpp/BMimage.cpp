@@ -1,13 +1,13 @@
-#include "Color.hh"
-#include "BMimage.h"
-#include "define.h"
+#include "Color.hpp"
+#include "BMimage.hpp"
+#include "define.hpp"
 
 using namespace scgb;
 
 void BMimage::Draw(int x,int y){
   InitDraw(x,y);
   for(int i:this->Pixels){
-    AddStr(L"aa",COLOR_PAIR(i)|A_PROTECT);
+    AddStr(L"  ",COLOR_PAIR(i));
   }
 }
 
