@@ -7,8 +7,12 @@ namespace scgb{
     std::map<int,std::shared_ptr<DrawingComponent>> drawlist;
     int width,height;
   public:
-    virtual void Draw(int x,int y);
-    
+    virtual void Draw(int x,int y){
+      for(auto i:drawlist){
+	i.second->Draw(x,y);
+      }
+    }
+  
     template <class T>
     std::shared_ptr<T> GetDrawable(int l){
       return std::static_pointer_cast<T>(drawlist[l]);
@@ -31,7 +35,12 @@ namespace scgb{
       this->AddDrawable(l,a);
     }
     
-    virtual void DeleteDrawable(int l);
+    void DeleteDrawable(int l){
+      auto a=drawlist.find(l);
+      if(a!=drawlist.end()){
+	drawlist.erase(a);
+      }
+    }
 
     WindowContainer(int w,int h):DrawingComponent(){}
     

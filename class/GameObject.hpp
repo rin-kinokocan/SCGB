@@ -18,7 +18,10 @@ namespace scgb{
     void AttachDrawingComponent(std::shared_ptr<DrawingComponent> dc){
       dcp=dc;
     }
-
+    template <class T>
+    std::shared_ptr<T> GetDrawingComponent(){
+      return std::dynamic_pointer_cast<T>(dcp);
+    }
     GameObject(int x,int y,DrawingComponent* dc):GameObject(x,y){
       this->AttachDrawingComponent(dc);
     }

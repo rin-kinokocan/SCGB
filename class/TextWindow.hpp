@@ -2,14 +2,19 @@
 #include "Border.hpp"
 #include "DrawText.hpp"
 namespace scgb{
-  class TextWindow:public WindowContainer{
+  class TextWindow:public GameObject{
+  private:
+    using GameObject::AttachDrawingComponent;
   public:
-    TextWindow(attr_t a,int w,int h):WindowContainer(w,h){
-      AddDrawable(0,new Border(a,w,h));
-      AddDrawable(1,new DrawText(a,w,h));
+    TextWindow(attr_t a,int x,int y,int w,int h):GameObject(x,y){
+      AttachDrawingComponent(new WindowContainer(w,h));
+      auto dcp=GetDrawingComponent<WindowContainer>();
+      dcp->AddDrawable(0,new Border(a,w,h));
+      dcp->AddDrawable(1,new DrawText(a,w,h));
     }
     void ChangeText(std::wstring str){
-      auto dt=GetDrawable<DrawText>(1);
+      auto dcp=GetDrawingComponent<WindowContainer>();
+      auto dt=dcp->GetDrawable<DrawText>(1);
       dt->ChangeText(str);
     }
   };
