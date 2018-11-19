@@ -7,17 +7,17 @@ int main(){
   GWEventListner gel;
   InputMap im;
   auto textwindow=std::make_shared<TextWindow>(COLOR_PAIR(4),5,0,20,5);
-  auto bm=std::make_shared<GameObject>(0,0);
+  auto bm=std::make_shared<SingleHandler>(0,0);
   auto movable=std::make_shared<GOMovable>(10,10);
 
   textwindow->ChangeText(L"Hay, how are you doing?");
-  bm->AttachDrawingComponent(new BMimage("./assets/kinoko.bmp"));
-  movable->AttachDrawingComponent(new AAtext("./assets/ebi.aa"));
+  bm->AttachDC(new BMimage("./assets/kinoko.bmp"));
+  movable->AttachDC(new AAtext("./assets/ebi.aa"));
   
-  gw.AttachEventListner(&gel);
-  gw.AddGameObject(1,bm);
-  gw.AddGameObject(2,textwindow);
-  gw.AddGameObject(3,movable);
+  gw.AttachEL(&gel);
+  gw.AddDCHandler(1,bm);
+  gw.AddDCHandler(2,textwindow);
+  gw.AddDCHandler(3,movable);
   while(!gel.IsEnd()){
     gw.Draw();
     gw.Exec(im);

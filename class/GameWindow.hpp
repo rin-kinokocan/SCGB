@@ -1,17 +1,18 @@
 #pragma once
 #include "Color.hpp"
+#include "DCHandler.hpp"
 #include "LogicComponent.hpp"
+#include "ELHandler.hpp"
 
 namespace scgb{
-  class GameObject;
-  class GameWindow:public LogicComponent{
+  class GameWindow:public LogicComponent,public ELHandler{
   protected:
-    std::map<int,std::shared_ptr<LogicComponent>> lcs;
+    std::map<int,std::shared_ptr<DCHandler>> dchs;
   public:
     void Draw(){
       erase();
-      for(auto lc:lcs){
-	lc.second->Draw();
+      for(auto dch:dchs){
+	dch.second->Draw();
       }
       refresh();
     }
@@ -24,7 +25,7 @@ namespace scgb{
 	initscr();
 	reset_prog_mode();
       }
-      for(auto a:lcs){
+      for(auto a:dchs){
 	a.second->Exec(im);
       }
       if(im.GetBool(SCGB_QUIT)){
@@ -32,8 +33,8 @@ namespace scgb{
       }
     }
 
-    void AddGameObject(int l,std::shared_ptr<GameObject> lc){
-      lcs[l]=lc;
+    void AddDCHandler(int l,std::shared_ptr<DCHandler> dch){
+      dchs[l]=dch;
     }
     
     GameWindow(){

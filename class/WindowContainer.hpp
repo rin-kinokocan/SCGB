@@ -1,24 +1,23 @@
 #pragma once
-#include "DrawingComponent.hpp"
+#include "DCHandler.hpp"
 
 namespace scgb{
-  class WindowContainer:public DrawingComponent{
+  class WindowContainer:public DCHandler{
   protected:
     std::map<int,std::shared_ptr<DrawingComponent>> drawlist;
-    int width,height;
   public:
-    virtual void Draw(int x,int y){
+    virtual void Draw(){
       for(auto i:drawlist){
 	i.second->Draw(x,y);
       }
     }
   
     template <class T>
-    std::shared_ptr<T> GetDrawable(int l){
+    std::shared_ptr<T> GetDC(int l){
       return std::static_pointer_cast<T>(drawlist[l]);
     }
     
-    void AddDrawable(int l,std::shared_ptr<DrawingComponent> d){
+    void AddDC(int l,std::shared_ptr<DrawingComponent> d){
       if(drawlist.find(l)==drawlist.end()){
 	drawlist[l]=d;
       }
@@ -30,20 +29,19 @@ namespace scgb{
       }
     }
     
-    void AddDrawable(int l,DrawingComponent* d){
+    void AddDC(int l,DrawingComponent* d){
       auto a=std::shared_ptr<DrawingComponent>(d);
-      this->AddDrawable(l,a);
+      this->AddDC(l,a);
     }
     
-    void DeleteDrawable(int l){
+    void DeleteDC(int l){
       auto a=drawlist.find(l);
       if(a!=drawlist.end()){
 	drawlist.erase(a);
       }
     }
 
-    WindowContainer(int w,int h):DrawingComponent(){}
-    
+    WindowContainer(int x,int y):DCHandler(x,y){}
     virtual ~WindowContainer(){
       drawlist.clear();
     }

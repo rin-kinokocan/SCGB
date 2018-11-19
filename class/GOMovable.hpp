@@ -1,7 +1,8 @@
-#include "GameObject.hpp"
+#pragma once
+#include "SingleHandler.hpp"
 
 namespace scgb{
-  class GOMovable:public GameObject{
+  class GOMovable:public SingleHandler{
   public:
     virtual void Exec(InputMap im){
       if(im.GetBool(SCGB_LEFT))
@@ -13,6 +14,6 @@ namespace scgb{
       if(im.GetBool(SCGB_DOWN))
 	this->y++;
     }
-    GOMovable(double x,double y):GameObject(x,y){}
+    GOMovable(double x,double y):SingleHandler(x,y){}
   };
 }

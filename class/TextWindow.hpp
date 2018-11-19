@@ -1,20 +1,18 @@
+#pragma once
 #include "WindowContainer.hpp"
 #include "Border.hpp"
 #include "DrawText.hpp"
 namespace scgb{
-  class TextWindow:public GameObject{
+  class TextWindow:public WindowContainer{
   private:
-    using GameObject::AttachDrawingComponent;
+    using WindowContainer::AddDC;
   public:
-    TextWindow(attr_t a,int x,int y,int w,int h):GameObject(x,y){
-      AttachDrawingComponent(new WindowContainer(w,h));
-      auto dcp=GetDrawingComponent<WindowContainer>();
-      dcp->AddDrawable(0,new Border(a,w,h));
-      dcp->AddDrawable(1,new DrawText(a,w,h));
+    TextWindow(attr_t a,int x,int y,int w,int h):WindowContainer(x,y){
+      AddDC(0,new Border(a,w,h));
+      AddDC(1,new DrawText(a,w,h));
     }
     void ChangeText(std::wstring str){
-      auto dcp=GetDrawingComponent<WindowContainer>();
-      auto dt=dcp->GetDrawable<DrawText>(1);
+      auto dt=GetDC<DrawText>(1);
       dt->ChangeText(str);
     }
   };
