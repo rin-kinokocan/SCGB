@@ -5,3 +5,4 @@
 #include "SingleHandler.hpp"
 #include "GOMovable.hpp"
 #include "TextWindow.hpp"
+#include "Clock.hpp"

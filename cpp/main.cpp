@@ -6,6 +6,7 @@ int main(){
   GameWindow gw;
   GWEventListner gel;
   InputMap im;
+  Clock clock;
   auto textwindow=std::make_shared<TextWindow>(COLOR_PAIR(4),5,0,20,5);
   auto bm=std::make_shared<SingleHandler>(0,0);
   auto movable=std::make_shared<GOMovable>(10,10);
@@ -19,9 +20,9 @@ int main(){
   gw.AddDCHandler(2,textwindow);
   gw.AddDCHandler(3,movable);
   while(!gel.IsEnd()){
-    gw.Draw();
     gw.Exec(im);
-    usleep(200);
+    gw.Draw();
+    clock.WaitFrame();
   }
   endwin();
   return 0;
