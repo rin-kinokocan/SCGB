@@ -7,14 +7,14 @@ int main(){
   InputMap im;
   Clock clock;
   auto textwindow=std::make_shared<TextWindow>(COLOR_PAIR(4),5,1,20,5);
-  auto textwindow2=std::make_shared<TextWindow>(L"Test",COLOR_PAIR(9),10,10,50,5);
+  auto textwindow2=std::make_shared<TextWindow>(L"Test",COLOR_PAIR(9),3,3,50,5);
   auto bm=std::make_shared<SingleHandler>(3,3);
-  auto movable=std::make_shared<GOMovable>(10,10);
-  auto test1=std::make_shared<SingleHandler>(5,5);
+  auto movable=std::make_shared<GOMovable>(5,5);
+  auto test1=std::make_shared<SingleHandler>(5,10);
   textwindow->ChangeText(L"Hay, how are you doing?");
   bm->AttachDC(new BMimage("./assets/kinoko.bmp"));
   movable->AttachDC(new AAtext("./assets/test.aa"));
-  test1->AttachDC(new AAtext("./assets/ebi.aa"));
+  test1->AttachDC(new AAtext("./assets/test.aa"));
  
   gw.AttachEL(&gel);
   gw.AddDCHandler(1,bm);

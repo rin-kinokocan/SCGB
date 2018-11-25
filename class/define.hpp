@@ -48,6 +48,14 @@ namespace scgb{
     }
   };
   
+  class Vector3D:public std::vector<int>{
+  public:
+    Vector3D():std::vector<int>(3){}
+    Vector3D(int x,int y,int z):Vector3D(){
+      (*this)[0]=x;(*this)[1]=y;(*this)[2]=z;
+    }
+  };
+  
   template <class T>
   class WeakPtr{//wrapper of std::weak_ptr
   public:

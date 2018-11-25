@@ -6,13 +6,17 @@ using namespace scgb;
 
 void BMimage::Draw(int x,int y){
   InitDraw(x,y);
-  for(int i:this->Pixels){
-    AddStr(L"  ",COLOR_PAIR(i));
+  // for(int i=0;i<height;i++){
+  //   for(int j=0;j<width;j++){
+  //     AddStr(L"  ",COLOR_PAIR(pixels[i*width+j]));
+  //   }
+  // }
+  for(int i:this->pixels){
+    AddStr(L"　",COLOR_PAIR(i));
   }
 }
 
-BMimage::BMimage(std::string filename):BaseWindow(0,0)
-{
+BMimage::BMimage(std::string filename):BaseWindow(0,0){
   std::ifstream file(filename,std::ios::in | std::ios::binary);
   int data;
   if(file.is_open()==false){
@@ -28,8 +32,7 @@ BMimage::BMimage(std::string filename):BaseWindow(0,0)
   int w=width;
   int h=height;
   width*=2;
-
-  this->Pixels.resize(w*h);
+  this->pixels.resize(w*h);
   for(int i=0;i<h;i++){
     for(int j=0;j<w;j++){
       unsigned char r,g,b;
@@ -39,7 +42,7 @@ BMimage::BMimage(std::string filename):BaseWindow(0,0)
 	int p=Color::GetColor(r,g,b);
 	int x=j,y=h-1-i;
 	int pos=y*w+x;
-	this->Pixels[pos]=p;
+	this->pixels[pos]=p;
       }
     }
   }

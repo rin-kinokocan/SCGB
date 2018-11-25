@@ -3,9 +3,6 @@
 
 namespace scgb{
   namespace Util{
-    int GetAttr(cchar_t c){
-      return c.attr;
-    }
     Vector2D GetMaxScr(){
       Vector2D v;
       getmaxyx(stdscr,v[1],v[0]);

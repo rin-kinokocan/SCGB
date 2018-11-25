@@ -12,7 +12,6 @@ namespace scgb{
     int cury=0;
     bool MoveCursor(int x,int y);
     void MoveAfterDraw(int w);
-    void DrawTransparent(wchar_t c=L' ');
   protected:
     int x,y,width,height;
     void InitDraw(int x,int y);
@@ -26,6 +25,7 @@ namespace scgb{
     void AddStr(std::wstring c,attr_t a);
     void AddStr(std::wstring c,attr_t a,int x,int y);
     void AddNewLine();
+    void DrawTransparent();
     BaseWindow(int w,int h):DrawingComponent(){width=w;height=h;}
     virtual ~BaseWindow(){}
   };
