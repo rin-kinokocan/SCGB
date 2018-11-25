@@ -36,10 +36,10 @@ namespace scgb{
     void AddDCHandler(int l,std::shared_ptr<DCHandler> dch){
       dchs[l]=dch;
     }
-    
-    GameWindow(){
+
+    GameWindow(std::string locale){
       Util::SetSigHandlers();
-      setlocale(LC_ALL, "");
+      setlocale(LC_ALL, locale.c_str());
       initscr();//initialize ncurses
       nodelay(stdscr,true);
       keypad(stdscr,true);
@@ -49,6 +49,7 @@ namespace scgb{
       //color initialization
       Color::Init();
     }
+    GameWindow():GameWindow(""){}
     
     ~GameWindow(){}
   };

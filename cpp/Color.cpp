@@ -7,7 +7,6 @@ int Color::phase;
 int Color::delta;
 
 void Color::Init(){//initializes color_pairs
-  
   if(!has_colors())
     return;
   start_color();

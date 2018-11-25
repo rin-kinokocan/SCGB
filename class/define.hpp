@@ -40,13 +40,11 @@ namespace scgb{
     Down,
   };
       
-  typedef std::ifstream File;
-  typedef std::wifstream WFile;
-
   class Vector2D:public std::vector<int>{
   public:
-    Vector2D(){
-      this->resize(2);
+    Vector2D():std::vector<int>(2){}
+    Vector2D(int x,int y):Vector2D(){
+      (*this)[0]=x;(*this)[1]=y;
     }
   };
   

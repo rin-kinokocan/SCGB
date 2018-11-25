@@ -20,8 +20,8 @@ void AAtext::Draw(int x,int y){
 
 AAtext::AAtext(std::string filename)
   :BaseWindow(0,0){
-  WFile file(filename,std::ios::binary);
-  file.imbue(std::locale("ja_JP.UTF-8"));  
+  std::wifstream file(filename,std::ios::binary);
+  file.imbue(std::locale(""));  
   if(file.is_open()!=false){
     file.clear();
     file.seekg(0,std::ios::beg);

@@ -13,7 +13,7 @@ void BMimage::Draw(int x,int y){
 
 BMimage::BMimage(std::string filename):BaseWindow(0,0)
 {
-  File file(filename,std::ios::in | std::ios::binary);
+  std::ifstream file(filename,std::ios::in | std::ios::binary);
   int data;
   if(file.is_open()==false){
     throw std::invalid_argument("cannot open file");

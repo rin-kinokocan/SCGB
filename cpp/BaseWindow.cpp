@@ -53,7 +53,7 @@ bool BaseWindow::MoveCursor(int px,int py){
   if(IsCursorInBoundary(px,py)){
     curx=px;
     cury=py;
-    move(y+py,x+px);
+    move(y+cury,x+curx);
     return true;
   }
   else 
