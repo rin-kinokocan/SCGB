@@ -1,9 +1,8 @@
-#include "BaseWindow.hpp"
+#include "Block.hpp"
 namespace scgb{
-  class TextWriter:public BaseWindow{
+  class TextWriter:public Block{
   protected:
     std::wstring text;
-    attr_t attr;
   public:
     void Draw(int x,int y){
       InitDraw(x,y);
@@ -12,8 +11,6 @@ namespace scgb{
     void ChangeText(std::wstring str){
       text=str;
     }
-    TextWriter(attr_t a,int w,int h):BaseWindow(w,h){
-      attr=a;
-    }
+    TextWriter(attr_t a,int w,int h):Block(a,w,h){}
   };
 }

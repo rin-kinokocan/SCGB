@@ -7,7 +7,7 @@
 #include <map>
 #include <string>
 int mk_wcwidth(wchar_t);
-int mk_wcswidth(const wchar_t,size_t);
+int mk_wcswidth(const wchar_t*,size_t);
 
 namespace scgb{
   enum State{
@@ -15,22 +15,9 @@ namespace scgb{
     STA_OPEN=1,
   };
 
-  enum KeyEvent{
-    //key values used in SCGB.
-    SCGB_BACKSPACE,
-    SCGB_DELETE,
-    SCGB_CTR_D,
-    SCGB_RIGHT=KEY_RIGHT,
-    SCGB_LEFT=KEY_LEFT,
-    SCGB_UP=KEY_UP,
-    SCGB_DOWN=KEY_DOWN,
-    SCGB_RESIZE=KEY_RESIZE,
-    SCGB_NOINPUT=ERR,
-    SCGB_QUIT='q',
-  };
-
   enum Event{
     EVE_END,
+    EVE_ENDINPUT,
   };
   
   enum Direction{

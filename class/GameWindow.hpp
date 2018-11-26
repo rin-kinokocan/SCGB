@@ -19,7 +19,7 @@ namespace scgb{
     
     void Exec(InputMap im){
       im.Update();
-      if(im.GetBool(SCGB_RESIZE)){
+      if(im.GetBool(KEY_RESIZE)){
 	def_prog_mode();
 	endwin();
 	initscr();
@@ -28,7 +28,7 @@ namespace scgb{
       for(auto a:dchs){
 	a.second->Exec(im);
       }
-      if(im.GetBool(SCGB_QUIT)){
+      if(im.GetBool('q')){
 	SendMessage(EVE_END);
       }
     }
@@ -38,7 +38,6 @@ namespace scgb{
     }
 
     GameWindow(std::string locale){
-      Util::SetSigHandlers();
       setlocale(LC_ALL, locale.c_str());
       initscr();//initialize ncurses
       nodelay(stdscr,true);
@@ -50,20 +49,8 @@ namespace scgb{
       Color::Init();
     }
     GameWindow():GameWindow(""){}
-    
-    ~GameWindow(){}
-  };
-  
-  class GWEventListner:public EventListner{
-  private:
-    bool isend=false;
-  public:
-    void notify(Event e,std::string str=NULL){
-      if(e==EVE_END)
-	isend=true;
-    }
-    bool IsEnd(){
-      return isend;
+    ~GameWindow(){
+      endwin();
     }
   };
 }

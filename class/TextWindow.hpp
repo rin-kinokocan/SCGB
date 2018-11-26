@@ -1,7 +1,8 @@
 #pragma once
 #include "WindowContainer.hpp"
 #include "Border.hpp"
-#include "DrawText.hpp"
+#include "TextWriter.hpp"
+
 namespace scgb{
   class TextWindow:public WindowContainer{
   private:
@@ -14,10 +15,10 @@ namespace scgb{
       
     TextWindow(attr_t a,int x,int y,int w,int h):WindowContainer(x,y){
       AddDC(0,new Border(a,w,h));
-      AddDC(1,new DrawText(a,w-2,h-2),1,1);
+      AddDC(1,new TextWriter(a,w-2,h-2),1,1);
     }
     void ChangeText(std::wstring str){
-      auto dt=GetDC<DrawText>(1);
+      auto dt=GetDC<TextWriter>(1);
       dt->ChangeText(str);
     }
   };

@@ -6,13 +6,8 @@ using namespace scgb;
 
 void BMimage::Draw(int x,int y){
   InitDraw(x,y);
-  // for(int i=0;i<height;i++){
-  //   for(int j=0;j<width;j++){
-  //     AddStr(L"  ",COLOR_PAIR(pixels[i*width+j]));
-  //   }
-  // }
   for(int i:this->pixels){
-    AddStr(L"　",COLOR_PAIR(i));
+    AddStr(L"  ",COLOR_PAIR(i));
   }
 }
 

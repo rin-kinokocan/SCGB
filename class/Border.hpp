@@ -1,9 +1,7 @@
-#include "BaseWindow.hpp"
+#include "Block.hpp"
 
 namespace scgb{
-  class Border:public BaseWindow{
-  protected:
-    attr_t attr;
+  class Border:public Block{
   public:
     void Draw(int x,int y){
       InitDraw(x,y);
@@ -24,6 +22,6 @@ namespace scgb{
       }
       AddChar(L'┘',attr);
     }
-    Border(attr_t a,int w,int h):BaseWindow(w,h){attr=a;}
+    Border(attr_t a,int w,int h):Block(a,w,h){}
   };
 }

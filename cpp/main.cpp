@@ -4,30 +4,33 @@ using namespace scgb::Util;
 int main(){
   GameWindow gw("ja_JP.UTF-8");
   GWEventListner gel;
+  IBEventListner iel;
   InputMap im;
   Clock clock;
-  auto textwindow=std::make_shared<TextWindow>(COLOR_PAIR(4),5,1,20,5);
-  auto textwindow2=std::make_shared<TextWindow>(L"Test",COLOR_PAIR(9),3,3,50,5);
+  auto textwindow=std::make_shared<TextWindow>(COLOR_PAIR(3),3,15,30,5);
+  auto inputbox=std::make_shared<InputBox>(COLOR_PAIR(3),10,3,10,4);
   auto bm=std::make_shared<SingleHandler>(3,3);
-  auto movable=std::make_shared<GOMovable>(5,5);
-  auto test1=std::make_shared<SingleHandler>(5,10);
-  textwindow->ChangeText(L"Hay, how are you doing?");
+  auto aa=std::make_shared<SingleHandler>(5,8);
+  auto test=std::make_shared<SingleHandler>(2,2);
+
+  textwindow->ChangeText(L"Hay, what's your name?");
+  inputbox->ChangeTitle(L"Enter your name.");
   bm->AttachDC(new BMimage("./assets/kinoko.bmp"));
-  movable->AttachDC(new AAtext("./assets/test.aa"));
-  test1->AttachDC(new AAtext("./assets/test.aa"));
- 
+  aa->AttachDC(new AAtext("./assets/human.aa"));
+  test->AttachDC(new AAtext("./assets/test.aa"));
+  
   gw.AttachEL(&gel);
+  inputbox->AttachEL(&iel);
+  gw.AddDCHandler(-10,test);
   gw.AddDCHandler(1,bm);
   gw.AddDCHandler(2,textwindow);
-  gw.AddDCHandler(3,movable);
-  gw.AddDCHandler(4,textwindow2);
-  gw.AddDCHandler(5,test1);
+  gw.AddDCHandler(3,aa);
+  gw.AddDCHandler(4,inputbox);
   while(!gel.IsEnd()){
     gw.Exec(im);
     gw.Draw();
     clock.WaitFrame();
   }
-  endwin();
   return 0;
 }
 

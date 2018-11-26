@@ -1,4 +1,5 @@
 #pragma once
+#include "DrawingComponent.hpp"
 #include "DCHandler.hpp"
 
 namespace scgb{
