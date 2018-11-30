@@ -29,8 +29,6 @@ namespace scgb{
       FPS=i;
     }
   };
-  int Clock::FPS=30;
-  int Clock::dt=0;
 }
 
 

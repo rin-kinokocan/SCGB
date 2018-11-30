@@ -7,7 +7,7 @@ using namespace scgb;
 void BMimage::Draw(int x,int y){
   InitDraw(x,y);
   for(int i:this->pixels){
-    AddStr(L"  ",COLOR_PAIR(i));
+    AddStr(L"  ",i);
   }
 }
 
@@ -30,11 +30,11 @@ BMimage::BMimage(std::string filename):BaseWindow(0,0){
   this->pixels.resize(w*h);
   for(int i=0;i<h;i++){
     for(int j=0;j<w;j++){
-      unsigned char r,g,b;
-      if(file.read(reinterpret_cast<char*>(&b),1)&&
-	 file.read(reinterpret_cast<char*>(&g),1)&&
-	 file.read(reinterpret_cast<char*>(&r),1)){
-	int p=Color::GetColor(r,g,b);
+      RGBvalue rgb;
+      if(file.read(reinterpret_cast<char*>(&rgb[2]),1)&&
+	 file.read(reinterpret_cast<char*>(&rgb[1]),1)&&
+	 file.read(reinterpret_cast<char*>(&rgb[0]),1)){
+	int p=Color::GetColorPair(rgb,rgb);
 	int x=j,y=h-1-i;
 	int pos=y*w+x;
 	this->pixels[pos]=p;

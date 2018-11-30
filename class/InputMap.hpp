@@ -5,6 +5,7 @@ namespace scgb{
   class InputMap{
   private:
     std::map<wint_t,bool> map;
+    wint_t input;
   public:
     void Update(){
       for(auto& i:map){
@@ -12,25 +13,22 @@ namespace scgb{
       }
       while(1){
 	wint_t c;
-      	wget_wch(stdscr,&c);
-	if(c!=ERR){
+	auto code=get_wch(&c);
+	if(code==ERR)
+	  break;
+	if(code==KEY_CODE_YES || (int)c<256){
 	  auto i=map.find(c);
 	  if(i==map.end()){
-      	    map.insert(std::pair<wint_t,bool>(c,true));
-      	  }
-      	  else{
-      	    if(i->second==false)
-      	      i->second=true;
-	    auto i=map.find(c);
-	    if(i!=map.end()){
-	      if(i->second==false)
-		i->second=true;
-	      else
-		break;
-	    }
-	    else
-	      map.insert(std::pair<wint_t,bool>(c,true));
+	    map.insert(std::pair<wint_t,bool>(c,true));
 	  }
+	  else{
+	    if(i->second==false)
+	      i->second=true;
+	  }
+	}
+	else{
+	  input=c;
+	  break;
 	}
       }
     };
@@ -41,5 +39,8 @@ namespace scgb{
       else
 	return false;
     };
+    wint_t GetLastInput(){
+      return input;
+    }
   };
 }

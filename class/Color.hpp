@@ -1,17 +1,16 @@
 #pragma once
-#include <ncurses.h>
-#include <iostream>
-#include <memory>
+#include "define.hpp"
 
 namespace scgb{
   class Color{
+    //manages color palette
   private:
-    static int delta;
-    static int phase;
+    static int colorpairs;
   public:
-    static void Init();
-    static int GetColor(unsigned char r,unsigned char g,unsigned char b);
+    static bool Init();
+    static attr_t GetColorPair(RGBvalue top,RGBvalue back);
+    static attr_t GetByBackGround(RGBvalue rgb);
+    static short GetColor(RGBvalue rgb);
+    static void LoadPalette(std::string filename);
   };
-
-  typedef std::unique_ptr<Color> Palette;
 }

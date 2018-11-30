@@ -26,7 +26,7 @@ namespace scgb{
     Up,
     Down,
   };
-      
+  
   class Vector2D:public std::vector<int>{
   public:
     Vector2D():std::vector<int>(2){}
@@ -35,10 +35,10 @@ namespace scgb{
     }
   };
   
-  class Vector3D:public std::vector<int>{
+  class RGBvalue:public std::vector<short>{
   public:
-    Vector3D():std::vector<int>(3){}
-    Vector3D(int x,int y,int z):Vector3D(){
+    RGBvalue():std::vector<short>(3){}
+    RGBvalue(int x,int y,int z):RGBvalue(){
       (*this)[0]=x;(*this)[1]=y;(*this)[2]=z;
     }
   };
