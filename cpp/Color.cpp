@@ -38,6 +38,26 @@ attr_t Color::GetColorPair(RGBvalue front,RGBvalue back){
   return COLOR_PAIR(colorpairs);
 }
 
+attr_t Color::GetByBackGround(RGBvalue rgb){
+  if(!has_colors())
+    return 0;
+  auto b=GetColor(rgb);
+  short pf,pb;
+  for(int i=1;i<colorpairs;i++){
+    pair_content(i,&pf,&pb);
+    if(pb==b){
+      return COLOR_PAIR(i);
+    }
+  }
+  if(colorpairs<COLOR_PAIRS-1){
+    colorpairs++;
+    init_pair(colorpairs,0,b);
+  }
+  else
+    throw std::runtime_error("Too much color pairs required.");
+  return COLOR_PAIR(colorpairs);
+}
+
   
 static inline short CalcRgb(short x){
   return (short)(x/1000.0*255);

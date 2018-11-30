@@ -34,7 +34,7 @@ BMimage::BMimage(std::string filename):BaseWindow(0,0){
       if(file.read(reinterpret_cast<char*>(&rgb[2]),1)&&
 	 file.read(reinterpret_cast<char*>(&rgb[1]),1)&&
 	 file.read(reinterpret_cast<char*>(&rgb[0]),1)){
-	int p=Color::GetColorPair(rgb,rgb);
+	int p=Color::GetByBackGround(rgb);
 	int x=j,y=h-1-i;
 	int pos=y*w+x;
 	this->pixels[pos]=p;
