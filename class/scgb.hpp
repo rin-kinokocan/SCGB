@@ -5,7 +5,7 @@
 //LogicComponents
 #include "GameWindow.hpp"
 #include "SingleHandler.hpp"
-#include "GOMovable.hpp"
+#include "MoveByInput.hpp"
 #include "TextWindow.hpp"
 #include "InputBox.hpp"
 //EventListners

@@ -1,5 +1,4 @@
 #pragma once
-#include "define.hpp"
 #include "InputMap.hpp"
 #include "EventListner.hpp"
 

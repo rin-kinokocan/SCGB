@@ -26,10 +26,10 @@ namespace scgb{
 	      i->second=true;
 	  }
 	}
-	else{
+	if(code!=KEY_CODE_YES)
 	  input=c;
-	  break;
-	}
+	else
+	  input=0;
       }
     };
     
@@ -39,7 +39,15 @@ namespace scgb{
       else
 	return false;
     };
-    wint_t GetLastInput(){
+    wint_t GetInput(){
+      switch(input){
+      case 10://enter
+      case 127://backspace
+	input=0;
+	break;
+      default:
+	break;
+      }
       return input;
     }
   };

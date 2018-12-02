@@ -22,6 +22,10 @@ namespace scgb{
       if(toggle)
 	AddChar(ch,attr);
     }
+    void Reset(){
+      toggle=true;
+      timer=0;
+    }
     Cursor(attr_t attr,int hz=1,wchar_t ch=L' '):BaseWindow(1,1){
       this->attr=attr;
       this->hz=hz;

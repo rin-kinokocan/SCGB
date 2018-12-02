@@ -14,23 +14,26 @@ namespace scgb{
 	i.second->Draw(x+p[0],y+p[1]);
       }
     }
-  
+
+    void MoveDC(int l,int x,int y){
+      positions[l]=Vector2D(x,y);
+    }
+    
     template <class T>
     std::shared_ptr<T> GetDC(int l){
       return std::static_pointer_cast<T>(drawlist[l]);
     }
-
-    void AddDC(int l,DrawingComponent* d){
-      AddDC(l,d,0,0);
+    void AttachDC(int l,DrawingComponent* d){
+      AttachDC(l,d,0,0);
     }
-    void AddDC(int l,DrawingComponent* d,int x,int y){
+    void AttachDC(int l,DrawingComponent* d,int x,int y){
       auto a=std::shared_ptr<DrawingComponent>(d);
-      AddDC(l,a,x,y);
+      AttachDC(l,a,x,y);
     }
-    void AddDC(int l,std::shared_ptr<DrawingComponent> d){
-      AddDC(l,d,0,0);
+    void AttachDC(int l,std::shared_ptr<DrawingComponent> d){
+      AttachDC(l,d,0,0);
     }
-    void AddDC(int l,std::shared_ptr<DrawingComponent> d,int x,int y){
+    void AttachDC(int l,std::shared_ptr<DrawingComponent> d,int x,int y){
       if(drawlist.find(l)==drawlist.end()){
 	drawlist[l]=d;
 	positions[l]=Vector2D(x,y);

@@ -6,10 +6,12 @@ namespace scgb{
   class InputBox:public WindowContainer,public ELHandler{
     //one line title + one line input.
   protected:
-    using WindowContainer::AddDC;
+    using WindowContainer::AttachDC;
     bool isStarted=false;
     int maxchar;
-    std::wstring input;
+    int charnum=0;//actual char num
+    int cursorpos=0;//cursor position
+    std::wstring input=L"";
   public:
     void Exec(InputMap);
     void StartInput();
