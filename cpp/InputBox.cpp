@@ -65,10 +65,13 @@ void InputBox::Exec(InputMap im){
   }
   
   auto in=im.GetInput();
-  if(charnum+1<maxchar && in!=0){
-    input.insert(cursorpos,1,in);
-    charnum++;
-    cursorpos++;
+  for(int i=0;charnum+1<maxchar;i++){
+    try{
+      input.insert(cursorpos,1,in.at(i));
+      charnum++;
+      cursorpos++;
+    }
+    catch(std::exception e){break;}
   }
   auto w=mk_wcswidth(input.c_str(),cursorpos);
   MoveDC(4,1+w,2);
