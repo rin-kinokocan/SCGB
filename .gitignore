@@ -1,4 +1,7 @@
 test/
+gtest/
 build/
+lib/
 dependency/
-scgb
+demo
+!cpp/demo/

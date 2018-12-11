@@ -8,9 +8,9 @@ namespace scgb{
     static int colorpairs;
   public:
     static bool Init();
-    static attr_t GetColorPair(RGBvalue top,RGBvalue back);
-    static attr_t GetByBackGround(RGBvalue rgb);
-    static short GetColor(RGBvalue rgb);
-    static void LoadPalette(std::string filename);
+    static attr_t GetColorPair(RGBvalue& top,RGBvalue& back);
+    static attr_t GetByBackGround(RGBvalue& rgb);
+    static short GetColor(RGBvalue& rgb);
+    static void SetColors();
   };
 }

@@ -3,10 +3,9 @@
 
 namespace scgb{
   class AAtext :public BaseWindow{
-  protected:
-    std::vector<wchar_t> data;
+    // Draws Ascii Art (with Unicode chars).
+    // Model prefix:AA
   public:
-    void Draw(int x,int y);
-    AAtext(std::string filename);
+    void Draw();
   };
 }

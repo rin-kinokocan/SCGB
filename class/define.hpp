@@ -6,15 +6,11 @@
 #include <memory>
 #include <map>
 #include <string>
+#include <utility>
 int mk_wcwidth(wchar_t);
 int mk_wcswidth(const wchar_t*,size_t);
 
 namespace scgb{
-  enum State{
-    STA_DESTROY=0,
-    STA_OPEN=1,
-  };
-
   enum Event{
     EVE_END,
     EVE_ENDINPUT,
@@ -43,27 +39,10 @@ namespace scgb{
     }
   };
   
-  template <class T>
-  class WeakPtr{//wrapper of std::weak_ptr
-  public:
-    std::weak_ptr<T> pointer;
-    std::shared_ptr<T> operator->(){
-      if(!pointer.expired())
-	return pointer.lock();
-      else
-	throw std::runtime_error("NOPE.");
-    }
-    WeakPtr(){}
-    WeakPtr(std::shared_ptr<T> a){
-      pointer=a;
-    }
-  };
-
   //prototypes of Util functions
   namespace Util{
-    int GetAttr(cchar_t c);
     Vector2D GetMaxScr();
     void LogToStdout(std::string);
-    void SetSigHandlers();
+    void ShowColorPairs();
   }
 }

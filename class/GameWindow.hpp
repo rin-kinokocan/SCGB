@@ -1,18 +1,15 @@
 #pragma once
-#include "Color.hpp"
-#include "DCHandler.hpp"
-#include "LogicComponent.hpp"
-#include "ELHandler.hpp"
+#include "CompoundController.hpp"
 
 namespace scgb{
-  class GameWindow:public LogicComponent,public ELHandler{
-  protected:
-    std::map<int,std::shared_ptr<DCHandler>> dchs;
+  // Work as a controller.
+  // Contains other controllers, and update them every frame.
+  class GameWindow:public CompoundController{
   public:
     void Draw(){
       erase();
-      for(auto dch:dchs){
-	dch.second->Draw();
+      for(auto c:cs){
+	c.second->Draw();
       }
       refresh();
     }
@@ -25,16 +22,12 @@ namespace scgb{
 	initscr();
 	reset_prog_mode();
       }
-      for(auto a:dchs){
-	a.second->Exec(im);
+      for(auto c:cs){
+	c.second->Exec(im);
       }
       if(im.GetBool('q')){
 	SendMessage(EVE_END);
       }
-    }
-
-    void AddDCHandler(int l,std::shared_ptr<DCHandler> dch){
-      dchs[l]=dch;
     }
 
     GameWindow(std::string locale){
@@ -47,6 +40,7 @@ namespace scgb{
       cbreak();
       //color initialization
       Color::Init();
+      refresh();
     }
     GameWindow():GameWindow(""){}
     ~GameWindow(){
