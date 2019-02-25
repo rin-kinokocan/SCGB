@@ -2,7 +2,7 @@
 namespace scgb{
   template <class T>
   class BaseModel{
-    // Contains data, and can update them.
+    // Contains data.
   public:
     virtual T GetData()=0;
   };

@@ -13,6 +13,11 @@ namespace scgb{
     Geometry(int w,int h){
       width=w;height=h;
     }
+    Geometry(Vector2D geo){
+      width=geo[0];height=geo[1];
+    }
     Geometry():Geometry(0,0){}
   };
+  typedef Geometry Coordinate;
+  typedef Geometry Boundary;
 }

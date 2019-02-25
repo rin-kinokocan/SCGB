@@ -1,13 +1,13 @@
 #pragma once
-#include "BWHandler.hpp"
+#include "BaseModel.hpp"
 
 namespace scgb{
-  class Attribute:public LogicComponent{
-    // Contains attributes for a Box.
+  class Attribute:public BaseModel<attr_t>{
+    // Contains attributes
   protected:
     attr_t attr;
   public:
-    attr_t GetAttr(){return attr;}
-    Attribute(attr_t a,int x,int y):BWHandler(w,y){attr=a;};
-  }
+    attr_t GetData(){return attr;}
+    Attribute(attr_t a){attr=a;}
+  };
 }
