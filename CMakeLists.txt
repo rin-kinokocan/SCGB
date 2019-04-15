@@ -4,6 +4,7 @@ set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/cpp)
 set(DEMO_DIR ${SOURCE_DIR}/demo)
 set(INCLUDE_DIRS
   "${CMAKE_SOURCE_DIR}/class"
+  "${CMAKE_SOURCE_DIR}/lib"
   )
 # I don't think glob is that bad guy...
 # You just need to touch it every time.
@@ -17,13 +18,12 @@ add_executable(demo "${DEMO_DIR}/main.cpp")
 target_link_libraries(demo scgb)
 
 # Choose actual curses implementation.
-set(USE_NCURSES "" CACHE BOOL "ON to use ncurses, OFF to use pdcurses.")
+set(USE_NCURSES "ON" CACHE BOOL "ON to use ncurses, OFF to use pdcurses.")
 if(USE_NCURSES)
   find_library(NCURSESW_LIB ncursesw)
   target_link_libraries(demo ${NCURSESW_LIB})
 else()
   find_library(PDCURSES_LIB pdcurses HINT "${CMAKE_SOURCE_DIR}/lib")
-  include_directories("${CMAKE_SOURCE_DIR}/lib")
   # When you want to use pdcurses, put the lib in {SOURCE}/lib.
   # Also, put curses.h at the same directory as pdcurses.
   if(NOT PDCURSES_LIB)

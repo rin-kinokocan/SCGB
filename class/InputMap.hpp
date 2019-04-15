@@ -1,5 +1,7 @@
 #pragma once
-#include "define.hpp"
+#include <string>
+#include <map>
+#include <curses.h>
 
 namespace scgb{
   class InputMap{

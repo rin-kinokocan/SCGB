@@ -1,27 +1,11 @@
 #pragma once
-#include "curses.h"
 #include <vector>
-#include <fstream>
-#include <iostream>
-#include <memory>
-#include <map>
 #include <string>
-#include <utility>
+
 int mk_wcwidth(wchar_t);
 int mk_wcswidth(const wchar_t*,size_t);
 
 namespace scgb{
-  enum Event{
-    EVE_END,
-    EVE_ENDINPUT,
-  };
-  
-  enum Direction{
-    Right,
-    Left,
-    Up,
-    Down,
-  };
   
   class Vector2D:public std::vector<int>{
   public:

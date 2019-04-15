@@ -1,17 +1,43 @@
 #include "scgb.hpp"
 using namespace scgb;
 using namespace scgb::Util;
+
+class TestScene{
+private:
+  Rectangle rect;
+  Text text;
+  AAtext aa;
+  AAfile roflcopter;
+public:
+  TestScene(){
+    rect.SetOrigin(8,8);
+    rect.SetSize(15,15);
+    text.SetText(L"Hay, I changed something! You can't see it though!");
+    text.SetOrigin(10,10);
+    roflcopter.SetFile("../assets/Logo.aa");
+    aa.SetAAfile(roflcopter);
+    aa.SetOrigin(10,11);
+  }
+  void Draw(){
+    rect.Draw();
+    text.Draw();
+    aa.Draw();
+  }
+};
+
+
 int main(){
-  GameWindow gw("ja_JP.UTF-8");
+  Root system;
+  TestScene ts;
   InputMap im;
   Clock clock;
-  RGBvalue fg(255,255,255);
-  RGBvalue bg(0,0,255);
-  auto text=std::make_shared<TextBoxController>(new Geometry(31,5),new Coordinate(3,10),fg,bg);
-  gw.Append(text);
-  text->SetText(L"Hay, there mortal! Give me back the jewel!");
-  while(true){
-    gw.Draw();
+  system.Init();
+  while(!system.IsEnd()){
+    system.Delete();
+    ts.Draw();
+    system.Update(im);
+    clock.WaitFrame();
   }
+  system.End();
   return 0;
 }

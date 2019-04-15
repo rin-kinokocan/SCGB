@@ -1,4 +1,6 @@
 #include "define.hpp"
+#include <iostream>
+#include <curses.h>
 #include <unistd.h>
 
 namespace scgb{

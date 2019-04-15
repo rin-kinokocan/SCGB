@@ -35,7 +35,7 @@ attr_t Color::GetColorPair(RGBvalue& front,RGBvalue& back){
     init_pair(colorpairs,f,b);
   }
   else{
-    throw std::runtime_error("Over "+std::to_string(COLOR_PAIRS)+" color pairs required.");
+    return -1;
   }
   return COLOR_PAIR(colorpairs);
 }
@@ -112,33 +112,4 @@ static inline int conv(int x){
   return x*1000/255.0;
 }
 
-void Color::SetColors(){
-  /*
-    I assume that default curses color macros
-    (COLOR_BLACK to COLOR_WHITE) are 0~7.
-    At least, ncurses and PDcurses are using these numbers.
-
-    With PDCurses on Windows, init_color() cannot change
-    more than 16 color definitions.
-    However, the default pallete is exactly the same
-    thing as the original colors set on initialization.
-    Hence you don't need to worry about colors
-    if you stick with the normal 256 colors.
-
-    After all, this function just gives ncurses 
-    the default color definitions which should be used on
-    color_content().
-   */
-  int i=8;
-  if(COLORS<256 || !can_change_color())
-    return;
-  for(int r=0;r<=255;r+=51){
-    for(int g=0;g<=255;g+=51){
-      for(int b=0;b<=255;b+=51){
-	init_color(i,conv(r),conv(g),conv(b));
-	i++;
-      }
-    }
-  }
-}
 

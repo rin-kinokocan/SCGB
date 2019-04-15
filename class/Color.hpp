@@ -1,5 +1,6 @@
 #pragma once
 #include "define.hpp"
+#include <curses.h>
 
 namespace scgb{
   class Color{

@@ -19,10 +19,14 @@ On Windows, the former option is not available unless you are
 using MinGW or Cygwin or something like that.
 
 If you want a ncurses version, you need `ncursesw` to build SCGB.
+You might need to copy `curses.h` of ncursesw and put it into `lib` directory.
+
 If you want a PDCurses version, create a directory called `lib`
-first. Then you need to put PDCurses static library
+at the root of the project directory first.
+Then you need to put PDCurses static library
 and PDCurses header (`curses.h`) in the `lib` directory.
 
+SCGB uses ncurses by default.
 ## Build
 You can use CMake to build SCGB.
 Make a directory called `build` on the project root directory,

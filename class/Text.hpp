@@ -1,19 +1,21 @@
 #pragma once
-#include "BaseView.hpp"
-#include "Attribute.hpp"
-#include "String.hpp"
+#include "DrawingComponent.hpp"
 
 namespace scgb{
-  class Text:public BaseView{
+  class Text:public DrawingComponent{
   protected:
-    std::shared_ptr<Attribute> attribute;
-    std::shared_ptr<String> text;
+    std::wstring text=L"default";
+    attr_t attr=0;
   public:
     void Draw(){
       InitDraw();
-      AddStr(text->GetData(),attribute->GetData());
+      AddStr(text,attr);
     }
-    Text(WindowInfo wi,std::shared_ptr<Attribute> attr,std::shared_ptr<String> str)
-      :BaseView(wi),attribute(attr),text(str){}
+    void SetText(std::wstring str){
+      text=str;
+    }
+    void SetAttr(attr_t a){
+      attr=a;
+    }
   };
 }
