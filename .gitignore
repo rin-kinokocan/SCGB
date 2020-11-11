@@ -1,7 +1,6 @@
 test/
 gtest/
-build/
 lib/
+build/
 dependency/
-demo
-!cpp/demo/
+*~

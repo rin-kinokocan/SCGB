@@ -1,18 +1,59 @@
 #pragma once
-#include "define.hpp"
 #include <curses.h>
-
+#include <cmath>
 namespace scgb{
   class Color{
-    //manages color palette
+    // manages color palette
+    // Singleton. But I can't remember the static state it had.
   private:
-    static int colorpairs;
+    Color(){}
   public:
-    static bool Init();
-    static attr_t GetColorPair(RGBvalue& top,RGBvalue& back);
-    static attr_t GetByBackGround(RGBvalue& rgb);
-    static attr_t GetByForeGround(RGBvalue& rgb);
-    static short GetColor(RGBvalue& rgb);
-    static void SetColors();
+    Color(Color &col)=delete;
+    void operator=(const Color col)=delete;
+    
+    static Color& GetInstance(){
+      static Color instance;
+      return instance;
+    }
+    
+    attr_t GetColorPair(int r,int g,int b){
+      int res=0,max=0;
+      r=r*1000/255.0;
+      g=g*1000/255.0;
+      b=b*1000/255.0;
+      for(int i=1;i<COLOR_PAIRS;i++){
+	short pf,pb,cr,cg,cb;
+	pair_content(i,&pf,&pb);
+	color_content(pb,&cr,&cg,&cb);
+
+	int dist=pow(r-cr,2)+pow(g-cg,2)+pow(b-cb,2);
+	
+	if(dist<max || res==0){
+	  max=dist;
+	  res=i;
+	}
+      }
+      return res;
+    }
+
+    short GetColor(int r,int g,int b){
+      //rgb values:0~255
+      if(!has_colors())
+	return 0;
+      short cr,cg,cb;
+      int res=0,max=0;
+      r=r*1000/255.0;
+      g=g*1000/255.0;
+      b=b*1000/255.0;
+      for(int i=0;i<COLORS;i++){
+	color_content(i,&cr,&cg,&cb);
+	int dist=pow(r-cr,2)+pow(g-cg,2)+pow(b-cb,2);
+	if(dist<max || res==0){
+	  max=dist;
+	  res=i;
+	}
+      }
+      return res;
+    }
   };
 }

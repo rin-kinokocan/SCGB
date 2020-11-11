@@ -3,22 +3,16 @@
 #include "AAfile.hpp"
 
 namespace scgb{
-  class AAtext :public DrawingComponent{
-    // Draws Ascii Art (with Unicode chars).
+  class AABox :public DrawingComponent{
+    // Draws things in datafile (with Unicode chars).
   public:
     void Draw(){
-      InitDraw();
-      if(!aafile){
-	Util::LogToStdout("file not found");
-	return;
-      }
-      auto data=aafile->GetString();
-      AddStr(data,0);
+      MoveCursor(0,0);
+      AddStr(datafile.GetData(),0);
     }
-    void SetAAfile(AAfile &aa){
-      aafile=&aa;
-    }
+    TextBox(DataFile& f,int x=0,int y=0,int w=0,int h=0):DrawingComponent(x,y,w,h),datafile(f){
+     }
   protected:
-    AAfile* aafile=nullptr;
+    DataFile& datafile;
   };
 }
