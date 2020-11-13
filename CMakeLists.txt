@@ -18,14 +18,17 @@ add_library(scgb "${SCGB_SOURCES}")
 add_executable(demo "${DEMO_DIR}/main.cpp")
 target_link_libraries(demo scgb)
 
+set_property(TARGET scgb PROPERTY CXX_STANDARD 11)
+set_property(TARGET demo PROPERTY CXX_STANDARD 11)
+
 # Choose actual curses implementation.
 set(USE_NCURSES "ON" CACHE BOOL "ON to use ncurses, OFF to use pdcurses.")
 if(USE_NCURSES)
   set(CURSES_NEED_WIDE TRUE)
   set(CURSES_NEED_NCURSES TRUE)
   find_package(Curses REQUIRED)
-  #target_link_libraries(demo ${NCURSESW_LIB})
   target_link_libraries(demo ${CURSES_LIBRARIES})
+  add_definitions(-DNCURSES_WIDECHAR)
 else()
   find_library(PDCURSES_LIB pdcurses HINT "${CMAKE_SOURCE_DIR}/lib")
   # When you want to use pdcurses, put the lib in {SOURCE}/lib.
