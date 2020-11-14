@@ -16,3 +16,4 @@
 #include "CursesManager.hpp"
 #include "Color.hpp"
 #include "Clock.hpp"
+#include "Input.hpp"

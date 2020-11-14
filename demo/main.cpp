@@ -24,24 +24,15 @@ int main(){
   CursesManager& cm=CursesManager::GetInstance();
   Color& col=Color::GetInstance();
   Clock clock(10);
+  Input input;
+  
   //GameContext
   GameContext gc;
   gc.ChangeScene(make_shared<TitleScene>(1,1));
   while(!isend){
-    clear();
-    wint_t input,tmp_in;
-    int code,tmp_code;
-    input=0;code=0;
-    while(true){
-      tmp_code=get_wch(&tmp_in);
-      if(tmp_code==ERR)
-    	break;
-      else{
-    	code=tmp_code;
-    	input=tmp_in;
-      }
-    }
-    switch(input){
+    erase();
+    auto data=input.GetInput();
+    switch(data[1]){
     case KEY_RESIZE:
       cm.OnResize();
       break;
@@ -50,7 +41,7 @@ int main(){
     }
     if(gc.IsEnd())
       break;
-    gc.HandleInput(input,code);
+    gc.HandleInput(data[0],data[1]);
     gc.Draw();
     refresh();    
     clock.WaitFrame();
