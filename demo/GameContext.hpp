@@ -15,6 +15,9 @@ namespace scgb{
     void Draw(){
       scene->Draw();
     }
+    void Update(){
+      scene->Update();
+    }
     void HandleInput(wint_t in,int code){
       scene->HandleInput(*this,in,code);
     }

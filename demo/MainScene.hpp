@@ -2,6 +2,7 @@
 #include "scgb.hpp"
 #include "Scene.hpp"
 #include "MapData.hpp"
+#include "MapBox.hpp"
 #include "Parts.hpp"
 using namespace scgb;
 using namespace std;
@@ -24,6 +25,7 @@ public:
     Add(AABox("assets/FrontWall2.txt",x+7,y+3));//9
     Add(AABox("assets/FrontWall1.txt",x+2,y));//10
     Add(Coin(x+11,y+4));
+    Add(MapBox(map,x+50,y));
     Add(MessageWindow(message,0,1,15,50,10));
   }
   
@@ -45,6 +47,13 @@ public:
       count++;
     }
   }
+  void Update(){
+    auto pos=map.GetPosition();
+    if(map.GetIcon(pos[0],pos[1])==1){
+      map.SetIcon(pos[0],pos[1],0);
+      coin++;
+    }
+  }
   void HandleInput(GameContext& gc,wint_t input,int code){
     switch(input){
     case KEY_UP:
@@ -60,11 +69,6 @@ public:
       gc.EndGame();
     default:
       break;
-    }
-    auto pos=map.GetPosition();
-    if(map.GetIcon(pos[0],pos[1])==1){
-      map.SetIcon(pos[0],pos[1],0);
-      coin++;
-    }
+    }  
   }
 };

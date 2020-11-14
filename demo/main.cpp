@@ -42,6 +42,7 @@ int main(){
     if(gc.IsEnd())
       break;
     gc.HandleInput(data[0],data[1]);
+    gc.Update();
     gc.Draw();
     refresh();    
     clock.WaitFrame();

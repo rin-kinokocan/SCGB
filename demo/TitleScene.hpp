@@ -18,6 +18,7 @@ public:
     Add(TextBox<std::wstring>(L"Load Game",x+20,y+12));
     Add(TextBox<std::wstring>(L"Quit Game",x+20,y+13));
   }
+  void Update(){}
   void HandleInput(GameContext& gc,wint_t input,int code){
     switch(input){
     case KEY_UP:

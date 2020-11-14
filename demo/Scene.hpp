@@ -7,6 +7,7 @@ namespace scgb{
   class Scene:public CompositeDrawingComponent{
   public:
     virtual void HandleInput(GameContext& gc,wint_t input,int code)=0;
+    virtual void Update()=0;
     Scene(int x=0,int y=0):CompositeDrawingComponent(x,y){}
   };
 }

@@ -15,6 +15,10 @@ private:
   int facing=0;// 0123->NWSE
   int x=0,y=0;// position
 public:
+  int GetFacing(){
+    return facing;
+  }
+  
   void TurnLeft(){
     if(facing==0)
       facing=3;
@@ -27,51 +31,64 @@ public:
     else
       facing++;
   }
-  int GetColWalls(int x,int y){
+
+  vector<int>& GetFloors(){
+    return Floors;
+  }
+  
+  int GetColWall(int x,int y){
     int index=Size[1]*x+y;
     if(index<0 || index>ColWalls.size())
       return 0;
     return ColWalls[index];
   }
-  int GetRowWalls(int x,int y){
+  
+  int GetRowWall(int x,int y){
     int index=(Size[1]+1)*x+y;
     if(index<0 || index>RowWalls.size()){
       return 0;
     }
     return RowWalls[index];
   }
+
   int GetFloor(int x,int y){
     int index=x*Size[1]+y;
     if(index<0 || index>Floors.size())
       return 0;
     return Floors[index];
   }
+  
   int GetIcon(int x,int y){
     int index=x*Size[1]+y;
     if(index<0 || index>Icons.size())
       return 0;
     return Icons[index];
   }
+
+  std::vector<int> GetSize(){
+    return Size;
+  }
   std::vector<int> GetPosition(){
     std::vector<int> vec{x,y};
     return vec;
   }
+  
   void MoveForward(){
     switch(facing){
     case 0:
-      if(GetRowWalls(x,y)==0)
+      if(GetRowWall(x,y)==0)
 	y--;
       break;
     case 1:
-      if(GetColWalls(x+1,y)==0)
+      if(GetColWall(x+1,y)==0)
 	x++;
       break;
     case 2:
-      if(GetRowWalls(x,y+1)==0)
+      if(GetRowWall(x,y+1)==0)
 	y++;
       break;
     case 3:
-      if(GetColWalls(x,y)==0)
+      if(GetColWall(x,y)==0)
 	x--;
       break;
     }
@@ -84,8 +101,12 @@ public:
     Icons[index]=i;
     return 1;
   }
-  
+
   int GetCoin(){
+    return GetIcon1();
+  }
+  
+  int GetIcon1(){
     int res=0;
     switch(facing){
     case 0:
@@ -106,20 +127,41 @@ public:
     return res;
   }
   
+  int GetIcon2(){
+    int res=0;
+    switch(facing){
+    case 0:
+      res=GetIcon(x,y-2);
+      break;
+    case 1:
+      res=GetIcon(x+2,y);
+      break;
+    case 2:
+      res=GetIcon(x,y+2);
+      break;
+    case 3:
+      res=GetIcon(x-2,y);
+      break;
+    default:
+      break;
+    }
+    return res;
+  }
+  
   int GetLW1(){
     int res=0;
     switch(facing){
     case 0:
-      res=GetColWalls(x,y);
+      res=GetColWall(x,y);
       break;
     case 1:
-      res=GetRowWalls(x,y);
+      res=GetRowWall(x,y);
       break;
     case 2:
-      res=GetColWalls(x+1,y);
+      res=GetColWall(x+1,y);
       break;
     case 3:
-      res=GetRowWalls(x,y+1);
+      res=GetRowWall(x,y+1);
       break;
     default:
       break;
@@ -130,36 +172,37 @@ public:
     int res=0;
     switch(facing){
     case 0:
-      res=GetColWalls(x,y-1);
+      res=GetColWall(x,y-1);
       break;
     case 1:
-      res=GetRowWalls(x+1,y);
+      res=GetRowWall(x+1,y);
       break;
     case 2:
-      res=GetColWalls(x+1,y+1);
+      res=GetColWall(x+1,y+1);
       break;
     case 3:
-      res=GetRowWalls(x-1,y+1);
+      res=GetRowWall(x-1,y+1);
       break;
     default:
       break;
     }
     return res;
   }
+  
   int GetLWB1(){
     int res=0;
     switch(facing){
     case 0:
-      res=GetRowWalls(x-1,y);
+      res=GetRowWall(x-1,y);
       break;
     case 1:
-      res=GetColWalls(x+1,y-1);
+      res=GetColWall(x+1,y-1);
       break;
     case 2:
-      res=GetRowWalls(x+1,y+1);
+      res=GetRowWall(x+1,y+1);
       break;
     case 3:
-      res=GetColWalls(x,y+1);
+      res=GetColWall(x,y+1);
       break;
     default:
       break;
@@ -170,16 +213,16 @@ public:
     int res=0;
     switch(facing){
     case 0:
-      res=GetRowWalls(x-1,y-1);
+      res=GetRowWall(x-1,y-1);
       break;
     case 1:
-      res=GetColWalls(x+2,y-1);
+      res=GetColWall(x+2,y-1);
       break;
     case 2:
-      res=GetRowWalls(x+1,y+2);
+      res=GetRowWall(x+1,y+2);
       break;
     case 3:
-      res=GetColWalls(x-1,y+1);
+      res=GetColWall(x-1,y+1);
       break;
     default:
       break;
@@ -190,16 +233,16 @@ public:
     int res=0;
     switch(facing){
     case 0:
-      res=GetColWalls(x+1,y);
+      res=GetColWall(x+1,y);
       break;
     case 1:
-      res=GetRowWalls(x,y+1);
+      res=GetRowWall(x,y+1);
       break;
     case 2:
-      res=GetColWalls(x,y);
+      res=GetColWall(x,y);
       break;
     case 3:
-      res=GetRowWalls(x,y);
+      res=GetRowWall(x,y);
       break;
     default:
       break;
@@ -210,16 +253,16 @@ public:
     int res=0;
     switch(facing){
     case 0:
-      res=GetColWalls(x+1,y-1);
+      res=GetColWall(x+1,y-1);
       break;
     case 1:
-      res=GetRowWalls(x+1,y+1);
+      res=GetRowWall(x+1,y+1);
       break;
     case 2:
-      res=GetColWalls(x,y+1);
+      res=GetColWall(x,y+1);
       break;
     case 3:
-      res=GetRowWalls(x-1,y);
+      res=GetRowWall(x-1,y);
       break;
     default:
       break;
@@ -230,16 +273,16 @@ public:
     int res=0;
     switch(facing){
     case 0:
-      res=GetRowWalls(x+1,y);
+      res=GetRowWall(x+1,y);
       break;
     case 1:
-      res=GetColWalls(x+1,y+1);
+      res=GetColWall(x+1,y+1);
       break;
     case 2:
-      res=GetRowWalls(x-1,y+1);
+      res=GetRowWall(x-1,y+1);
       break;
     case 3:
-      res=GetColWalls(x,y-1);
+      res=GetColWall(x,y-1);
       break;
     default:
       break;
@@ -250,16 +293,16 @@ public:
     int res=0;
     switch(facing){
     case 0:
-      res=GetRowWalls(x+1,y-1);
+      res=GetRowWall(x+1,y-1);
       break;
     case 1:
-      res=GetColWalls(x+2,y+1);
+      res=GetColWall(x+2,y+1);
       break;
     case 2:
-      res=GetRowWalls(x-1,y+2);
+      res=GetRowWall(x-1,y+2);
       break;
     case 3:
-      res=GetColWalls(x-1,y-1);
+      res=GetColWall(x-1,y-1);
       break;
     default:
       break;
@@ -270,16 +313,16 @@ public:
     int res=0;
     switch(facing){
     case 0:
-      res=GetRowWalls(x,y);
+      res=GetRowWall(x,y);
       break;
     case 1:
-      res=GetColWalls(x+1,y);
+      res=GetColWall(x+1,y);
       break;
     case 2:
-      res=GetRowWalls(x,y+1);
+      res=GetRowWall(x,y+1);
       break;
     case 3:
-      res=GetColWalls(x,y);
+      res=GetColWall(x,y);
       break;
     default:
       break;
@@ -290,16 +333,16 @@ public:
     int res=0;
     switch(facing){
     case 0:
-      res=GetRowWalls(x,y-1);
+      res=GetRowWall(x,y-1);
       break;
     case 1:
-      res=GetColWalls(x+2,y);
+      res=GetColWall(x+2,y);
       break;
     case 2:
-      res=GetRowWalls(x,y+2);
+      res=GetRowWall(x,y+2);
       break;
     case 3:
-      res=GetColWalls(x-1,y);
+      res=GetColWall(x-1,y);
       break;
     default:
       break;
