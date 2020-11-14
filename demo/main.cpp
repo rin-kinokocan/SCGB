@@ -31,7 +31,7 @@ int main(){
     clear();
     wint_t input,tmp_in;
     int code,tmp_code;
-    code=get_wch(&input);
+    input=0;code=0;
     while(true){
       tmp_code=get_wch(&tmp_in);
       if(tmp_code==ERR)
