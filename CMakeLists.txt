@@ -30,7 +30,7 @@ if(USE_NCURSES)
   target_link_libraries(demo ${CURSES_LIBRARIES})
   add_definitions(-DNCURSES_WIDECHAR)
 else()
-  find_library(PDCURSES_LIB pdcurses HINT "${CMAKE_SOURCE_DIR}/lib")
+  find_library(PDCURSES_LIB pdcursesw HINT "${CMAKE_SOURCE_DIR}/lib")
   # When you want to use pdcurses, put the lib in {SOURCE}/lib.
   # Also, put curses.h at the same directory as pdcurses.
   if(NOT PDCURSES_LIB)

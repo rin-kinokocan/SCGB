@@ -10,6 +10,7 @@ namespace scgb{
       x+=dx;
       y+=dy;
     }
+
     void SetTransparency(bool t){
       IsTransparent=t;
     }

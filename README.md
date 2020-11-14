@@ -3,12 +3,10 @@ SCGB is an object-oriented wrapper of curses for creating games.
 
 ## What can SCGB do?
 SCGB provides some object-oriented API to manage text-based interface.
-Currently, the main feature is `BaseWindow`, a refined version of
-curses `WINDOW`. `BaseWindow` can write text in a rectangle shape like
-`WINDOW` does, but also can be moved outside of the screen.
+Currently, the main feature is `DrawingComponent`, a refined version of
+curses `WINDOW`. `DrwaingComponent` can write text in a rectangle shape like
+`WINDOW` does, but also can be moved outside of the screen, write outside of the border, etc.
 It adds enhanced visual effects for games.
-
-SCGB also has built-in input functions based on curses getch.
 
 ## Prerequisites
 On Unix-like OS (Linux or Mac), you have two library options:
@@ -19,14 +17,14 @@ On Windows, the former option is not available unless you are
 using MinGW or Cygwin or something like that.
 
 If you want a ncurses version, you need `ncursesw` to build SCGB.
-You might need to copy `curses.h` of ncursesw and put it into `lib` directory.
 
-If you want a PDCurses version, create a directory called `lib`
-at the root of the project directory first.
-Then you need to put PDCurses static library
-and PDCurses header (`curses.h`) in the `lib` directory.
+If you want a PDCurses version, configure CMake to set USE_NCURSES false.
+
+In case your compiler cannot find correct curses header, create `lib` directory on the root of this project.
+You might need to copy `curses.h` of curses library you are using and put it into `lib` directory.
 
 SCGB uses ncurses by default.
+
 ## Build
 You can use CMake to build SCGB.
 Make a directory called `build` on the project root directory,
@@ -40,9 +38,7 @@ cmake ..
 make
 ```
 These commands create a static library of SCGB and a demo program
-inside of `build` directory. CMake automatically copies the demo
-executable to the project root directory. Run the copied
-one because the demo uses files inside of `assets` using relative paths.
+inside of `build` directory. 
 
 ## Test Programs
 The test program shows some fundamental functionalities of SCGB.
@@ -53,9 +49,10 @@ As a recursive abbreviation, SCGB stands for
 "SCGB Can be Good and Bad."  No one knows.
 
 ## OS supports
-For now, I tested  SCGB on gnome-terminals, xterm, and
-terminator running on Debian 9(stretch) using ncurses.
+For now, I tested  SCGB on gnome-terminals, xterm, and terminator running on Debian 9(stretch) using ncurses.
 I also tested PDCurses (XCurses) to build SCGB, and it worked fine.
 However, there might be bugs caused by the difference between
 the libraries, especially on platform-specific features.
+
+
 
