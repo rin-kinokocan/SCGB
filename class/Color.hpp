@@ -25,9 +25,9 @@ namespace scgb{
 	ColMax=1000;
       else
 	ColMax=680;
-      r=r*1000/255.0;
-      g=g*1000/255.0;
-      b=b*1000/255.0;
+      r=r*ColMax/255.0;
+      g=g*ColMax/255.0;
+      b=b*ColMax/255.0;
       for(int i=1;i<COLOR_PAIRS;i++){
 	short pf,pb,cr,cg,cb;
 	pair_content(i,&pf,&pb);
