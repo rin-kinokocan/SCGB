@@ -21,14 +21,13 @@ namespace scgb{
 	return 0;
       int res=0,max=0;
       int ColMax;
-      if(can_change_color)
+      if(can_change_color())
 	ColMax=1000;
       else
 	ColMax=680;
-      
-      r=r*ColMax/255.0;
-      g=g*ColMax/255.0;
-      b=b*ColMax/255.0;
+      r=r*1000/255.0;
+      g=g*1000/255.0;
+      b=b*1000/255.0;
       for(int i=1;i<COLOR_PAIRS;i++){
 	short pf,pb,cr,cg,cb;
 	pair_content(i,&pf,&pb);
@@ -51,7 +50,7 @@ namespace scgb{
       short cr,cg,cb;
       int res=0,max=0;
       int ColMax;
-      if(can_change_color)
+      if(can_change_color())
 	ColMax=1000;
       else
 	ColMax=680;
