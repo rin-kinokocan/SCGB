@@ -13,11 +13,21 @@ public:
       attroff(COLOR_PAIR(i));
     }
   }
+  void Output(){
+    endwin();
+    short r,g,b;
+    for(int i=0;i<COLORS;i++){
+      color_content(i,&r,&g,&b);
+      cout<<'('<<r<<','<<g<<','<<b<<')'<<endl;
+    }
+  }
   void Update(){}
   void HandleInput(GameContext& gc,wint_t input,int code){
     switch(input){
     case L'q':
       gc.EndGame();
+    case L'c':
+      Output();
     }
   }
 };
