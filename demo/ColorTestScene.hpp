@@ -16,6 +16,7 @@ public:
   void Output(){
     endwin();
     short r,g,b;
+    cout<<"can_change_color:"<<(bool)can_change_color()<<endl;
     for(int i=0;i<COLORS;i++){
       color_content(i,&r,&g,&b);
       cout<<'('<<r<<','<<g<<','<<b<<')'<<endl;
