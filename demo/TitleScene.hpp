@@ -2,6 +2,7 @@
 #include "scgb.hpp"
 #include "Scene.hpp"
 #include "MainScene.hpp"
+#include "ColorTestScene.hpp"
 using namespace scgb;
 using namespace std;
 
@@ -12,10 +13,10 @@ protected:
 public:
   TitleScene(int x=0,int y=0){
     Add(Image("assets/Logo.bmp",x+0,y+0));
-    Add(AABox("assets/TitleLogo.txt",x+1,y+1));
+    Add(AABox("assets/TitleLogo.txt",x+1,y+1))->SetTransparency(true);
     Add(TextBox<std::wstring>(L"*",x+19,y+11));
-    Add(TextBox<std::wstring>(L"New Game",x+20,y+11));
-    Add(TextBox<std::wstring>(L"Load Game",x+20,y+12));
+    Add(TextBox<std::wstring>(L"Play Game",x+20,y+11));
+    Add(TextBox<std::wstring>(L"Color Test",x+20,y+12));
     Add(TextBox<std::wstring>(L"Quit Game",x+20,y+13));
   }
   void Update(){}
@@ -43,7 +44,9 @@ public:
       break;
     case KEY_ENTER:
     case '\n':
-      if(curpos==2)
+      if(curpos==1)
+	gc.ChangeScene(make_shared<ColorTestScene>(x,y));
+      else if(curpos==2)
 	gc.EndGame();
       else
 	gc.ChangeScene(make_shared<MainScene>(x,y));

@@ -349,6 +349,81 @@ public:
     }
     return res;
   }
+  int GetGround(){
+    int res=0;
+    if(GetFloor(x,y)==1)
+      res|=1<<0;
+    if(GetFL2()==1)
+      res|=1<<1;
+    if(GetFLL()==1)
+      res|=1<<2;
+    if(GetFLR()==1)
+      res|=1<<3;
+    return res;
+  }
+  
+  int GetFL2(){
+    int res=0;
+    switch(facing){
+    case 0:
+      res=GetFloor(x,y-1);
+      break;
+    case 1:
+      res=GetFloor(x+1,y);
+      break;
+    case 2:
+      res=GetFloor(x,y+1);
+      break;
+    case 3:
+      res=GetFloor(x-1,y);
+      break;
+    default:
+      break;
+    }
+    return res;
+  }
+  
+  int GetFLL(){
+    int res=0;
+    switch(facing){
+    case 0:
+      res=GetFloor(x-1,y-1);
+      break;
+    case 1:
+      res=GetFloor(x+1,y-1);
+      break;
+    case 2:
+      res=GetFloor(x+1,y+1);
+      break;
+    case 3:
+      res=GetFloor(x-1,y+1);
+      break;
+    default:
+      break;
+    }
+    return res;    
+  }
+  
+  int GetFLR(){
+    int res=0;
+    switch(facing){
+    case 0:
+      res=GetFloor(x+1,y-1);
+      break;
+    case 1:
+      res=GetFloor(x+1,y+1);
+      break;
+    case 2:
+      res=GetFloor(x-1,y+1);
+      break;
+    case 3:
+      res=GetFloor(x-1,y-1);
+      break;
+    default:
+      break;
+    }
+    return res;    
+  }
   
   int GetSight(){
     int res=0;

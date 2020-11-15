@@ -14,16 +14,22 @@ protected:
   int coin=0;
 public:
   MainScene(int x=0,int y=0):map("assets/Map.txt",0,0){
-    Add(AABox("assets/LeftWallBetween.txt",x,y));//1
-    Add(AABox("assets/LeftWallBetween2.txt",x+3,y+3));//2
-    Add(AABox("assets/LeftWall1.txt",x,y));//3
-    Add(AABox("assets/LeftWall2.txt",x+2,y+1));//4
-    Add(AABox("assets/RightWallBetween.txt",x+27,y));//5
-    Add(AABox("assets/RightWallBetween2.txt",x+22,y+3));//6
-    Add(AABox("assets/RightWall1.txt",x+27,y));//7
-    Add(AABox("assets/RightWall2.txt",x+22,y+1));//8
-    Add(AABox("assets/FrontWall2.txt",x+7,y+3));//9
-    Add(AABox("assets/FrontWall1.txt",x+2,y));//10
+    auto floor=Add(CompositeDrawingComponent());
+    floor->Add(AABox("assets/Floor1.txt",x+3,y+14))->SetTransparency(true);
+    floor->Add(AABox("assets/Floor2.txt",x+5,y+11))->SetTransparency(true);
+    floor->Add(AABox("assets/FloorL.txt",x+3,y+11))->SetTransparency(true);
+    floor->Add(AABox("assets/FloorR.txt",x+22,y+11))->SetTransparency(true);
+    auto walls=Add(CompositeDrawingComponent());
+    walls->Add(AABox("assets/LeftWallBetween.txt",x,y));//1
+    walls->Add(AABox("assets/LeftWallBetween2.txt",x+3,y+3));//2
+    walls->Add(AABox("assets/LeftWall1.txt",x,y));//3
+    walls->Add(AABox("assets/LeftWall2.txt",x+2,y+1));//4
+    walls->Add(AABox("assets/RightWallBetween.txt",x+27,y));//5
+    walls->Add(AABox("assets/RightWallBetween2.txt",x+22,y+3));//6
+    walls->Add(AABox("assets/RightWall1.txt",x+27,y));//7
+    walls->Add(AABox("assets/RightWall2.txt",x+22,y+1));//8
+    walls->Add(AABox("assets/FrontWall2.txt",x+7,y+3));//9
+    walls->Add(AABox("assets/FrontWall1.txt",x+2,y));//10
     Add(Coin(x+11,y+4));
     Add(MapBox(map,x+50,y));
     Add(MessageWindow(message,0,1,15,50,10));
@@ -32,21 +38,27 @@ public:
   void Draw(){
     message=L"COIN GAINED:"+std::to_wstring(coin);
     int sight=map.GetSight(),count=0;
+    int ground=map.GetGround();
+    auto floor=GetComponent<CompositeDrawingComponent>(0);
+    auto wall=GetComponent<CompositeDrawingComponent>(1);
     for(int i=0;i<10;i++){
       int num=1<<i;
-      if(sight&num){
-	composite[i]->Draw();
-      }
+      if(sight&num)
+	wall->Draw(i);
+    }
+    for(int i=0;i<4;i++){
+      int num=1<<i;
+      if(ground&num && (sight&(1<<9))==0)
+	floor->Draw(i);
     }
     if(map.GetCoin()){
-      composite[10]->Draw();
+      composite[2]->Draw();
     }
-    for(auto i:composite){
-      if(count>10)
-	i->Draw();
-      count++;
+    for(int i=3;i<composite.size();i++){
+      composite[i]->Draw();
     }
   }
+  
   void Update(){
     auto pos=map.GetPosition();
     if(map.GetIcon(pos[0],pos[1])==1){
@@ -54,6 +66,7 @@ public:
       coin++;
     }
   }
+  
   void HandleInput(GameContext& gc,wint_t input,int code){
     switch(input){
     case KEY_UP:

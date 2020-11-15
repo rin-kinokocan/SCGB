@@ -34,15 +34,18 @@ namespace scgb{
 	MoveCursor(0,cury+1);
       }
       else if(IsDrawable()){
-	std::wstring str(1,ch);
-	cchar_t c;
-	if(IsTransparent){	  
+	if(IsTransparent){
 	  auto a=inch();
+	  if(ch==L' '){
+	    ch=a&(A_CHARTEXT);
+	  }
 	  if(attr&A_COLOR)
 	    a=a&(~A_COLOR);
 	  a=a&A_ATTRIBUTES;
 	  attr=attr|a;
 	}
+	std::wstring str(1,ch);
+	cchar_t c;
 	setcchar(&c,str.c_str(),attr,0,nullptr);
 	attron(attr);
 	add_wchnstr(&c,1);
@@ -58,6 +61,9 @@ namespace scgb{
       else if(IsDrawable()){
 	if(IsTransparent){
 	  auto a=inch();
+	  if(ch==L' '){
+	    ch=a&(A_CHARTEXT);
+	  }
 	  if(attr&A_COLOR)
 	    a=a&(~A_COLOR);
 	  a=a&A_ATTRIBUTES;

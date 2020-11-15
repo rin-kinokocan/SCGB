@@ -3,20 +3,8 @@
 #include "TitleScene.hpp"
 #include <iostream>
 #include <map>
-#include <unistd.h>
 using namespace scgb;
 using namespace std;
-
-void Dev_CheckPalette(){
-  move(0,0);
-  for(int i=0;i<COLOR_PAIRS;i++){
-    attron(COLOR_PAIR(i));
-    addch('@');
-    attroff(COLOR_PAIR(i));
-  }
-  refresh();
-  sleep(10000);
-}
 
 int main(){
   bool isend=false;

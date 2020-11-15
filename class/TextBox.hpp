@@ -19,7 +19,6 @@ namespace scgb{
       }
     }
     TextBox(T s,int x=0,int y=0,int w=10,int h=10):DrawingComponent(x,y,w,h),data(s){
-      SetTransparency(true);
     }
   };
 }
