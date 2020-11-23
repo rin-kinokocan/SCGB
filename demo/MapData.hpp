@@ -35,6 +35,13 @@ public:
   vector<int>& GetFloors(){
     return Floors;
   }
+
+  vector<int>& GetColWalls(){
+    return ColWalls;
+  }
+  vector<int>& GetRowWalls(){
+    return RowWalls;
+  }
   
   int GetColWall(int x,int y){
     int index=Size[1]*x+y;

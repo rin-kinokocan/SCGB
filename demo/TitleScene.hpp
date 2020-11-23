@@ -2,6 +2,7 @@
 #include "scgb.hpp"
 #include "Scene.hpp"
 #include "MainScene.hpp"
+#include "TestScene.hpp"
 #include "ColorTestScene.hpp"
 using namespace scgb;
 using namespace std;
@@ -49,7 +50,7 @@ public:
       else if(curpos==2)
 	gc.EndGame();
       else
-	gc.ChangeScene(make_shared<MainScene>(x,y));
+	gc.ChangeScene(make_shared<TestScene>(x,y));
       break;
     default:
       break;

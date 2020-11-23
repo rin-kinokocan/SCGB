@@ -30,7 +30,7 @@ namespace scgb{
     bool IsTransparent=false;
     
     void AddChar(wchar_t ch,attr_t attr){
-      if(ch==L'\n'){
+      if(ch==L'\n'||ch==L'\rn'){
 	MoveCursor(0,cury+1);
       }
       else if(IsDrawable()){
