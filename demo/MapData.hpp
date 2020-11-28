@@ -80,25 +80,63 @@ public:
     return vec;
   }
   
-  void MoveForward(){
+  bool MoveForward(){
     switch(facing){
     case 0:
-      if(GetRowWall(x,y)==0)
+      if(GetRowWall(x,y)==0){
 	y--;
+	return true;
+      }
       break;
     case 1:
-      if(GetColWall(x+1,y)==0)
+      if(GetColWall(x+1,y)==0){
 	x++;
+	return true;
+      }
       break;
     case 2:
-      if(GetRowWall(x,y+1)==0)
+      if(GetRowWall(x,y+1)==0){
 	y++;
+	return true;
+      }
       break;
     case 3:
-      if(GetColWall(x,y)==0)
+      if(GetColWall(x,y)==0){
 	x--;
+	return true;
+      }
       break;
     }
+    return false;
+  }
+  bool MoveBackward(){
+    switch(facing){
+    case 0:
+      if(GetRowWall(x,y+1)==0){
+	y++;
+	return true;
+      }
+      break;
+    case 1:
+      if(GetColWall(x,y)==0){
+	x--;
+	return true;
+      }
+      break;
+    case 2:
+      if(GetRowWall(x,y)==0){
+	y--;
+	return true;
+      }
+      break;
+    case 3:
+      if(GetColWall(x+1,y)==0){
+	x++;
+	return true;
+      }
+      break;
+    }
+    return false;
   }
   
   int SetIcon(int x,int y,int i){
@@ -107,354 +145,6 @@ public:
       return 0;
     Icons[index]=i;
     return 1;
-  }
-
-  int GetCoin(){
-    return GetIcon1();
-  }
-  
-  int GetIcon1(){
-    int res=0;
-    switch(facing){
-    case 0:
-      res=GetIcon(x,y-1);
-      break;
-    case 1:
-      res=GetIcon(x+1,y);
-      break;
-    case 2:
-      res=GetIcon(x,y+1);
-      break;
-    case 3:
-      res=GetIcon(x-1,y);
-      break;
-    default:
-      break;
-    }
-    return res;
-  }
-  
-  int GetIcon2(){
-    int res=0;
-    switch(facing){
-    case 0:
-      res=GetIcon(x,y-2);
-      break;
-    case 1:
-      res=GetIcon(x+2,y);
-      break;
-    case 2:
-      res=GetIcon(x,y+2);
-      break;
-    case 3:
-      res=GetIcon(x-2,y);
-      break;
-    default:
-      break;
-    }
-    return res;
-  }
-  
-  int GetLW1(){
-    int res=0;
-    switch(facing){
-    case 0:
-      res=GetColWall(x,y);
-      break;
-    case 1:
-      res=GetRowWall(x,y);
-      break;
-    case 2:
-      res=GetColWall(x+1,y);
-      break;
-    case 3:
-      res=GetRowWall(x,y+1);
-      break;
-    default:
-      break;
-    }
-    return res;
-  }
-  int GetLW2(){
-    int res=0;
-    switch(facing){
-    case 0:
-      res=GetColWall(x,y-1);
-      break;
-    case 1:
-      res=GetRowWall(x+1,y);
-      break;
-    case 2:
-      res=GetColWall(x+1,y+1);
-      break;
-    case 3:
-      res=GetRowWall(x-1,y+1);
-      break;
-    default:
-      break;
-    }
-    return res;
-  }
-  
-  int GetLWB1(){
-    int res=0;
-    switch(facing){
-    case 0:
-      res=GetRowWall(x-1,y);
-      break;
-    case 1:
-      res=GetColWall(x+1,y-1);
-      break;
-    case 2:
-      res=GetRowWall(x+1,y+1);
-      break;
-    case 3:
-      res=GetColWall(x,y+1);
-      break;
-    default:
-      break;
-    }
-    return res;
-  }
-  int GetLWB2(){
-    int res=0;
-    switch(facing){
-    case 0:
-      res=GetRowWall(x-1,y-1);
-      break;
-    case 1:
-      res=GetColWall(x+2,y-1);
-      break;
-    case 2:
-      res=GetRowWall(x+1,y+2);
-      break;
-    case 3:
-      res=GetColWall(x-1,y+1);
-      break;
-    default:
-      break;
-    }
-    return res;
-  }
-  int GetRW1(){
-    int res=0;
-    switch(facing){
-    case 0:
-      res=GetColWall(x+1,y);
-      break;
-    case 1:
-      res=GetRowWall(x,y+1);
-      break;
-    case 2:
-      res=GetColWall(x,y);
-      break;
-    case 3:
-      res=GetRowWall(x,y);
-      break;
-    default:
-      break;
-    }
-    return res;
-  }
-  int GetRW2(){
-    int res=0;
-    switch(facing){
-    case 0:
-      res=GetColWall(x+1,y-1);
-      break;
-    case 1:
-      res=GetRowWall(x+1,y+1);
-      break;
-    case 2:
-      res=GetColWall(x,y+1);
-      break;
-    case 3:
-      res=GetRowWall(x-1,y);
-      break;
-    default:
-      break;
-    }
-    return res;
-  }
-  int GetRWB1(){
-    int res=0;
-    switch(facing){
-    case 0:
-      res=GetRowWall(x+1,y);
-      break;
-    case 1:
-      res=GetColWall(x+1,y+1);
-      break;
-    case 2:
-      res=GetRowWall(x-1,y+1);
-      break;
-    case 3:
-      res=GetColWall(x,y-1);
-      break;
-    default:
-      break;
-    }
-    return res;
-  }
-  int GetRWB2(){
-    int res=0;
-    switch(facing){
-    case 0:
-      res=GetRowWall(x+1,y-1);
-      break;
-    case 1:
-      res=GetColWall(x+2,y+1);
-      break;
-    case 2:
-      res=GetRowWall(x-1,y+2);
-      break;
-    case 3:
-      res=GetColWall(x-1,y-1);
-      break;
-    default:
-      break;
-    }
-    return res;
-  }
-  int GetFW1(){
-    int res=0;
-    switch(facing){
-    case 0:
-      res=GetRowWall(x,y);
-      break;
-    case 1:
-      res=GetColWall(x+1,y);
-      break;
-    case 2:
-      res=GetRowWall(x,y+1);
-      break;
-    case 3:
-      res=GetColWall(x,y);
-      break;
-    default:
-      break;
-    }
-    return res;
-  }
-  int GetFW2(){
-    int res=0;
-    switch(facing){
-    case 0:
-      res=GetRowWall(x,y-1);
-      break;
-    case 1:
-      res=GetColWall(x+2,y);
-      break;
-    case 2:
-      res=GetRowWall(x,y+2);
-      break;
-    case 3:
-      res=GetColWall(x-1,y);
-      break;
-    default:
-      break;
-    }
-    return res;
-  }
-  int GetGround(){
-    int res=0;
-    if(GetFloor(x,y)==1)
-      res|=1<<0;
-    if(GetFL2()==1)
-      res|=1<<1;
-    if(GetFLL()==1)
-      res|=1<<2;
-    if(GetFLR()==1)
-      res|=1<<3;
-    return res;
-  }
-  
-  int GetFL2(){
-    int res=0;
-    switch(facing){
-    case 0:
-      res=GetFloor(x,y-1);
-      break;
-    case 1:
-      res=GetFloor(x+1,y);
-      break;
-    case 2:
-      res=GetFloor(x,y+1);
-      break;
-    case 3:
-      res=GetFloor(x-1,y);
-      break;
-    default:
-      break;
-    }
-    return res;
-  }
-  
-  int GetFLL(){
-    int res=0;
-    switch(facing){
-    case 0:
-      res=GetFloor(x-1,y-1);
-      break;
-    case 1:
-      res=GetFloor(x+1,y-1);
-      break;
-    case 2:
-      res=GetFloor(x+1,y+1);
-      break;
-    case 3:
-      res=GetFloor(x-1,y+1);
-      break;
-    default:
-      break;
-    }
-    return res;    
-  }
-  
-  int GetFLR(){
-    int res=0;
-    switch(facing){
-    case 0:
-      res=GetFloor(x+1,y-1);
-      break;
-    case 1:
-      res=GetFloor(x+1,y+1);
-      break;
-    case 2:
-      res=GetFloor(x-1,y+1);
-      break;
-    case 3:
-      res=GetFloor(x-1,y-1);
-      break;
-    default:
-      break;
-    }
-    return res;    
-  }
-  
-  int GetSight(){
-    int res=0;
-    if(GetLWB1()==1)
-      res|=1<<0;
-    if(GetLWB2()==1)
-      res|=1<<1;
-    if(GetLW1()==1)
-      res|=1<<2;
-    if(GetLW2()==1)
-      res|=1<<3;
-    if(GetRWB1()==1)
-      res|=1<<4;
-    if(GetRWB2()==1)
-      res|=1<<5;
-    if(GetRW1()==1)
-      res|=1<<6;
-    if(GetRW2()==1)
-      res|=1<<7;
-    if(GetFW2()==1)
-      res|=1<<8;
-    if(GetFW1()==1)
-      res|=1<<9;
-    return res;
   }
   
   void LoadFile(std::string filename){

@@ -35,7 +35,7 @@ public:
       }
     }
     imf->Add(0,1,A_BOLD)->Add(8,1,A_BOLD)->Add(0,6,A_BOLD)->Add(8,6,A_BOLD);
-    Add(Image(imf,x,y))->SetTransparency(true);
+    Add(Image(imf,x,y))->SetTransparency(false);
     Add(AABox("assets/Coin.txt",x,y))->SetTransparency(true);    
   }
 };

@@ -20,7 +20,9 @@ public:
     auto yaw=glm::radians(this->yaw);
     return glm::vec3(cos(yaw)*cos(pitch),sin(pitch),sin(yaw)*cos(pitch));    
   }
-
+  glm::vec3 GetPosition(){
+    return position;
+  }
   void Move(float i){
     position+=GetDirection()*i;
   }

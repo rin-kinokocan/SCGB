@@ -6,12 +6,15 @@ namespace scgb{
   class DrawingComponent{
   public:
     virtual void Draw()=0;
-    void Move(int dx,int dy){
+    virtual void Move(int dx,int dy){
       x+=dx;
       y+=dy;
     }
-
-    void SetTransparency(bool t){
+    virtual void MoveTo(int x,int y){
+      this->x=x;
+      this->y=y;
+    }
+    virtual void SetTransparency(bool t){
       IsTransparent=t;
     }
     
@@ -30,8 +33,9 @@ namespace scgb{
     bool IsTransparent=false;
     
     void AddChar(wchar_t ch,attr_t attr){
-      if(ch==L'\n'||ch==L'\rn'){
+      if(ch==L'\n'||ch==L'\r\n'){
 	MoveCursor(0,cury+1);
+	return;
       }
       else if(IsDrawable()){
 	if(IsTransparent){
@@ -50,13 +54,14 @@ namespace scgb{
 	attron(attr);
 	add_wchnstr(&c,1);
 	attroff(attr);
-	MoveCursor(curx+mk_wcwidth(ch),cury);
       }
+      MoveCursor(curx+mk_wcwidth(ch),cury);
     }
     
     void AddChar(char ch,attr_t attr){
       if(ch=='\n'){
 	MoveCursor(0,cury+1);
+	return;
       }
       else if(IsDrawable()){
 	if(IsTransparent){
@@ -72,8 +77,8 @@ namespace scgb{
 	attron(attr);
 	addch(ch);
 	attroff(attr);
-	MoveCursor(curx+mk_wcwidth(ch),cury);
       }
+      MoveCursor(curx+mk_wcwidth(ch),cury);
     }
     
     void AddStr(std::wstring str,attr_t attr){

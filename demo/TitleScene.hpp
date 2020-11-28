@@ -1,7 +1,6 @@
 #pragma once
 #include "scgb.hpp"
 #include "Scene.hpp"
-#include "MainScene.hpp"
 #include "TestScene.hpp"
 #include "ColorTestScene.hpp"
 using namespace scgb;
@@ -18,7 +17,7 @@ public:
     Add(TextBox<std::wstring>(L"*",x+19,y+11));
     Add(TextBox<std::wstring>(L"Play Game",x+20,y+11));
     Add(TextBox<std::wstring>(L"Color Test",x+20,y+12));
-    Add(TextBox<std::wstring>(L"Quit Game",x+20,y+13));
+    Add(TextBox<std::wstring>(L"Quit Game",x+20,y+13));    
   }
   void Update(){}
   void HandleInput(GameContext& gc,wint_t input,int code){

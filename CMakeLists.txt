@@ -18,8 +18,8 @@ add_library(scgb "${SCGB_SOURCES}")
 add_executable(demo "${DEMO_DIR}/main.cpp")
 target_link_libraries(demo scgb)
 
-set_property(TARGET scgb PROPERTY CXX_STANDARD 11)
-set_property(TARGET demo PROPERTY CXX_STANDARD 11)
+set_property(TARGET scgb PROPERTY CXX_STANDARD 17)
+set_property(TARGET demo PROPERTY CXX_STANDARD 17)
 
 # Choose actual curses implementation.
 set(USE_NCURSES "ON" CACHE BOOL "ON to use ncurses, OFF to use pdcurses.")

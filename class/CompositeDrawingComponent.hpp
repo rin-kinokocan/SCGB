@@ -14,14 +14,13 @@ namespace scgb{
       return std::dynamic_pointer_cast<T>(composite[i]);
     }
   public:
-    CompositeDrawingComponent(CompositeDrawingComponent&& c):composite(std::move(c.composite)){}
     CompositeDrawingComponent(int x=0,int y=0,int w=0,int h=0):DrawingComponent(x,y,w,h){}
-    template <class T> std::shared_ptr<DrawingComponent> Add(T&& dc,int i){
+    template <class T> std::shared_ptr<T> Add(T&& dc,int i){
       if(i>=composite.size()){
 	composite.resize(i+1);
       }
       composite[i]=std::make_shared<T>(std::move(dc));
-      return composite[i];
+      return std::dynamic_pointer_cast<T>(composite[i]);
     }
     template <class T> std::shared_ptr<T> Add(T&& dc){
       composite.push_back(std::make_shared<T>(std::move(dc)));
@@ -33,11 +32,6 @@ namespace scgb{
 	d->Draw();
       }
     }
-    void SetTransparency(bool t){
-      for(auto d:composite){
-	d->SetTransparency(t);
-      }
-    }
     void Draw(int i){
       if(i<0 || i>composite.size()){
 	endwin();
@@ -45,10 +39,22 @@ namespace scgb{
       }
       composite[i]->Draw();
     }
-    
+
+    void SetTransparency(bool t){
+      for(auto d:composite){
+	d->SetTransparency(t);
+      }
+    }    
     void Move(int dx,int dy){
+      this->x+=dx;this->y+=dy;
       for(auto d:composite){
 	d->Move(dx,dy);
+      }
+    }
+    void MoveTo(int x,int y){
+      this->x=x;this->y=y;
+      for(auto d:composite){
+	d->MoveTo(x,y);
       }
     }
     void Remove(int i){
